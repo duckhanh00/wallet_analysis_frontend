@@ -12,7 +12,6 @@ const appReducer = combineReducers({
     ThemeOptions,
     auth, 
     user,
-    
     overviewDashboard,
     userAnalysis
 })

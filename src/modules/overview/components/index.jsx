@@ -1,35 +1,21 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import { ForceGraph3D } from "react-force-graph";
+import NetworkGraph from './networkGraph';
 
-import NFTStats from './nftStats'
-import NFTMarketCapAndTradingVolumeChart from './nftMarketCapAndVolumeChart'
-import MarketPlaceTrendChart from './marketPlaceTrendChart.jsx'
-import HolderChart from './holderChart.jsx'
-import TraderChart from './traderChart.jsx'
-import AverageChart from './averagePriceChart.jsx'
-import KnightStakingChart from './knightStakingChart'
-import BumbleChart from './bumbleChart'
+import data from './block.json'
 
-function OverviewDashboard(props) {
-
+function OverviewDashboard(props) { 
   return (
     <Fragment>
-        <NFTStats/>
-        <BumbleChart/>
-        {/* <NetworkChart/> */}
-        {/* <NFTMarketCapAndTradingVolumeChart/>
-        <MarketPlaceTrendChart/>
-        <HolderChart/>
-        <TraderChart/>
-        <AverageChart/>
-        <KnightStakingChart/> */}
-    </Fragment>
+      <NetworkGraph/>
+    </Fragment>  
   );
 }
 
 function mapState(state) {
-  const {  } = state;
-  return {  };
+  const { } = state;
+  return {};
 }
 const actions = {
 };

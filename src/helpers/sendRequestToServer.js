@@ -1,4 +1,5 @@
 import Cookies from 'js-cookie';
+
 const axios = require('axios');
 
 export function sendRequestToServer(req) {
@@ -9,10 +10,13 @@ export function sendRequestToServer(req) {
             method: method,
             url: url,
             data: data,
-            withCredentials: true,
-            headers: {
-                'Authorization': Cookies.get('token')
-            },
+            // withCredentials: true,
+            // headers: {
+            //     'X-Content-Type-Options': 'nosniff',
+            //     'X-Frame-Options':'deny',
+            //     'Access-Control-Allow-Origin':'*',
+            //     'content-type':'application/json'
+            // },
             params: params
         })
         .then(response => {

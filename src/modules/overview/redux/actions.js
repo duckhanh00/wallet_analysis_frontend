@@ -4,144 +4,71 @@ import { OverviewDashboardConstants } from './constants';
 import { clearStorage, setCookie } from '../../../helpers';
 
 export const OverviewDashboardActions = {
-  getNftDashboardMarketCapVolume,
-  getNftDashboardMarketPlaceTrend,
-  getNftDashboardHolder,
-  getNftDashboardTrader,
-  getNftDashboardAveragePrice,
-  getNftDashboardStaking
+  getWalletType,
+  getCloseRelationEdges,
+  getCloseRelationNodes
 };
 
-/** Get market cap and volume */
-function getNftDashboardMarketCapVolume(nft, chainId, data) {
+function getWalletType(token_name, chain_name) {
   return dispatch => {
     dispatch({
-      type: OverviewDashboardConstants.GET_DASHBOARD_MARKET_CAP_VOLUME_REQUEST
+      type: OverviewDashboardConstants.GET_WALLET_TYPE_REQUEST
     });
-    OverviewDashboardServices.getNftDashboardMarketCapVolume(nft, chainId, data)
+    OverviewDashboardServices.getWalletType(token_name, chain_name)
       .then(res => {
         dispatch({
-          type: OverviewDashboardConstants.GET_DASHBOARD_MARKET_CAP_VOLUME_SUCCESS,
-          payload: res.data.result
+          type: OverviewDashboardConstants.GET_WALLET_TYPE_SUCCESS,
+          payload: res.data
         });
       })
       .catch(error => {
         dispatch({
-          type: OverviewDashboardConstants.GET_DASHBOARD_MARKET_CAP_VOLUME_FAILURE,
+          type: OverviewDashboardConstants.GET_WALLET_TYPE_FAILURE,
           error: error
         });
       });
   };
 }
 
-/** Get market place trend */
-function getNftDashboardMarketPlaceTrend(nft, chainId, data) {
+function getCloseRelationEdges(token_name, chain_name) {
   return dispatch => {
     dispatch({
-      type: OverviewDashboardConstants.GET_DASHBOARD_MARKET_PLACE_TREND_REQUEST
+      type: OverviewDashboardConstants.GET_CLOSE_RELATION_EDGES_REQUEST
     });
-    OverviewDashboardServices.getNftDashboardMarketPlaceTrend(nft, chainId, data)
+    OverviewDashboardServices.getCloseRelationEdges(token_name, chain_name)
       .then(res => {
         dispatch({
-          type: OverviewDashboardConstants.GET_DASHBOARD_MARKET_PLACE_TREND_SUCCESS,
-          payload: res.data.result
+          type: OverviewDashboardConstants.GET_CLOSE_RELATION_EDGES_SUCCESS,
+          payload: res.data
         });
       })
       .catch(error => {
         dispatch({
-          type: OverviewDashboardConstants.GET_DASHBOARD_MARKET_PLACE_TREND_FAILURE,
+          type: OverviewDashboardConstants.GET_CLOSE_RELATION_EDGES_FAILURE,
           error: error
         });
       });
   };
 }
 
-
-/** Get holder */
-function getNftDashboardHolder(nft, chainId, data) {
+function getCloseRelationNodes(token_name, chain_name) {
   return dispatch => {
     dispatch({
-      type: OverviewDashboardConstants.GET_DASHBOARD_HOLDER_REQUEST
+      type: OverviewDashboardConstants.GET_CLOSE_RELATION_NODES_REQUEST
     });
-    OverviewDashboardServices.getNftDashboardHolder(nft, chainId, data)
+    OverviewDashboardServices.getCloseRelationNodes(token_name, chain_name)
       .then(res => {
         dispatch({
-          type: OverviewDashboardConstants.GET_DASHBOARD_HOLDER_SUCCESS,
-          payload: res.data.result
+          type: OverviewDashboardConstants.GET_CLOSE_RELATION_NODES_SUCCESS,
+          payload: res.data
         });
       })
       .catch(error => {
         dispatch({
-          type: OverviewDashboardConstants.GET_DASHBOARD_HOLDER_FAILURE,
+          type: OverviewDashboardConstants.GET_CLOSE_RELATION_NODES_FAILURE,
           error: error
         });
       });
   };
 }
 
-/** Get trader */
-function getNftDashboardTrader(nft, chainId, data) {
-  return dispatch => {
-    dispatch({
-      type: OverviewDashboardConstants.GET_DASHBOARD_TRADER_REQUEST
-    });
-    OverviewDashboardServices.getNftDashboardTrader(nft, chainId, data)
-      .then(res => {
-        dispatch({
-          type: OverviewDashboardConstants.GET_DASHBOARD_TRADER_SUCCESS,
-          payload: res.data.result
-        });
-      })
-      .catch(error => {
-        dispatch({
-          type: OverviewDashboardConstants.GET_DASHBOARD_TRADER_FAILURE,
-          error: error
-        });
-      });
-  };
-}
-
-/** Get average price */
-function getNftDashboardAveragePrice(nft, chainId, data) {
-  return dispatch => {
-    dispatch({
-      type: OverviewDashboardConstants.GET_DASHBOARD_AVERAGE_PRICE_REQUEST
-    });
-    OverviewDashboardServices.getNftDashboardAveragePrice(nft, chainId, data)
-      .then(res => {
-        dispatch({
-          type: OverviewDashboardConstants.GET_DASHBOARD_AVERAGE_PRICE_SUCCESS,
-          payload: res.data.result
-        });
-      })
-      .catch(error => {
-        dispatch({
-          type: OverviewDashboardConstants.GET_DASHBOARD_AVERAGE_PRICE_FAILURE,
-          error: error
-        });
-      });
-  };
-}
-
-
-/** Get staking */
-function getNftDashboardStaking(nft, chainId, data) {
-  return dispatch => {
-    dispatch({
-      type: OverviewDashboardConstants.GET_DASHBOARD_STAKING_REQUEST
-    });
-    OverviewDashboardServices.getNftDashboardStaking(nft, chainId, data)
-      .then(res => {
-        dispatch({
-          type: OverviewDashboardConstants.GET_DASHBOARD_STAKING_SUCCESS,
-          payload: res.data.result
-        });
-      })
-      .catch(error => {
-        dispatch({
-          type: OverviewDashboardConstants.GET_DASHBOARD_STAKING_FAILURE,
-          error: error
-        });
-      });
-  };
-}

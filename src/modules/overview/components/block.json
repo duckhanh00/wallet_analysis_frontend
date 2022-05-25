@@ -1,0 +1,4 @@
+{"nodes": [{"id": "0", "user": "qewrqwer", "val": 1}, {"id": "1", "user": "qewrqwer", "val": 2}, {"id": "2", "user": "qewrqwer", "val": 3}, {"id": "3", "user": "qewrqwer", "val": 4}, {"id": "4", "user": "qewrqwer", "val": 5}, {"id": "5", "user": "qewrqwer", "val": 6}, {"id": "6", "user": "qewrqwer", "val": 7}, {"id": "7", "user": "qewrqwer", "val": 8}, {"id": "8", "user": "qewrqwer", "val": 9}, {"id": "9", "user": "qewrqwer", "val": 10}], "links": [{
+    "source": "0",
+    "target": "1"
+}]}

@@ -64,7 +64,7 @@ const Header = props => {
       .catch(err => {
         return handleSignup(wallet_address)
       })
-   
+
     if (data?.result) {
       let signature = await handleSignMessage(data.result.nonce)
       handleAuthenticate(data.result.address, signature)
@@ -87,7 +87,7 @@ const Header = props => {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
       const signature = await signer.signMessage(message);
-  
+
       return signature
     } catch (err) {
       console.log(err)
@@ -106,7 +106,10 @@ const Header = props => {
         position={headerFixed ? 'fixed' : 'absolute'}
         elevation={headerShadow ? 11 : 3}>
         {!props.isCollapsedLayout && <HeaderLogo />}
+
+
         <Box className="app-header-toolbar">
+          
           <Hidden lgUp>
             <Box
               className="app-logo-wrapper"
@@ -124,12 +127,16 @@ const Header = props => {
                 </IconButton>
               </Link>
               <Hidden smDown>
-                <Box className="app-logo-text">NFT Analyze</Box>
+                <Box className="app-logo-text">Wallet Analysis</Box>
               </Hidden>
             </Box>
           </Hidden>
+
+
           <Box className="d-flex align-items-center">
           </Box>
+
+
           <Box className="d-flex align-items-center">
             {checkLogin() ? (
               <HeaderUserbox />
@@ -142,21 +149,25 @@ const Header = props => {
                 </Button>
               </Box>
             )}
-            <Box className="toggle-sidebar-btn-mobile">
-              <Tooltip title="Toggle Sidebar" placement="right">
-                <IconButton
-                  color="inherit"
-                  onClick={toggleSidebarMobile}
-                  size="medium">
-                  {sidebarToggleMobile ? (
-                    <MenuOpenRoundedIcon />
-                  ) : (
-                    <MenuRoundedIcon />
-                  )}
-                </IconButton>
-              </Tooltip>
-            </Box>
+
+              <Box className="toggle-sidebar-btn-mobile">
+                <Tooltip title="Toggle Sidebar" placement="right">
+                  <IconButton
+                    color="inherit"
+                    onClick={toggleSidebarMobile}
+                    size="medium">
+                    {sidebarToggleMobile ? (
+                      <MenuOpenRoundedIcon />
+                    ) : (
+                      <MenuRoundedIcon />
+                    )}
+                  </IconButton>
+                </Tooltip>
+              </Box>
+            
           </Box>
+
+
         </Box>
       </AppBar>
     </Fragment>

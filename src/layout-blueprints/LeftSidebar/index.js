@@ -19,12 +19,17 @@ const LeftSidebar = props => {
     <Fragment>
       <div className={clsx('app-wrapper', contentBackground)}>
         <Header />
-        <div
+        <div className="app-content--inner">
+              <div className="app-content--inner__wrapper">{children}</div>
+            </div>
+        <Footer />
+
+        {/* <div
           className={clsx('app-main', {
             'app-main-sidebar-static': !sidebarFixed
-          })}>
-          <Sidebar />
-          <div
+          })}> */}
+          {/* <Sidebar /> */}
+          {/* <div
             className={clsx('app-content', {
               'app-content-sidebar-collapsed': sidebarToggle,
               'app-content-sidebar-fixed': sidebarFixed,
@@ -34,8 +39,10 @@ const LeftSidebar = props => {
               <div className="app-content--inner__wrapper">{children}</div>
             </div>
             <Footer />
-          </div>
-        </div>
+          </div> */}
+        {/* </div> */}
+
+
       </div>
     </Fragment>
   );

@@ -33,16 +33,16 @@ body {
   transition: all 0.5s $app-sidebar-transition;
   padding-top: $header-height;
 
-  &--inner {
-    padding: $layout-spacer $layout-spacer ($layout-spacer / 2);
-    display: flex;
-    flex: 1;
+  // &--inner {
+  //   padding: $layout-spacer $layout-spacer ($layout-spacer / 2);
+  //   display: flex;
+  //   flex: 1;
 
-    &__wrapper {
-      display: block;
-      width: 100%;
-    }
-  }
+  //   &__wrapper {
+  //     display: block;
+  //     width: 100%;
+  //   }
+  // }
 }
 
 .app-content-sidebar-fixed {
