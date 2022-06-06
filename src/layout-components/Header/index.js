@@ -1,190 +1,267 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Component } from "react";
+import { Link, withRouter } from "react-router-dom";
+import { Dropdown } from "react-bootstrap";
 
-import clsx from 'clsx';
-import { Link } from 'react-router-dom';
+export class Header extends Component {
+  closeMenu(e) {
+    e.target.closest(".dropdown").classList.remove("show");
+    e.target.closest(".dropdown .dropdown-menu").classList.remove("show");
+  }
 
-import {
-  Hidden,
-  IconButton,
-  AppBar,
-  Box,
-  Button,
-  Tooltip
-} from '@material-ui/core';
-import { ethers } from "ethers";
-import { connect } from 'react-redux';
+  toggleHeaderMenu(e) {
+    e.preventDefault();
+    document.querySelector("body").classList.toggle("az-header-menu-show");
+  }
 
-import { setSidebarToggleMobile } from '../../redux/ThemeOptions';
-import projectLogo from '../../assets/images/react.svg';
-
-import HeaderLogo from '../../layout-components/HeaderLogo';
-import HeaderUserbox from '../../layout-components/HeaderUserbox';
-
-import MenuOpenRoundedIcon from '@material-ui/icons/MenuOpenRounded';
-import MenuRoundedIcon from '@material-ui/icons/MenuRounded';
-
-import { UserActions } from '../../modules/user/redux/actions'
-import { AuthActions } from '../../modules/auth/redux/actions';
-
-import { checkLogin } from '../../helpers';
-
-const Header = props => {
-  useEffect(() => {
-    if (checkLogin()) {
-      props.getCurrentUser();
-    }
-  }, []);
-
-  const toggleSidebarMobile = () => {
-    setSidebarToggleMobile(!sidebarToggleMobile);
-  };
-  const {
-    headerShadow,
-    headerFixed,
-    sidebarToggleMobile,
-    setSidebarToggleMobile,
-    auth
-  } = props;
-
-  const connectWallet = () => {
-    if (window.ethereum) {
-      window.ethereum.request({ method: 'eth_requestAccounts' })
-        .then(res => {
-          // Return the address of the wallet
-          handleLogin(res[0])
-        })
-    } else {
-      alert("install metamask extension!!")
+  componentDidUpdate(prevProps) {
+    if (this.props.location !== prevProps.location) {
+      document.querySelector("body").classList.remove("az-header-menu-show");
     }
   }
 
-  const handleLogin = async (wallet_address) => {
-    let data = await fetch(`${process.env.REACT_APP_SERVER}/v1/wallet?wallet_address=${wallet_address}`)
-      .then(response => response.json())
-      .catch(err => {
-        return handleSignup(wallet_address)
-      })
+  render() {
+    return (
+      <div>
+        <div className="az-header">
+          <div className="container">
+            <div className="az-header-left">
+              <a href="#/" className="az-logo">
+                <span></span> space
+              </a>
+              <a
+                id="azMenuShow"
+                onClick={event => this.toggleHeaderMenu(event)}
+                className="az-header-menu-icon d-lg-none"
+                href="#/"
+              >
+                <span></span>
+              </a>
+            </div>
+            <div className="az-header-menu">
+              <div className="az-header-menu-header">
+                <Link to="/" className="az-logo">
+                  <span></span> space
+                </Link>
+                <a
+                  href="#/"
+                  onClick={event => this.toggleHeaderMenu(event)}
+                  className="close"
+                >
+                  &times;
+                </a>
+              </div>
+              <ul className="nav">
+                <li
+                  className={
+                    this.isPathActive("/dashboard")
+                      ? "nav-item active"
+                      : "nav-item"
+                  }
+                >
+                  <Link to="/dashboard" className="nav-link">
+                    <i className="typcn typcn-chart-area-outline"></i> Dashboard
+                  </Link>
+                </li>
 
-    if (data?.result) {
-      let signature = await handleSignMessage(data.result.nonce)
-      handleAuthenticate(data.result.address, signature)
-    }
-  };
-  const handleSignup = async (wallet_address) => {
-    let data = await fetch(`${process.env.REACT_APP_SERVER}/v1/wallet`, {
-      body: JSON.stringify({ 'wallet_address': wallet_address }),
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      method: 'POST'
-    }).then(response => response.json());
-    return data
-  }
+                <li
+                  className={
+                    this.isPathActive("/clothing-man")
+                      ? "nav-item active"
+                      : "nav-item"
+                  }
+                >
+                  <Link to="/clothing-man" className="nav-link">
+                    Man
+                  </Link>
+                </li>
 
-  const handleSignMessage = async (nonce) => {
-    try {
-      const message = `I am signing my one-time nonce: ${nonce}`
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
-      const signature = await signer.signMessage(message);
+                <li
+                  className={
+                    this.isPathActive("/clothing-woman")
+                      ? "nav-item active"
+                      : "nav-item"
+                  }
+                >
+                  <Link to="/clothing-woman" className="nav-link">
+                    Woman
+                  </Link>
+                </li>
 
-      return signature
-    } catch (err) {
-      console.log(err)
-    }
-  };
+                <li
+                  className={
+                    this.isPathActive("/relation-graph")
+                      ? "nav-item active"
+                      : "nav-item"
+                  }
+                >
+                  <Link to="/relation-graph" className="nav-link">
+                    Relation Graph
+                  </Link>
+                </li>
 
-  const handleAuthenticate = (address, signature) => {
-    props.login({ 'address': address, 'signature': signature })
-  }
+                <li
+                  className={
+                    this.isPathActive("/wallet-type")
+                      ? "nav-item active"
+                      : "nav-item"
+                  }
+                >
+                  <Link to="/wallet-type" className="nav-link">
+                    Wallet Type
+                  </Link>
+                </li>
 
-  return (
-    <Fragment>
-      <AppBar
-        color="secondary"
-        className={clsx('app-header', {})}
-        position={headerFixed ? 'fixed' : 'absolute'}
-        elevation={headerShadow ? 11 : 3}>
-        {!props.isCollapsedLayout && <HeaderLogo />}
-
-
-        <Box className="app-header-toolbar">
-          
-          <Hidden lgUp>
-            <Box
-              className="app-logo-wrapper"
-              title="Carolina React Admin Dashboard with Material-UI Free">
-              <Link to="/DashboardDefault" className="app-logo-link">
-                <IconButton
-                  color="primary"
-                  size="medium"
-                  className="app-logo-btn">
+              </ul>
+            </div>
+            <div className="az-header-right">
+              <a href="#/" className="az-header-search-link">
+                <i className="fas fa-search"></i>
+              </a>
+              <div className="az-header-message">
+                <Link to="#/">
+                  <i className="typcn typcn-messages"></i>
+                </Link>
+              </div>
+              <Dropdown className="az-header-notification">
+                <Dropdown.Toggle as={"a"} className="new">
+                  <i className="typcn typcn-bell"></i>
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <div className="az-dropdown-header mg-b-20 d-sm-none">
+                    <a
+                      href="#/"
+                      onClick={event => this.closeMenu(event)}
+                      className="az-header-arrow"
+                    >
+                      <i className="icon ion-md-arrow-back"></i>
+                    </a>
+                  </div>
+                  <h6 className="az-notification-title">Notifications</h6>
+                  <p className="az-notification-text">
+                    You have 2 unread notification
+                  </p>
+                  <div className="az-notification-list">
+                    <div className="media new">
+                      <div className="az-img-user">
+                        <img
+                          src={require("../../assets/images/img2.jpg")}
+                          alt=""
+                        ></img>
+                      </div>
+                      <div className="media-body">
+                        <p>
+                          Congratulate <strong>Socrates Itumay</strong> for work
+                          anniversaries
+                        </p>
+                        <span>Mar 15 12:32pm</span>
+                      </div>
+                    </div>
+                    <div className="media new">
+                      <div className="az-img-user online">
+                        <img
+                          src={require("../../assets/images/img3.jpg")}
+                          alt=""
+                        ></img>
+                      </div>
+                      <div className="media-body">
+                        <p>
+                          <strong>Joyce Chua</strong> just created a new blog
+                          post
+                        </p>
+                        <span>Mar 13 04:16am</span>
+                      </div>
+                    </div>
+                    <div className="media">
+                      <div className="az-img-user">
+                        <img
+                          src={require("../../assets/images/img4.jpg")}
+                          alt=""
+                        ></img>
+                      </div>
+                      <div className="media-body">
+                        <p>
+                          <strong>Althea Cabardo</strong> just created a new
+                          blog post
+                        </p>
+                        <span>Mar 13 02:56am</span>
+                      </div>
+                    </div>
+                    <div className="media">
+                      <div className="az-img-user">
+                        <img
+                          src={require("../../assets/images/img5.jpg")}
+                          alt=""
+                        ></img>
+                      </div>
+                      <div className="media-body">
+                        <p>
+                          <strong>Adrian Monino</strong> added new comment on
+                          your photo
+                        </p>
+                        <span>Mar 12 10:40pm</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="dropdown-footer">
+                    <a href="#/">View All Notifications</a>
+                  </div>
+                </Dropdown.Menu>
+              </Dropdown>
+              <Dropdown className="az-profile-menu">
+                <Dropdown.Toggle as={"a"} className="az-img-user">
                   <img
-                    className="app-logo-img"
-                    alt="Carolina React Admin Dashboard with Material-UI Free"
-                    src={projectLogo}
-                  />
-                </IconButton>
-              </Link>
-              <Hidden smDown>
-                <Box className="app-logo-text">Wallet Analysis</Box>
-              </Hidden>
-            </Box>
-          </Hidden>
+                    src={require("../../assets/images/img1.jpg")}
+                    alt=""
+                  ></img>
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <div className="az-dropdown-header d-sm-none">
+                    <a
+                      href="#/"
+                      onClick={event => this.closeMenu(event)}
+                      className="az-header-arrow"
+                    >
+                      <i className="icon ion-md-arrow-back"></i>
+                    </a>
+                  </div>
+                  <div className="az-header-profile">
+                    <div className="az-img-user">
+                      <img
+                        src={require("../../assets/images/img1.jpg")}
+                        alt=""
+                      ></img>
+                    </div>
+                    <h6>Wallet Analysis</h6>
+                    <span>Premium Member</span>
+                  </div>
 
+                  <a href="#/" className="dropdown-item">
+                    <i className="typcn typcn-user-outline"></i> My Profile
+                  </a>
+                  <a href="#/" className="dropdown-item">
+                    <i className="typcn typcn-edit"></i> Edit Profile
+                  </a>
+                  <a href="#/" className="dropdown-item">
+                    <i className="typcn typcn-time"></i> Activity Logs
+                  </a>
+                  <a href="#/" className="dropdown-item">
+                    <i className="typcn typcn-cog-outline"></i> Account Settings
+                  </a>
+                  <Link to="/general-pages/signin" className="dropdown-item">
+                    <i className="typcn typcn-power-outline"></i> Sign Out
+                  </Link>
+                </Dropdown.Menu>
+              </Dropdown>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
-          <Box className="d-flex align-items-center">
-          </Box>
+  isPathActive(path) {
+    return this.props.location.pathname.startsWith(path);
+  }
+}
 
-
-          <Box className="d-flex align-items-center">
-            {checkLogin() ? (
-              <HeaderUserbox />
-            ) : (
-              <Box className="d-flex align-items-center">
-                <Button
-                  className="m-1" variant="contained" color="default" size="small"
-                  onClick={() => connectWallet()}>
-                  Connect Wallet
-                </Button>
-              </Box>
-            )}
-
-              <Box className="toggle-sidebar-btn-mobile">
-                <Tooltip title="Toggle Sidebar" placement="right">
-                  <IconButton
-                    color="inherit"
-                    onClick={toggleSidebarMobile}
-                    size="medium">
-                    {sidebarToggleMobile ? (
-                      <MenuOpenRoundedIcon />
-                    ) : (
-                      <MenuRoundedIcon />
-                    )}
-                  </IconButton>
-                </Tooltip>
-              </Box>
-            
-          </Box>
-
-
-        </Box>
-      </AppBar>
-    </Fragment>
-  );
-};
-
-const mapStateToProps = state => ({
-  headerShadow: state.ThemeOptions.headerShadow,
-  headerFixed: state.ThemeOptions.headerFixed,
-  sidebarToggleMobile: state.ThemeOptions.sidebarToggleMobile,
-  auth: state.auth
-});
-
-const mapDispatchToProps = dispatch => ({
-  setSidebarToggleMobile: enable => dispatch(setSidebarToggleMobile(enable)),
-  getCurrentUser: () => dispatch(UserActions.getCurrentUser()),
-  login: (data) => dispatch(AuthActions.login(data)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default withRouter(Header);

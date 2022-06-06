@@ -1,275 +1,71 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import { library } from '@fortawesome/fontawesome-svg-core';
+// import CssBaseline from '@material-ui/core/CssBaseline';
+import './App.scss'
+
+// Component
+import Header from './layout-components/Header';
+import Footer from './layout-components/Footer';
+import ScrollToTop from './utils/ScrollToTop';
 
 import { Routes } from './react-router/routes';
 
 import store from './redux/store';
-import ScrollToTop from './utils/ScrollToTop';
 
-import './assets/base.scss';
-import './App.css'
-
-import {
-  fab,
-  faFacebook,
-  faTwitter,
-  faVuejs,
-  faReact,
-  faHtml5,
-  faGoogle,
-  faInstagram,
-  faPinterest,
-  faYoutube,
-  faDiscord,
-  faSlack,
-  faDribbble,
-  faGithub
-} from '@fortawesome/free-brands-svg-icons';
-import {
-  far,
-  faSquare,
-  faLifeRing,
-  faCheckCircle,
-  faTimesCircle,
-  faDotCircle,
-  faThumbsUp,
-  faComments,
-  faFolderOpen,
-  faTrashAlt,
-  faFileImage,
-  faFileArchive,
-  faCommentDots,
-  faFolder,
-  faKeyboard,
-  faCalendarAlt,
-  faEnvelope,
-  faAddressCard,
-  faMap,
-  faObjectGroup,
-  faImages,
-  faUser,
-  faLightbulb,
-  faGem,
-  faClock,
-  faUserCircle,
-  faQuestionCircle,
-  faBuilding,
-  faBell,
-  faFileExcel,
-  faFileAudio,
-  faFileVideo,
-  faFileWord,
-  faFilePdf,
-  faFileCode,
-  faFileAlt,
-  faEye,
-  faChartBar
-} from '@fortawesome/free-regular-svg-icons';
-import {
-  fas,
-  faAngleDoubleRight,
-  faAngleDoubleLeft,
-  faSmile,
-  faHeart,
-  faBatteryEmpty,
-  faBatteryFull,
-  faChevronRight,
-  faSitemap,
-  faPrint,
-  faMapMarkedAlt,
-  faTachometerAlt,
-  faAlignCenter,
-  faExternalLinkAlt,
-  faShareSquare,
-  faInfoCircle,
-  faSync,
-  faQuoteRight,
-  faStarHalfAlt,
-  faShapes,
-  faCarBattery,
-  faTable,
-  faCubes,
-  faPager,
-  faCameraRetro,
-  faBomb,
-  faNetworkWired,
-  faBusAlt,
-  faBirthdayCake,
-  faEyeDropper,
-  faUnlockAlt,
-  faDownload,
-  faAward,
-  faPlayCircle,
-  faReply,
-  faUpload,
-  faBars,
-  faEllipsisV,
-  faSave,
-  faSlidersH,
-  faCaretRight,
-  faChevronUp,
-  faPlus,
-  faLemon,
-  faChevronLeft,
-  faTimes,
-  faChevronDown,
-  faFilm,
-  faSearch,
-  faEllipsisH,
-  faCog,
-  faArrowsAltH,
-  faPlusCircle,
-  faAngleRight,
-  faAngleUp,
-  faAngleLeft,
-  faAngleDown,
-  faArrowUp,
-  faArrowDown,
-  faArrowRight,
-  faArrowLeft,
-  faStar,
-  faSignOutAlt,
-  faLink
-} from '@fortawesome/free-solid-svg-icons';
-library.add(
-  far,
-  faSquare,
-  faLifeRing,
-  faCheckCircle,
-  faTimesCircle,
-  faDotCircle,
-  faThumbsUp,
-  faComments,
-  faFolderOpen,
-  faTrashAlt,
-  faFileImage,
-  faFileArchive,
-  faCommentDots,
-  faFolder,
-  faKeyboard,
-  faCalendarAlt,
-  faEnvelope,
-  faAddressCard,
-  faMap,
-  faObjectGroup,
-  faImages,
-  faUser,
-  faLightbulb,
-  faGem,
-  faClock,
-  faUserCircle,
-  faQuestionCircle,
-  faBuilding,
-  faBell,
-  faFileExcel,
-  faFileAudio,
-  faFileVideo,
-  faFileWord,
-  faFilePdf,
-  faFileCode,
-  faFileAlt,
-  faEye,
-  faChartBar
-);
-library.add(
-  fab,
-  faFacebook,
-  faTwitter,
-  faVuejs,
-  faReact,
-  faHtml5,
-  faGoogle,
-  faInstagram,
-  faPinterest,
-  faYoutube,
-  faDiscord,
-  faSlack,
-  faDribbble,
-  faGithub
-);
-library.add(
-  fas,
-  faAngleDoubleRight,
-  faAngleDoubleLeft,
-  faSmile,
-  faHeart,
-  faBatteryEmpty,
-  faBatteryFull,
-  faChevronRight,
-  faSitemap,
-  faPrint,
-  faMapMarkedAlt,
-  faTachometerAlt,
-  faAlignCenter,
-  faExternalLinkAlt,
-  faShareSquare,
-  faInfoCircle,
-  faSync,
-  faQuoteRight,
-  faStarHalfAlt,
-  faShapes,
-  faCarBattery,
-  faTable,
-  faCubes,
-  faPager,
-  faCameraRetro,
-  faBomb,
-  faNetworkWired,
-  faBusAlt,
-  faBirthdayCake,
-  faEyeDropper,
-  faUnlockAlt,
-  faDownload,
-  faAward,
-  faPlayCircle,
-  faReply,
-  faUpload,
-  faBars,
-  faEllipsisV,
-  faSave,
-  faSlidersH,
-  faCaretRight,
-  faChevronUp,
-  faPlus,
-  faLemon,
-  faChevronLeft,
-  faTimes,
-  faChevronDown,
-  faFilm,
-  faSearch,
-  faEllipsisH,
-  faCog,
-  faArrowsAltH,
-  faPlusCircle,
-  faAngleRight,
-  faAngleUp,
-  faAngleLeft,
-  faAngleDown,
-  faArrowUp,
-  faArrowDown,
-  faArrowRight,
-  faArrowLeft,
-  faStar,
-  faSignOutAlt,
-  faLink
-);
 
 class App extends Component {
+  state = {}
+  componentDidMount() {
+    this.onRouteChanged();
+  }
   render() {
+    let headerComponent = !this.state.isFullPageLayout ? <Header /> : '';
+    let footerComponent = !this.state.isFullPageLayout ? <Footer /> : '';
     return (
+
       <Provider store={store}>
         <BrowserRouter basename="/">
-          <CssBaseline />
-          <ScrollToTop>
-            <Routes />
-          </ScrollToTop>
+          {/* <CssBaseline /> */}
+          {headerComponent}
+          <div className="az-content-wrapper">
+            <ScrollToTop>
+              <Routes />
+            </ScrollToTop>
+          </div>
+          {/* {footerComponent} */}
         </BrowserRouter>
       </Provider>
     );
   }
+
+  // componentDidUpdate(prevProps) {
+  //   if (this.props.location !== prevProps.location) {
+  //     this.onRouteChanged();
+  //   }
+  // }
+
+  onRouteChanged() {
+    console.log("ROUTE CHANGED");
+    window.scrollTo(0, 0);
+    const fullPageLayoutRoutes = ['/general-pages/signin', '/general-pages/signup', '/general-pages/page-404'];
+    for (let i = 0; i < fullPageLayoutRoutes.length; i++) {
+      if (this.props.location.pathname === fullPageLayoutRoutes[i]) {
+        this.setState({
+          isFullPageLayout: true
+        })
+        document.querySelector('.az-content-wrapper').classList.add('p-0');
+        break;
+      } else {
+        this.setState({
+          isFullPageLayout: false
+        })
+        document.querySelector('.az-content-wrapper').classList.remove('p-0');
+      }
+    }
+  }
+
 }
 
-export default App;
+export default withRouter(App);

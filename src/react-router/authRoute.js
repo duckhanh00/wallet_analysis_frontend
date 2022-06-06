@@ -1,16 +1,15 @@
 import React, { useEffect } from 'react';
 import { Route, Redirect } from 'react-router-dom';
-// import { checkLogin } from '../helpers'
+import { checkLogin } from '../helpers'
+import Page from './page';
 
 const AuthRoute = ({ component: Component, ...rest }) => {
-    useEffect(() => {
-        document.title = rest.title ?? "Loading..."
-    })
-
     return (
         <Route {...rest} render={(props) => {
-            if (!true) {
-                return <Component {...props} />
+            if (!checkLogin()) {
+                return <Page title={rest.title}>
+                    <Component {...props} />
+                </Page>
             } else {
                 return <Redirect to="/home" />
             }

@@ -1,21 +1,29 @@
-const Role = {
-    SYSTEM_ADMIN: "SYSTEMADMIN",
-    ADMIN: "ADMIN",
-    MEMBER: "MEMBER",
-}
-
 const PermissionRoute = {
-    OVERVIEW: {
-        path: "/overview",
-        title: "Overview",
-        roles: "@all"
+    DASHBOARD: {
+        path: "/dashboard",
+        title: "Dashboard",
     },
 
-    USER_ANALYSIS: {
-        path: "/user-analysis",
-        title: "User Analysis",
-        roles: "@all"
+    CLOTHING_MAN: {
+        path: "/clothing-man",
+        title: "Clothing Man",
     },
+
+    CLOTHING_WOMAN: {
+        path: "/clothing-woman",
+        title: "Clothing Woman",
+    },
+
+    RELATION_GRAPH: {
+        path: "/relation-graph",
+        title: "Relation Graph"
+    },
+
+    WALLET_TYPE: {
+        path: "/wallet-type",
+        title: "Wallet Type"
+    },
+
 
     NOT_FOUND: {
         path: "/404",
@@ -26,7 +34,6 @@ const PermissionRoute = {
 const AllRoute = Object.values(PermissionRoute).map(item => item.path)
 
 export {
-    Role,
     PermissionRoute,
     AllRoute
 }
