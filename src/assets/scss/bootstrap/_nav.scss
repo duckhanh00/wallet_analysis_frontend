@@ -8,7 +8,7 @@
 
 .nav-pills {
   .nav-link {
-    color: $gray-700;
+    color: #fff;
     @include hover-focus() { color: $gray-900; }
 
     &.active {

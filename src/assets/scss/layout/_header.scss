@@ -19,14 +19,15 @@
 
 .az-header {
   height: $az-height-header-mobile;
-  background-color: #1a195a;
+  background-color: #17171a;
   box-shadow: 0 0 30px rgba($gray-900, 0.08);
-  border-bottom: 1px solid rgba($gray-900, 0.12);
+  border-bottom: 1px solid #323546;
   position: fixed !important;
   z-index: 100 !important;
   width: 100%;
   top: 0;
-  
+  color: #fff;
+
   @include media-breakpoint-up(lg) {
     height: $az-height-header;
   }
@@ -75,19 +76,17 @@
 }
 
 .az-logo {
-  font-weight: 700;
-  font-size: 28px;
-  font-family: "Poppins", sans-serif;
-  text-transform: lowercase;
+  font-weight: 500;
+  font-size: 20px;
   color: white;
-  letter-spacing: -1px;
-  display: flex;
-  align-items: center;
-  position: relative;
   top: -2px;
 
-  @include hover-focus() {
-    color: #2D88DB;
+  span {
+    margin-top: 5px;
+  }
+
+  img {
+    margin-right: 5px;
   }
 
   i {
@@ -233,9 +232,9 @@
       display: flex;
       align-items: center;
       position: relative;
-      color: rgb(121, 148, 193);
-      font-size: 15px;
-      font-weight: 500;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 600;
       padding: 0;
       cursor: pointer;
       @include transition($transition-base);
@@ -245,9 +244,9 @@
       }
 
       @include hover() {
-        color: #2D88DB;
+        color: #3861fb;
         i {
-          color: #2D88DB;
+          color: #3861fb;
         }
       }
 
@@ -536,7 +535,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: $gray-500;
+    color: #808a9d;
     @include border-radius();
     @include transition($transition-base);
 

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { Dropdown } from "react-bootstrap";
-
 export class Header extends Component {
   closeMenu(e) {
     e.target.closest(".dropdown").classList.remove("show");
@@ -26,11 +25,15 @@ export class Header extends Component {
           <div className="container">
             <div className="az-header-left">
               <a href="#/" className="az-logo">
-                <span></span> space
+                <img
+                  src={require("../../assets/images/coin.png")}
+                  alt="lo"
+                />
+                <span>DK MarketCap</span>
               </a>
               <a
                 id="azMenuShow"
-                onClick={event => this.toggleHeaderMenu(event)}
+                onClick={(event) => this.toggleHeaderMenu(event)}
                 className="az-header-menu-icon d-lg-none"
                 href="#/"
               >
@@ -44,7 +47,7 @@ export class Header extends Component {
                 </Link>
                 <a
                   href="#/"
-                  onClick={event => this.toggleHeaderMenu(event)}
+                  onClick={(event) => this.toggleHeaderMenu(event)}
                   className="close"
                 >
                   &times;
@@ -110,7 +113,6 @@ export class Header extends Component {
                     Wallet Type
                   </Link>
                 </li>
-
               </ul>
             </div>
             <div className="az-header-right">
@@ -130,7 +132,7 @@ export class Header extends Component {
                   <div className="az-dropdown-header mg-b-20 d-sm-none">
                     <a
                       href="#/"
-                      onClick={event => this.closeMenu(event)}
+                      onClick={(event) => this.closeMenu(event)}
                       className="az-header-arrow"
                     >
                       <i className="icon ion-md-arrow-back"></i>
@@ -218,7 +220,7 @@ export class Header extends Component {
                   <div className="az-dropdown-header d-sm-none">
                     <a
                       href="#/"
-                      onClick={event => this.closeMenu(event)}
+                      onClick={(event) => this.closeMenu(event)}
                       className="az-header-arrow"
                     >
                       <i className="icon ion-md-arrow-back"></i>

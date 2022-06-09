@@ -6,64 +6,75 @@
 //     top: 15px;
 //     right: 1%
 // }
-.button-giam{
+.button-giam {
   margin-top: 100px;
   bottom: auto;
-    transform: none !important;
-    z-index: 10000;
-    position: absolute;
-    top: 15px;
-    right: 1%;
+  transform: none !important;
+  z-index: 10000;
+  position: absolute;
+  top: 15px;
+  right: 1%;
 }
 
-.button-tang{
+.button-tang {
   margin-top: 150px;
   bottom: auto;
-    transform: none !important;
-    z-index: 10000;
-    position: absolute;
-    top: 15px;
-    right: 1%;
+  transform: none !important;
+  z-index: 10000;
+  position: absolute;
+  top: 15px;
+  right: 1%;
 }
 
 .relation-graph-container {
-    position: relative;
+  position: relative;
 }
 
 .relation-graph-menu {
-    position: relative;
-    margin-left: 15px;
-    background-color: #050512;
+  position: relative;
+  margin-left: 15px;
+  background-color: #050512;
 }
 
 .wallet-list-title {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    background-color: #435176;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #435176;
 }
 
 .button-wallet-list {
-    bottom: auto;
-    transform: none !important;
-    z-index: 10000;
-    position: absolute;
-    top: 15px;
-    right: 1%;
+  bottom: auto;
+  transform: none !important;
+  z-index: 10000;
+  position: absolute;
+  top: 15px;
+  right: 1%;
 }
 
-.btn-primary:not(:disabled):not(.disabled):active, .form-wizard .container > div:not(.content) > button:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active, .form-wizard .container > div:not(.content) > button:not(:disabled):not(.disabled).active, .show > .btn-primary.dropdown-toggle, .form-wizard .container > div.show:not(.content) > button.dropdown-toggle {
-    color: #5b47fb;
-    background-color: #000;
-    border-color: #5b47fb;
+.btn-primary:not(:disabled):not(.disabled):active,
+.form-wizard
+  .container
+  > div:not(.content)
+  > button:not(:disabled):not(.disabled):active,
+.btn-primary:not(:disabled):not(.disabled).active,
+.form-wizard
+  .container
+  > div:not(.content)
+  > button:not(:disabled):not(.disabled).active,
+.show > .btn-primary.dropdown-toggle,
+.form-wizard .container > div.show:not(.content) > button.dropdown-toggle {
+  color: #5b47fb;
+  background-color: #000;
+  border-color: #5b47fb;
 }
 
 $input-color: #333;
 $button-color: #777;
 $icon-color: #666;
 
-$ns: '.search';
+$ns: ".search";
 
 #{$ns} {
   &__form {
@@ -75,19 +86,19 @@ $ns: '.search';
     #{$ns}__input {
       padding: 30px;
     }
-    
+
     #{$ns}__btn-submit {
       padding: 30px;
     }
   }
-  
+
   // Swapped modifier
   &--swap {
     #{$ns}__input {
       order: 1;
     }
   }
-  
+
   // Icon modifier
   &--icon {
     #{$ns}__form {
@@ -102,29 +113,28 @@ $ns: '.search';
       width: 46px;
       height: 100%;
       background: none;
-      
+
       &:focus,
       &:active,
       &:hover {
         box-shadow: none;
-        
+
         &:before {
           border-color: #eee;
         }
-        
+
         &:after {
           background-color: #eee;
         }
       }
-      
+
       &:before,
       &:after {
-        content: '';
+        content: "";
         position: absolute;
-        transition: background-color 200ms ease-out,
-                    border-color 200ms ease-out;
+        transition: background-color 200ms ease-out, border-color 200ms ease-out;
       }
-      
+
       &:before {
         right: 8px;
         top: 8px;
@@ -133,7 +143,7 @@ $ns: '.search';
         border: 3px solid $icon-color;
         border-radius: 100%;
       }
-      
+
       &:after {
         right: 30px;
         top: 23px;
@@ -142,41 +152,41 @@ $ns: '.search';
         background-color: $icon-color;
         transform: rotate(45deg);
       }
-      
+
       &:hover {
         background: none;
       }
     }
   }
-  
+
   // Icon (Expandable) modifier
   &--icon-expandable {
     #{$ns}__input {
       transform: scaleX(0);
       transform-origin: right center;
       transition: transform 300ms ease-out;
-      
+
       &:focus,
       &:active {
         transform: scaleX(1);
       }
     }
-    
+
     #{$ns}__btn-submit {
       background-color: $input-color;
-      
+
       &:hover {
         background-color: $input-color;
       }
     }
   }
-  
+
   &--expanded {
     #{$ns}__input {
       transform: scaleX(1);
     }
   }
-  
+
   &__input,
   &__btn-submit {
     &:focus,
@@ -194,7 +204,7 @@ $ns: '.search';
     background-color: $input-color;
     border: 0;
   }
-  
+
   &__btn-submit {
     position: relative;
     padding: 15px;
@@ -207,9 +217,10 @@ $ns: '.search';
     cursor: pointer;
     z-index: 10;
     transition: background-color 200ms ease-out;
-    
+
     &:hover {
       background-color: $button-color;
     }
   }
 }
+
