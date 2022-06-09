@@ -1,0 +1,19 @@
+.wallet-classification{
+    border: 1px solid rgba(232, 179, 11, 0.2);
+    width: 900px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 700px;
+    border-radius: 20px;
+    // position: relative;
+    background: url(https://storage.googleapis.com/public-moonlight/token-background.svg) 50%;
+    background-repeat: no-repeat;
+    // background-position: 50%;
+    margin-bottom: 16px;
+    grid-column-end: span 4;
+    // background: var(--button-color,#271644);
+    -webkit-border-radius: 2ex;
+  }
