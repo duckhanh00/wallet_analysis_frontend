@@ -29,7 +29,7 @@ export class Header extends Component {
                   src={require("../../assets/images/coin.png")}
                   alt="lo"
                 />
-                <span>DK MarketCap</span>
+                <span>Space Blockchain</span>
               </a>
               <a
                 id="azMenuShow"

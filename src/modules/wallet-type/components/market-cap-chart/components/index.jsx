@@ -1,11 +1,10 @@
 // import React, { Fragment, useEffect, useState } from "react";
 import React, { Fragment } from "react";
 import { connect } from "react-redux";
-import "./coin.scss";
-// import data_7_days from "./totalHoldersData/data_7_days.json";
-// import data_30_days from "./totalHoldersData/data_30_days.json";
-// import data_90_days from "./totalHoldersData/data_90_days.json";
 import Chart from "react-apexcharts";
+import TopHoldersList from '../../top-holders-list/components/index.jsx'
+
+import "./style.scss";
 
 function MarketCapChart(props) {
   const options = {
@@ -364,63 +363,10 @@ function MarketCapChart(props) {
       ],
     },
   ];
+  const t = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
   return (
     <Fragment>
-      <div className="coin-container">
-        <div className="coin-left">
-          <h1 className="coin-name">
-            <img
-              src={require("../../../assets/images/bitcoin.png")}
-              alt="Logo"
-            />
-            <span>Bitcoin</span>
-            <div className="coin-logo">BTC</div>
-          </h1>
-          <ul className="list-desc">
-            <li className="desc-item">Xếp hạng</li>
-            <li className="desc-item">Đồng coin</li>
-            <li className="desc-item">On 3,241,011 watchlists</li>
-          </ul>
-        </div>
-
-        <div className="coin-right">
-          <span className="coin-desc">Giá Bitcoin (BTC)</span>
-          <div className="coin-price">
-            <h1>₫704,160,672.63</h1>
-            <div className="coin-up">&#x25B2; 0.81%</div>
-          </div>
-
-          <div className="market">
-            <div className="market__item">
-              <div className="coin-desc">Vốn hóa thị trường</div>
-              <div className="market__price">₫13,422,670,604,451,240</div>
-              <span>1.38%</span>
-            </div>
-            <div className="market__item">
-              <div className="coin-desc">
-                Vốn hóa thị trường được pha loãng hoàn toàn
-              </div>
-              <div className="market__price">₫14,787,374,125,160,066</div>
-              <span>1.38%</span>
-            </div>
-            <div className="market__item">
-              <div className="coin-desc">
-                Khối lượng <span className="desc-item">24 giờ</span>
-              </div>
-              <div className="market__price">₫861,560,025,281,030</div>
-              <span>1.38%</span>
-              <div className="coin-desc">Khối lượng / Vốn hóa thị trường</div>
-              <div className="market__price">0.06426</div>
-            </div>
-            <div className="market__item">
-              <div className="coin-desc">Lượng cung lưu hành</div>
-              <div className="market__price">19,061,943.00 BTC</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <div className="action-wrapper">
         <div className="action__chart">
           <div className="action__1">
@@ -442,54 +388,12 @@ function MarketCapChart(props) {
             options={options}
             series={series}
             width={1000}
-            height={400}
+            height={600}
           />
         </div>
 
         <div className="info">
-          <h2 className="info__name">Đồng coin và token thịnh hành</h2>
-          <ul className="info__list">
-            <li className="info__item">
-              <span>
-                <img
-                  src={require("../../../assets/images/sol.png")}
-                  alt="sol"
-                />
-                GSTGreen Satoshi Token (SOL)GST
-              </span>
-              <span className="desc-item">#4324</span>
-            </li>
-            <li className="info__item">
-              <span>
-                <img
-                  src={require("../../../assets/images/sol1.png")}
-                  alt="sol1"
-                />
-                BNB
-              </span>
-              <span className="desc-item">#4324</span>
-            </li>
-            <li className="info__item">
-              <span>
-                <img
-                  src={require("../../../assets/images/sol2.png")}
-                  alt="sol2"
-                />
-                PancakeSwap
-              </span>
-              <span className="desc-item">#4324</span>
-            </li>
-            <li className="info__item">
-              <span>
-                <img
-                  src={require("../../../assets/images/sol3.png")}
-                  alt="sol3"
-                />
-                GSTGreen Satoshi Token (SOL)GST
-              </span>
-              <span className="desc-item">#4324</span>
-            </li>
-          </ul>
+          <TopHoldersList/>
         </div>
       </div>
     </Fragment>

@@ -4,10 +4,11 @@ import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 // import { Grid, Card, Button, Box } from "@material-ui/core";
 
-import "./coin.scss";
-import data_7_days from "./tokenAllocationData/data_7_days.json";
-import data_30_days from "./tokenAllocationData/data_30_days.json";
-import data_90_days from "./tokenAllocationData/data_90_days.json";
+import data_7_days from "../../tokenAllocationData/data_7_days.json";
+import data_30_days from "../../tokenAllocationData/data_30_days.json";
+import data_90_days from "../../tokenAllocationData/data_90_days.json";
+import "./style.scss";
+
 
 function TokenAllocationChart(props) {
   const [rangeTime, setRangeTime] = useState("7d");
@@ -39,7 +40,7 @@ function TokenAllocationChart(props) {
   let options = {
     chart: {
       type: typeChart,
-      backgroundColor: "#17171a",
+      backgroundColor: "#17171a"
     },
     title: {
       text: "Token ownership allocation",
@@ -85,8 +86,7 @@ function TokenAllocationChart(props) {
       itemStyle: { color: "#a1a7bb" },
       itemHoverStyle: { color: "#fff" },
     },
-    colors: ["#ea3943", "#94a1b2", "#7f5af0", "#2cb67d"],
-
+    colors: ["#6f42c1", "#3366ff", "#1491a5", "#00cccc"],
     series: data["series"],
   };
 
@@ -98,57 +98,40 @@ function TokenAllocationChart(props) {
 
   return (
     <Fragment>
-      <div className="action__chart">
-        <div className="action__1">
-          <div className="action">
-            <div
-              className={
-                "action__btn " + (typeChart === "column" ? "active" : "")
-              }
-              onClick={() => handleType("column")}
-            >
-              Price
+      <div className="block-in-page">
+        <div className="action__chart">
+          <div className="action__1">
+            <div className="action">
+              <div  className={
+                  "action__btn " + (typeChart === "column" ? "active" : "")
+                }
+                onClick={() => handleType("column")}>Price</div>
+              <div className={
+                  "action__btn " + (typeChart === "line" ? "active" : "")
+                }
+                onClick={() => handleType("line")}>Market Cap</div>
             </div>
-            <div
-              className={
-                "action__btn " + (typeChart === "line" ? "active" : "")
-              }
-              onClick={() => handleType("line")}
-            >
-              Market Cap
-            </div>
-          </div>
 
-          <div className="date">
-            <div
-              className={
-                "date__btn " + (rangeTime === rangeTimes["7d"] ? "active" : "")
-              }
-              onClick={() => handleRangeTime(rangeTimes["7d"])}
-            >
-              7D
-            </div>
-            <div
-              className={
-                "date__btn " + (rangeTime === rangeTimes["1m"] ? "active" : "")
-              }
-              onClick={() => handleRangeTime(rangeTimes["1m"])}
-            >
-              1M
-            </div>
-            <div
-              className={
-                "date__btn " + (rangeTime === rangeTimes["3m"] ? "active" : "")
-              }
-              onClick={() => handleRangeTime(rangeTimes["3m"])}
-            >
-              3M
+            <div className="date">
+              <div className="date__btn">1D</div>
+              <div className={
+                  "date__btn " + (rangeTime === rangeTimes["7d"] ? "active" : "")
+                }
+                onClick={() => handleRangeTime(rangeTimes["7d"])}>7D</div>
+              <div className={
+                  "date__btn " + (rangeTime === rangeTimes["1m"] ? "active" : "")
+                }
+                onClick={() => handleRangeTime(rangeTimes["1m"])}>1M</div>
+              <div className={
+                  "date__btn " + (rangeTime === rangeTimes["3m"] ? "active" : "")
+                }
+                onClick={() => handleRangeTime(rangeTimes["3m"])}>3M</div>
+              <div className="date__btn">1Y</div>
             </div>
           </div>
+          <HighchartsReact highcharts={Highcharts} options={options} />
         </div>
       </div>
-
-      <HighchartsReact highcharts={Highcharts} options={options} />
     </Fragment>
   );
 }
