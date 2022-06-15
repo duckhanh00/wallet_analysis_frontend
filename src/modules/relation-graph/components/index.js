@@ -262,7 +262,6 @@ function RelationGraph(props) {
 
 
                 <ForceGraph3D
-                    className="az-profile-graph"
                     ref={fgRef}
                     graphData={{"nodes": nodes, "links": links}}
                     nodeLabel={node => `${node.id}: #${node.wallet_rank+1}`}

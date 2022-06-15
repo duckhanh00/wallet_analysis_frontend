@@ -1,8 +1,25 @@
+.page {
+ background-color: #222531;
+}
+
+.table-head {
+    background-color: #222531;
+    position: 'sticky';
+    top : 0;
+}
+
 .table-container{
-    height: 500px,
+    height: 500px;
+    background-color: #222531 !important;
+    color: #acb0b6;
 }
 
 .search-wallet {
     height: 40px;
     margin: 5px;
   }
+
+.table-pagination {
+    background-color: #222531;
+    color: #acb0b6 !important;
+}

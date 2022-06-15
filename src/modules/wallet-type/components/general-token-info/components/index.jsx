@@ -19,9 +19,7 @@ function GeneralTokenInfo(props) {
             <div className="coin-logo">BTC</div>
           </h1>
           <ul className="list-desc">
-            <li className="desc-item">Loai</li>
-            <li className="desc-item">Đồng coin</li>
-            <li className="desc-item">On 3,241,011 watchlists</li>
+            <li className="desc-item">Chain name: ETH</li>
           </ul>
         </div>
 

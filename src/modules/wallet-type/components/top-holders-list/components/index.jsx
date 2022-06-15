@@ -24,8 +24,8 @@ const columns = [
     format: (value) => value.toLocaleString('en-US'),
   },
   {
-    id: 'totalBalance',
-    label: 'TOTAL BALANCE (USD)',
+    id: 'tokenBalance',
+    label: 'TOKEN BALANCE (USD)',
     minWidth: 100,
     align: 'right',
     format: (value) => value.toLocaleString('en-US'),
@@ -95,51 +95,69 @@ function TopHoldersList(props) {
         <button onClick={''} className="search__btn-submit"></button>
       </div>
 
-      <Paper>
-      <TableContainer className='table-container'>
-        <Table stickyHeader aria-label="sticky table">
-          <TableHead>
-            <TableRow>
-              {columns.map((column) => (
-                <TableCell
+      <Paper  className='page'>
+        <TableContainer  className='table-container'
+          sx={{
+            "&::-webkit-scrollbar": {
+              width: 10
+            },
+            "&::-webkit-scrollbar-track": {
+              backgroundColor: "#acb0b6",
+              borderRadius: 2
+            },
+            "&::-webkit-scrollbar-thumb": {
+              backgroundColor: "#787b7f",
+              borderRadius: 2
+            }
+          }}
+        >
+          <Table stickyHeader style={{ backgroundColor: '#222531' }}>
+            <TableHead stickyHeader style={{ backgroundColor: '#222531' }}>
+              <TableRow >
+                {columns.map((column) => (
+                  <TableCell
+                                      
                   key={column.id}
-                  align={column.align}
-                  style={{ minWidth: column.minWidth }}
-                >
-                  {column.label}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-              return (
-                <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                  {columns.map((column) => {
-                    const value = row[column.id];
-                    return (
-                      <TableCell key={column.id} align={column.align}>
-                        {column.format && typeof value === 'number' ? column.format(value) : value}
-                      </TableCell>
-                    );
-                  })}
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
-        component="div"
-        count={rows.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
-    </Paper>
-    </Fragment>
+                    align={column.align}
+                    style={{ minWidth: column.minWidth }}
+                  >
+                    {column.label}
+                  </TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody style={{ backgroundColor: '#222531' }}>
+              {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+                return (
+                  <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                    {columns.map((column) => {
+                      const value = row[column.id];
+                      return (
+                        <TableCell key={column.id} align={column.align}>
+                          {column.format && typeof value === 'number' ? column.format(value) : value}
+                        </TableCell>
+                      );
+                    })}
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+
+        <TablePagination
+          className="table-pagination"
+          rowsPerPageOptions={[10, 25, 100]}
+          component="div"
+          count={rows.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </Paper>
+
+    </Fragment >
   );
 }
 

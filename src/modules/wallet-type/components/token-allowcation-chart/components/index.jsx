@@ -105,11 +105,11 @@ function TokenAllocationChart(props) {
               <div  className={
                   "action__btn " + (typeChart === "column" ? "active" : "")
                 }
-                onClick={() => handleType("column")}>Price</div>
+                onClick={() => handleType("column")}>percent</div>
               <div className={
                   "action__btn " + (typeChart === "line" ? "active" : "")
                 }
-                onClick={() => handleType("line")}>Market Cap</div>
+                onClick={() => handleType("line")}>number</div>
             </div>
 
             <div className="date">

@@ -11,17 +11,19 @@ import './style.scss'
 function WalletType(props) {
   return (
     <Fragment>
-        <GeneralTokenInfo/>
-        <WalletClassificationChart/>
+      <div className="wallet-type">
+        <GeneralTokenInfo />
+        <WalletClassificationChart />
         <MarketCapChart />
-        <TokenAllocationChart/>
-        <TotalHoldersChart/>     
+        <TokenAllocationChart />
+        <TotalHoldersChart />
+      </div>
     </Fragment>
   );
 }
 
 function mapState(state) {
-  const {} = state;
+  const { } = state;
   return {};
 }
 const actions = {};
