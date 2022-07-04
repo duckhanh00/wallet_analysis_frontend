@@ -1,0 +1,127 @@
+componentsProps={{
+    columnsPanel: {
+      sx: {
+        /* style allied to the column menu */
+        color: "#a1a7ac",
+        backgroundColor: "#323546",
+         // for example
+      }
+    },
+    columnHeaderFilterIconButton: {
+      sx: {
+        /* style allied to the column menu */
+        color: "#a1a7ac",
+        backgroundColor: "#323546",
+         // for example
+      }
+    },
+    cell: {
+      sx: {
+        /* style allied to the column menu */
+        color: "#a1a7ac",
+        backgroundColor: "#323546",
+         // for example
+      }
+    },
+    baseTooltip: {
+      sx: {
+        /* style allied to the column menu */
+        color: "#a1a7ac",
+        backgroundColor: "#323546",
+         // for example
+      }
+    },
+    baseSwitch: {
+      sx: {
+        /* style allied to the column menu */
+        color: "#a1a7ac",
+        backgroundColor: "#323546",
+         // for example
+      }
+    },
+    basePopper:{
+      sx: {
+        /* style allied to the column menu */
+        color: "#a1a7ac",
+        backgroundColor: "#323546",
+         // for example
+      } 
+    },
+
+    baseFormControl: {
+      sx: {
+        /* style allied to the column menu */
+        color: "#a1a7ac",
+        backgroundColor: "#323546",
+         // for example
+      }
+    },
+    columnMenu: {
+      sx: {
+          /* style allied to the column menu */
+          color: "#a1a7ac",
+          backgroundColor: "#323546",
+           // for example
+        }
+    },
+    panel: {
+      sx: {
+          /* style allied to the column menu */
+          color: "#a1a7ac",
+          backgroundColor: "#323546",
+           // for example
+        }
+    },
+    preferencesPanel: {
+      sx: {
+        /* style allied to the column menu */
+        color: "#a1a7ac",
+        backgroundColor: "#323546"
+         // for example
+      }
+    },
+    row: {
+      sx: {
+        hover: '#a1a7ac',
+        /* style allied to the column menu */
+        color: "#a1a7ac",
+        backgroundColor: "#323546"
+         // for example
+      }
+    },
+    baseSelect:{
+      GridFilterForm: {
+        color: "#a1a7ac",
+        backgroundColor: "#323546"
+      },
+      sx: {
+          /* style allied to the column menu */
+          color: "#a1a7ac",
+          backgroundColor: "#323546"
+           // for example
+        }
+    },
+    baseTextField: {
+      sx: {
+        /* style allied to the column menu */
+        color: "#a1a7ac",
+        backgroundColor: "#323546"
+         // for example
+      }
+    },
+    filterPanel:{
+      GridFilterForm: {
+        color: "#a1a7ac",
+        backgroundColor: "#323546"
+      },
+      sx: {
+        /* style allied to the column menu */
+        color: "#a1a7ac",
+        backgroundColor: "#323546",
+         // for example
+      }
+    },
+    filterIcon:{
+
+    }
+  }}

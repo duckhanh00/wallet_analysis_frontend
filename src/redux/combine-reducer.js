@@ -1,13 +1,14 @@
 import { combineReducers } from 'redux';
 
 import ThemeOptions from './ThemeOptions';
-import { RelationGraph } from '../modules/relation-graph/redux/reducers'
-
+import { RelationGraph } from '../modules/relationship-space/redux/reducers'
+import { WalletType } from '../modules/whale-space/redux/reducers'
 
 
 const appReducer = combineReducers({
     ThemeOptions,
-    RelationGraph
+    RelationGraph,
+    WalletType
 })
 
 const rootReducer = (state, action) => {

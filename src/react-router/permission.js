@@ -1,29 +1,18 @@
-const PermissionRoute = {
-    DASHBOARD: {
-        path: "/dashboard",
-        title: "Dashboard",
+const PermissionRoute = { 
+    HOME: {
+        path: "/home",
+        title: "Home"
     },
 
-    CLOTHING_MAN: {
-        path: "/clothing-man",
-        title: "Clothing Man",
+    RELATIONSHIP_SPACE: {
+        path: "/relationship-space",
+        title: "Relationship Space"
     },
 
-    CLOTHING_WOMAN: {
-        path: "/clothing-woman",
-        title: "Clothing Woman",
+    WHALE_SPACE: {
+        path: "/whale-space",
+        title: "Whale Space"
     },
-
-    RELATION_GRAPH: {
-        path: "/relation-graph",
-        title: "Relation Graph"
-    },
-
-    WALLET_TYPE: {
-        path: "/wallet-type",
-        title: "Wallet Type"
-    },
-
 
     NOT_FOUND: {
         path: "/404",

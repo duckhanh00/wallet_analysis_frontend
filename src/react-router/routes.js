@@ -10,11 +10,8 @@ import { PublicRoute } from './publicRoute';
 
 import { PermissionRoute, AllRoute } from './permission';
 
-const Dashboard = lazy(() => import('../app/dashboard/Dashboard'))
-const Buttons = lazy(() => import('../app/ui-elements/Buttons'))
-const ClothingMan = lazy(() => import('../modules/clothing-man/components'))
-const RelationGraph = lazy(() => import('../modules/relation-graph/components'))
-const WalletType = lazy(() => import('../modules/wallet-type/components'))
+const RelationshipSpace = lazy(() => import('../modules/relationship-space/components'))
+const WhaleSpace = lazy(() => import('../modules/whale-space/components'))
 
 const Routes = props => {
   const location = useLocation();
@@ -60,29 +57,14 @@ const Routes = props => {
                 variants={pageVariants}
                 transition={pageTransition}>
                 <PublicRoute
-                  path={PermissionRoute.DASHBOARD.path}
-                  title={PermissionRoute.DASHBOARD.title}
-                  component={Dashboard}
+                  path={PermissionRoute.RELATIONSHIP_SPACE.path}
+                  title={PermissionRoute.RELATIONSHIP_SPACE.title}
+                  component={RelationshipSpace}
                 />
                 <PublicRoute
-                  path={PermissionRoute.CLOTHING_MAN.path}
-                  title={PermissionRoute.CLOTHING_MAN.title}
-                  component={ClothingMan}
-                />
-                <PublicRoute
-                  path={PermissionRoute.CLOTHING_WOMAN.path}
-                  title={PermissionRoute.CLOTHING_WOMAN.title}
-                  component={Buttons}
-                />
-                <PublicRoute
-                  path={PermissionRoute.RELATION_GRAPH.path}
-                  title={PermissionRoute.RELATION_GRAPH.title}
-                  component={RelationGraph}
-                />
-                <PublicRoute
-                  path={PermissionRoute.WALLET_TYPE.path}
-                  title={PermissionRoute.WALLET_TYPE.title}
-                  component={WalletType}
+                  path={PermissionRoute.WHALE_SPACE.path}
+                  title={PermissionRoute.WHALE_SPACE.title}
+                  component={WhaleSpace}
                 />
               </motion.div>
             </Switch>

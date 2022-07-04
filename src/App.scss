@@ -96,13 +96,7 @@
 */
 
 /* ############### FONTS IMPORT ############### */
-@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900");
-@import url("https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800");
-@import url("https://fonts.googleapis.com/css?family=Raleway:400,500,600,700,800");
-@import "~typicons.font/src/font/typicons.css";
-@import "~ionicons/dist/css/ionicons.min.css";
-@import "~@fortawesome/fontawesome-free/css/all.min.css";
-@import "~flag-icon-css/css/flag-icon.min.css";
+
 
 // Bootstrap variable overrides
 @import "./assets/scss/bootstrap/variables";
@@ -215,6 +209,6 @@
 @import "./assets/scss/util/width";
 
 /* ############### PLUGIN STYLES ############### */
-@import "~react-perfect-scrollbar/dist/css/styles.css";
-@import "~@fullcalendar/core/main.css";
-@import "~@fullcalendar/daygrid/main.css";
+// @import "~react-perfect-scrollbar/dist/css/styles.css";
+// @import "~@fullcalendar/core/main.css";
+// @import "~@fullcalendar/daygrid/main.css";

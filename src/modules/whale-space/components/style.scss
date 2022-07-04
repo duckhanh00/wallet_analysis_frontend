@@ -1,0 +1,230 @@
+.whale-space {
+  background-color: black;
+  padding: 30px 60px;
+}
+// .az-profile-menu > .wallet-list {
+//     bottom: auto;
+//     transform: none !important;
+//     z-index: 10000;
+//     position: absolute;
+//     top: 15px;
+//     right: 1%
+// }
+.button-giam {
+  margin-top: 100px;
+  bottom: auto;
+  transform: none !important;
+  z-index: 10000;
+  position: absolute;
+  top: 15px;
+  right: 1%;
+}
+
+.button-tang {
+  margin-top: 150px;
+  bottom: auto;
+  transform: none !important;
+  z-index: 10000;
+  position: absolute;
+  top: 15px;
+  right: 1%;
+}
+
+.relationship-space-container {
+  position: relative;
+}
+
+.relationship-space-menu {
+  position: relative;
+  margin-left: 15px;
+  background-color: #050512;
+}
+
+.wallet-list-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #435176;
+}
+
+.button-wallet-list {
+  bottom: auto;
+  transform: none !important;
+  z-index: 10000;
+  position: absolute;
+  top: 15px;
+  right: 1%;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active,
+.form-wizard
+  .container
+  > div:not(.content)
+  > button:not(:disabled):not(.disabled):active,
+.btn-primary:not(:disabled):not(.disabled).active,
+.form-wizard
+  .container
+  > div:not(.content)
+  > button:not(:disabled):not(.disabled).active,
+.show > .btn-primary.dropdown-toggle,
+.form-wizard .container > div.show:not(.content) > button.dropdown-toggle {
+  color: #5b47fb;
+  background-color: #000;
+  border-color: #5b47fb;
+}
+
+$input-color: #333;
+$button-color: #777;
+$icon-color: #666;
+
+$ns: ".search";
+
+#{$ns} {
+  &__form {
+    display: flex;
+  }
+
+  // Large modifier
+  &--large {
+    #{$ns}__input {
+      padding: 30px;
+    }
+
+    #{$ns}__btn-submit {
+      padding: 30px;
+    }
+  }
+
+  // Swapped modifier
+  &--swap {
+    #{$ns}__input {
+      order: 1;
+    }
+  }
+
+  // Icon modifier
+  &--icon {
+    #{$ns}__form {
+      position: relative;
+    }
+
+    #{$ns}__btn-submit {
+      position: absolute;
+      right: 0;
+      top: 0;
+      padding: 0;
+      width: 46px;
+      height: 100%;
+      background: none;
+
+      &:focus,
+      &:active,
+      &:hover {
+        box-shadow: none;
+
+        &:before {
+          border-color: #eee;
+        }
+
+        &:after {
+          background-color: #eee;
+        }
+      }
+
+      &:before,
+      &:after {
+        content: "";
+        position: absolute;
+        transition: background-color 200ms ease-out, border-color 200ms ease-out;
+      }
+
+      &:before {
+        right: 8px;
+        top: 8px;
+        width: 16px;
+        height: 16px;
+        border: 3px solid $icon-color;
+        border-radius: 100%;
+      }
+
+      &:after {
+        right: 30px;
+        top: 23px;
+        width: 3px;
+        height: 16px;
+        background-color: $icon-color;
+        transform: rotate(45deg);
+      }
+
+      &:hover {
+        background: none;
+      }
+    }
+  }
+
+  // Icon (Expandable) modifier
+  &--icon-expandable {
+    #{$ns}__input {
+      transform: scaleX(0);
+      transform-origin: right center;
+      transition: transform 300ms ease-out;
+
+      &:focus,
+      &:active {
+        transform: scaleX(1);
+      }
+    }
+
+    #{$ns}__btn-submit {
+      background-color: $input-color;
+
+      &:hover {
+        background-color: $input-color;
+      }
+    }
+  }
+
+  &--expanded {
+    #{$ns}__input {
+      transform: scaleX(1);
+    }
+  }
+
+  &__input,
+  &__btn-submit {
+    &:focus,
+    &:active {
+      outline: 0;
+      box-shadow: 0 0 16px rgba(255, 255, 255, 0.5);
+    }
+  }
+
+  &__input {
+    padding: 15px;
+    width: 300px;
+    color: #eee;
+    font-size: 14px;
+    background-color: $input-color;
+    border: 0;
+  }
+
+  &__btn-submit {
+    position: relative;
+    padding: 15px;
+    color: #eee;
+    font-size: 13px;
+    background-color: #666;
+    border: 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    z-index: 10;
+    transition: background-color 200ms ease-out;
+
+    &:hover {
+      background-color: $button-color;
+    }
+  }
+}
+
