@@ -35,6 +35,7 @@
     "framer-motion": "^6.3.3",
     "highcharts": "^10.1.0",
     "highcharts-react-official": "^3.1.0",
+    "react-jsx-highstock": "^5.0.0",
     "history": "^4.10.1",
     "ionicons": "^4.6.3",
     "js-cookie": "^3.0.1",

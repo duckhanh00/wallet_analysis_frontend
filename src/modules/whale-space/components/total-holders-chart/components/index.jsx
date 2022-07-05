@@ -138,7 +138,7 @@ function TotalHoldersChart(props) {
               <div  className={
                   "action__btn " + (typeChart === "column" ? "active" : "")
                 }
-                onClick={() => handleType("column")}>Price</div>
+                onClick={() => handleType("column")}>z</div>
               <div className={
                   "action__btn " + (typeChart === "line" ? "active" : "")
                 }
