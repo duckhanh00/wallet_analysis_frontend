@@ -87,32 +87,12 @@ function TotalHoldersChart(props) {
     labels: {
     
     },
-    colors: ["#6f42c1", "#3366ff", "#1491a5", "#00cccc", "orange"],
+    colors: ["orange"],
     series: [
-      {
-        type: "column",
-        name: "Special wallet",
-        data: [1, 3, 4, 7, 2, 1, 2],
-      },
-      {
-        type: "column",
-        name: "Large wallet",
-        data: [20, 20, 30, 20, 10, 10, 14],
-      },
-      {
-        type: "column",
-        name: "Trading wallet",
-        data: [30, 40, 20, 30, 20, 10, 15],
-      },
-      {
-        type: "column",
-        name: "Normal wallet",
-        data: [100, 200, 200, 100, 100, 150, 200],
-      },
       {
         type: "spline",
         name: "Average",
-        data: [300, 500, 600, 505, 203, 700, 702],
+        data: [300, 500, 600, 505, 203, 700, 702, 300, 500, 600, 505, 203, 700, 702, 300, 500, 600, 505, 203, 700, 702,300, 500, 600, 505, 203, 700, 702],
         marker: {
           lineWidth: 2,
           lineColor: Highcharts.getOptions().colors[3],
@@ -133,35 +113,6 @@ function TotalHoldersChart(props) {
     <Fragment>
       <div className="block-in-page">
         <div className="action__chart">
-          <div className="action__1">
-            <div className="action">
-              <div  className={
-                  "action__btn " + (typeChart === "column" ? "active" : "")
-                }
-                onClick={() => handleType("column")}>z</div>
-              <div className={
-                  "action__btn " + (typeChart === "line" ? "active" : "")
-                }
-                onClick={() => handleType("line")}>Market Cap</div>
-            </div>
-
-            <div className="date">
-              <div className="date__btn">1D</div>
-              <div className={
-                  "date__btn " + (rangeTime === rangeTimes["7d"] ? "active" : "")
-                }
-                onClick={() => handleRangeTime(rangeTimes["7d"])}>7D</div>
-              <div className={
-                  "date__btn " + (rangeTime === rangeTimes["1m"] ? "active" : "")
-                }
-                onClick={() => handleRangeTime(rangeTimes["1m"])}>1M</div>
-              <div className={
-                  "date__btn " + (rangeTime === rangeTimes["3m"] ? "active" : "")
-                }
-                onClick={() => handleRangeTime(rangeTimes["3m"])}>3M</div>
-              <div className="date__btn">1Y</div>
-            </div>
-          </div>
           <HighchartsReact highcharts={Highcharts} options={options} />
         </div>
       </div>

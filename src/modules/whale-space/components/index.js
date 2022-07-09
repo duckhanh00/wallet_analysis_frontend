@@ -5,7 +5,7 @@ import { Grid } from "@material-ui/core";
 import GeneralTokenInfo from "./general-token-info/components/index.jsx";
 import TokenAllocationChart from './token-allowcation-chart/components/index.jsx';
 import TotalHoldersChart from "./total-holders-chart/components/index.jsx";
-import MarketCapChart from "./market-cap-chart/components/index.jsx";
+import TokenDistribution from "./token-distribution/components/index.jsx";
 import TokenChangeLogs from "./token-change-logs/components/index.jsx"
 // import AntDesignGrid from "./wallet-table/AntDesignGrid.js";
 
@@ -16,7 +16,7 @@ function WalletType(props) {
       <div className="whale-space">
         <GeneralTokenInfo />
         <TokenChangeLogs />
-        <MarketCapChart />
+        <TokenDistribution />
         <TotalHoldersChart />
       </div>
     </Fragment>

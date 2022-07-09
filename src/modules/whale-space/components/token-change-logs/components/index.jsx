@@ -11,17 +11,6 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-
-import WalletTable from "./wallet-table";
-import {
-  Grid,
-  ButtonGroup,
-  Card,
-  Button,
-  Box,
-  ListItem,
-} from "@material-ui/core";
-
 import "./style.scss";
 
 import data_7_days from "../../totalHoldersData/data_7_days.json";
@@ -36,6 +25,79 @@ export function SortedAscendingIcon() {
 export function MuiMoreVertIcon() {
   return <MoreVertIcon fontSize='small' htmlColor="#a1a7ac" />
 }
+
+const theme = createTheme({
+  components: {
+    MuiSwitch: {
+      defaultProps: {
+        color: 'default',
+      },
+      styleOverrides: {
+        root: {
+          '& .MuiSwitch-switchBase': {
+            position: "absolute",
+            color: "#a1a7ac"
+          }
+        },
+      }
+    },
+    MuiButton: {
+      defaultProps: {
+        border: '0px',
+        outline: '0px'
+      },
+      styleOverrides: {
+        root: {
+          '& .MuiButton-buttonBase': {
+            border: '0px',
+            outline: '0px'
+          }
+        }
+      },
+    },
+    MuiInput: {
+      styleOverrides: {
+        root: {
+          "& .MuiInputBase-input, .MuiInput-input, .css-15e8ec1-MuiInputBase-input-MuiInput-input": {
+            color: "#a1a7ac",
+            backgroundColor: "#1e1f22 !important"
+          }
+        },
+      }
+    },
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          "& .MuiFormLabel-root": {
+            color: "#a1a7ac",
+          },
+          "& .MuiInputLabel-root": {
+            color: "#a1a7ac",
+          }
+        },
+      }
+    },
+    MuiFormControl: {
+      styleOverrides: {
+        root: {
+          "& .MuiFormLabel-root": {
+            color: "#a1a7ac !important",
+          },
+          "& .MuiInputLabel-root": {
+            color: "#a1a7ac !important",
+          },
+          "& .MuiInputBase-formControl:after": {
+            borderBottom: '#7987a1',
+          },
+          "& .MuiInputBase-formControl:hover": {
+            borderBottom: '#7987a1',
+          }
+        },
+      }
+    }
+  }
+
+});
 
 function TokenChangeLogs(props) {
   const [rangeTime, setRangeTime] = useState("7d");
@@ -217,78 +279,6 @@ function TokenChangeLogs(props) {
     "3m": "3m",
   };
 
-  const theme = createTheme({
-    components: {
-      MuiSwitch: {
-        defaultProps: {
-          color: 'default',
-        },
-        styleOverrides: {
-          root: {
-            '& .MuiSwitch-switchBase': {
-              position: "absolute",
-              color: "#a1a7ac"
-            }
-          },
-        }
-      },
-      MuiButton: {
-        defaultProps: {
-          border: '0px',
-          outline: '0px'
-        },
-        styleOverrides: {
-          root: {
-            '& .MuiButton-buttonBase': {
-              border: '0px',
-              outline: '0px'
-            }
-          }
-        },
-      },
-      MuiInput: {
-        styleOverrides: {
-          root: {
-            "& .MuiInputBase-input, .MuiInput-input, .css-15e8ec1-MuiInputBase-input-MuiInput-input": {
-              color: "#a1a7ac",
-              backgroundColor: "#1e1f22 !important"
-            }
-          },
-        }
-      },
-      MuiTextField: {
-        styleOverrides: {
-          root: {
-            "& .MuiFormLabel-root": {
-              color: "#a1a7ac",
-            },
-            "& .MuiInputLabel-root": {
-              color: "#a1a7ac",
-            }
-          },
-        }
-      },
-      MuiFormControl: {
-        styleOverrides: {
-          root: {
-            "& .MuiFormLabel-root": {
-              color: "#a1a7ac !important",
-            },
-            "& .MuiInputLabel-root": {
-              color: "#a1a7ac !important",
-            },
-            "& .MuiInputBase-formControl:after": {
-              borderBottom: '#7987a1',
-            },
-            "& .MuiInputBase-formControl:hover": {
-              borderBottom: '#7987a1',
-            }
-          },
-        }
-      }
-    }
-
-  });
 
   const columns: GridColDef[] = [
     { field: 'id', headerName: 'Rank', width: 100 },
@@ -493,9 +483,6 @@ function TokenChangeLogs(props) {
                       '&:hover': "#2d2f33",
                       '@media (hover: none)': {
                         backgroundColor: "#2d2f33",
-                      },
-                      '& select > option': {
-                        backgroundColor: "#2d2f33 !important"
                       }
                     }
                   }}

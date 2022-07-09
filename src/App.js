@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-// import CssBaseline from '@material-ui/core/CssBaseline';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import './App.scss'
 
 // Component
@@ -27,7 +27,7 @@ class App extends Component {
 
       <Provider store={store}>
         <BrowserRouter basename="/">
-          {/* <CssBaseline /> */}
+          <CssBaseline />
           {headerComponent}
           <div className="az-content-wrapper">
             <ScrollToTop>

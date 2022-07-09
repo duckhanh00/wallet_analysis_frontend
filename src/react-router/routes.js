@@ -50,12 +50,12 @@ const Routes = props => {
         <Switch>
           <Route path={AllRoute}>
             <Switch location={location} key={location.pathname}>
-              <motion.div
+              {/* <motion.div
                 initial="initial"
                 animate="in"
                 exit="out"
                 variants={pageVariants}
-                transition={pageTransition}>
+                transition={pageTransition}> */}
                 <PublicRoute
                   path={PermissionRoute.RELATIONSHIP_SPACE.path}
                   title={PermissionRoute.RELATIONSHIP_SPACE.title}
@@ -66,7 +66,7 @@ const Routes = props => {
                   title={PermissionRoute.WHALE_SPACE.title}
                   component={WhaleSpace}
                 />
-              </motion.div>
+              {/* </motion.div> */}
             </Switch>
           </Route>
           <Redirect to="/404" />
