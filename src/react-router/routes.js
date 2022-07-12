@@ -12,6 +12,7 @@ import { PermissionRoute, AllRoute } from './permission';
 
 const RelationshipSpace = lazy(() => import('../modules/relationship-space/components'))
 const WhaleSpace = lazy(() => import('../modules/whale-space/components'))
+const Home = lazy(() => import('../modules/home/components'))
 
 const Routes = props => {
   const location = useLocation();
@@ -39,7 +40,7 @@ const Routes = props => {
 
   return (
     <AnimatePresence>
-      <Suspense
+      <Suspense 
         fallback={
           <div className="d-flex align-items-center vh-100 justify-content-center text-center font-weight-bold font-size-lg py-3">
             <div className="w-50 mx-auto">
@@ -56,6 +57,11 @@ const Routes = props => {
                 exit="out"
                 variants={pageVariants}
                 transition={pageTransition}> */}
+                <PublicRoute
+                  path={PermissionRoute.HOME.path}
+                  title={PermissionRoute.HOME.title}
+                  component={Home}
+                />
                 <PublicRoute
                   path={PermissionRoute.RELATIONSHIP_SPACE.path}
                   title={PermissionRoute.RELATIONSHIP_SPACE.title}
