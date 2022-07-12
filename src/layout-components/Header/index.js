@@ -1,6 +1,16 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { Dropdown } from "react-bootstrap";
+import HomeIcon from '@mui/icons-material/Home';
+import BubbleChartIcon from '@mui/icons-material/BubbleChart';
+import InfoIcon from '@mui/icons-material/Info';
+import { Box, Typography } from "@mui/material";
+
+const locations = {
+  "Home": [<HomeIcon/>, "/home"],
+  "Relationship Space": [<BubbleChartIcon/>, "/relationship-space"],
+  "Whale Space": [<InfoIcon/>, "/whale-space"],
+};
 export class Header extends Component {
   closeMenu(e) {
     e.target.closest(".dropdown").classList.remove("show");
@@ -18,75 +28,63 @@ export class Header extends Component {
     }
   }
 
-  render() {
-    return (
-      <div>
-        <div className="az-header">
-          <div className="container">
-            <div className="az-header-left">
-              <a href="#/" className="az-logo">
-                <img
-                  src={require("../../assets/images/coin.png")}
-                  alt="lo"
-                />
-                <span>Blockchain Space</span>
-              </a>
-              <a
-                id="azMenuShow"
-                onClick={(event) => this.toggleHeaderMenu(event)}
-                className="az-header-menu-icon d-lg-none"
-                href="#/"
-              >
-                <span></span>
-              </a>
-            </div>
-            <div className="az-header-menu">
-              <ul className="nav">
-                <li
-                  className={
-                    this.isPathActive("/home")
-                      ? "nav-item active"
-                      : "nav-item"
-                  }
-                >
-                  <Link to="/home" className="nav-link">
-                    <i className="typcn typcn-chart-area-outline"></i> Home
-                  </Link>
-                </li>
-
-                <li
-                  className={
-                    this.isPathActive("/relationship-space")
-                      ? "nav-item active"
-                      : "nav-item"
-                  }
-                >
-                  <Link to="/relationship-space" className="nav-link">
-                    Relationship Space
-                  </Link>
-                </li>
-
-                <li
-                  className={
-                    this.isPathActive("/whale-space")
-                      ? "nav-item active"
-                      : "nav-item"
-                  }
-                >
-                  <Link to="/whale-space" className="nav-link">
-                    Whale Space
-                  </Link>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   isPathActive(path) {
     return this.props.location.pathname.startsWith(path);
+  }
+
+  render() {
+    // const [location, setLocation] = useState("/home");
+    // const locations = {"Home": "/home", "Relationship Space": "/relationship-space", "Whale Space": "/whale-space"};
+
+    return (
+      <Box>
+        <Box
+          className="az-header"
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <Box sx={{ marginLeft: "80px" }}>
+            <a href="#/" className="az-logo">
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                <img
+                  className="header-logo"
+                  src={require("../../assets/images/bitcoin.png")}
+                  alt="lo"
+                />
+                <Typography variant="h6" ml={1} sx={{ fontWeight: 600 }}>
+                  Blockchain Space
+                </Typography>
+              </Box>
+            </a>
+          </Box>
+          <Box className="az-header-menu" sx={{ marginRight: "80px" }}>
+            <ul className="nav">
+              {Object.keys(locations).map((location) => (
+                <Box
+                  sx={{padding: "10px 0",margin: "0 15px", height: "100%", display: "flex", alignItems: "center"}}
+                >
+                  <Box
+                    className={
+                      this.isPathActive(locations[location][1]) ? "nav-item active" : "nav-item"
+                    }
+                  >
+                    <Link to={locations[location][1]} className="nav-link">
+                      {locations[location][0]}
+                      <Typography variant="body1" sx={{ fontWeight: 600 }} ml={0.5}>
+                        {location}
+                      </Typography>
+                    </Link>
+                  </Box>
+                </Box>
+              ))}
+            </ul>
+          </Box>
+        </Box>
+      </Box>
+    );
   }
 }
 
