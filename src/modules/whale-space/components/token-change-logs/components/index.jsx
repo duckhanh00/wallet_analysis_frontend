@@ -24557,7 +24557,7 @@ function TokenChangeLogs(props) {
 
   return (
     <Fragment>
-      <div className="block-in-page">
+      <Box className="block-in-page" sx={{padding: "20px 0"}}>
         <div className="row">
           <Box className="action__1" sx={{display: "flex", alignItems: "center", paddingBottom: "10px"}}>
             <div className="action">
@@ -24608,8 +24608,8 @@ function TokenChangeLogs(props) {
           <div className="col">
             <HighchartsReact highcharts={Highcharts} options={options} />
           </div>
-          <div className="col wallet-table">
-            <div style={{ height: 600, width: '720px' }}>
+          <Box className="col wallet-table"sx={{marginTop: "40px"}}>
+            <div style={{ height: 600, width: '720px', margin: "0 auto"}}>
               <ThemeProvider theme={theme}>
                 <DataGrid
                   rows={topWallet['walletInfo']}
@@ -24652,6 +24652,8 @@ function TokenChangeLogs(props) {
                   sx={{
                     color: "#a1a7ac",
                     border: `1px solid #323546`,
+                    width: "100%",
+                    margin: "0 auto",
 
                     '&.MuiDataGrid-iconSeparator': {
                       display: 'none',
@@ -24728,10 +24730,10 @@ function TokenChangeLogs(props) {
                 />
               </ThemeProvider>
             </div>
-          </div>
+          </Box>
         </div>
 
-      </div>
+      </Box>
 
     </Fragment>
   ); 

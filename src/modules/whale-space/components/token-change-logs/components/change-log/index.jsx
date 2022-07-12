@@ -73,7 +73,7 @@ function TokenChangeLogs(props) {
     chart: {
       backgroundColor: "#17171a",
       height: 550,
-      width: 960
+      width: 960,
     },
     rangeSelector: {
       selected: 1
@@ -135,8 +135,8 @@ function TokenChangeLogs(props) {
   return (
     <Fragment>
       <div className="block-in-page">
-        <div className="row">
-          <div className="col">
+        <Box className="row" sx={{margin: "0 auto"}}>
+          <Box className="col" sx={{margin: "0 auto", width: "100%"}}>
             <div className="action__1">
               <div className="action">
                 <div className={
@@ -160,12 +160,12 @@ function TokenChangeLogs(props) {
                   onClick={() => handleRangeTime(rangeTimes["3m"])}>3M</div>
               </div> */}
             </div>
-            <ReactHighstock  config={options} />
-          </div>
+              <ReactHighstock className="high-charts" config={options} />
+          </Box>
           <div className="col wallet-table">
             <WalletTable />
           </div>
-        </div>
+        </Box>
 
       </div>
 
