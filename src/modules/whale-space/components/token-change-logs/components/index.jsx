@@ -11,7 +11,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-
+import { Box } from "@mui/material";
 import { WhaleSpaceActions } from "../../../redux/actions";
 import "./style.scss";
 
@@ -24559,7 +24559,7 @@ function TokenChangeLogs(props) {
     <Fragment>
       <div className="block-in-page">
         <div className="row">
-          <div className="action__1">
+          <Box className="action__1" sx={{display: "flex", alignItems: "center", paddingBottom: "10px"}}>
             <div className="action">
               <div className={
                 "action__btn " + (isTop === "1" ? "active" : "")
@@ -24601,7 +24601,7 @@ function TokenChangeLogs(props) {
                 <MenuItem value={"0"}>Not Contract</MenuItem>
               </Select>
             </FormControl>
-          </div>
+          </Box>
         </div>
         <div className="row">
 
