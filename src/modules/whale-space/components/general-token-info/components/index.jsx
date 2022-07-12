@@ -3,20 +3,32 @@ import { connect } from "react-redux";
 
 
 import "./style.scss";
-import { WalletTypeActions } from "../../../redux/actions";
+import { WhaleSpaceActions } from "../../../redux/actions";
 
 function GeneralTokenInfo(props) {
-  const { WalletType } = props
-
+  const { WhaleSpace } = props
+  console.log('general', WhaleSpace)
   useEffect(() => {
     props.getTokenGeneral('trava', 'bsc')
   }, [])
 
   // const [tokenGeneral, setTokenGeneral] = useState([])
   // console.log(tokenGeneral)
-  let general = {}
-  if (WalletType?.tokenGeneral) {
-    general = WalletType.tokenGeneral
+  let general = {
+    "_id": "0x38_0x0391be54e72f7e001f6bbc331777710b4f2999ef",
+    "chain_name": "bsc",
+    "circulating_supply": 692852995.39645,
+    "id_coingecko": "trava-finance",
+    "symbol": "trava",
+    "total_supply": 5000000000,
+    "total_holders": 5789,
+    "image": "https://assets.coingecko.com/coins/images/17553/large/TRAVA_OFFICIAL_LOGO.png?1628509820",
+    "market_cap": 310274,
+    "name": "Trava Finance",
+    "price": 0.0004478
+  }
+  if (WhaleSpace?.tokenGeneral) {
+    general = WhaleSpace.tokenGeneral
   }
   return (
     <Fragment>
@@ -79,10 +91,10 @@ function GeneralTokenInfo(props) {
 }
 
 function mapState(state) {
-  const { WalletType } = state;
-  return { WalletType };
+  const { WhaleSpace } = state;
+  return { WhaleSpace };
 }
 const actions = {
-  getTokenGeneral: WalletTypeActions.getTokenGeneral
+  getTokenGeneral: WhaleSpaceActions.getTokenGeneral
 };
 export default connect(mapState, actions)(GeneralTokenInfo);

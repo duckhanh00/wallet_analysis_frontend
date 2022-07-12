@@ -1,52 +1,95 @@
-import { WalletTypeServices } from './services';
-import { WalletTypeConstants } from './constants';
+import { WhaleSpaceServices } from './services';
+import { WhaleSpaceConstants } from './constants';
 
-export const WalletTypeActions = {
+export const WhaleSpaceActions = {
   getTokenGeneral,
-  getWalletType
+  getTopWallet,
+  getTopWalletTokenChangeLogs,
+  getTokenDistribution
 };
 
 function getTokenGeneral(token_name, chain_name) {
   return dispatch => {
     dispatch({
-      type: WalletTypeConstants.GET_TOKEN_GENERAL_REQUEST
+      type: WhaleSpaceConstants.GET_TOKEN_GENERAL_REQUEST
     });
-    WalletTypeServices.getTokenGeneral(token_name, chain_name)
+    WhaleSpaceServices.getTokenGeneral(token_name, chain_name)
       .then(res => {
         dispatch({
-          type: WalletTypeConstants.GET_TOKEN_GENERAL_SUCCESS,
+          type: WhaleSpaceConstants.GET_TOKEN_GENERAL_SUCCESS,
           payload: res.data
         });
       })
       .catch(error => {
         dispatch({
-          type: WalletTypeConstants.GET_TOKEN_GENERAL_FAILURE,
+          type: WhaleSpaceConstants.GET_TOKEN_GENERAL_FAILURE,
           error: error
         });
       });
   };
 }
 
-function getWalletType(token_name, chain_name) {
+function getTopWallet(token_name, chain_name, variable, is_contract) {
   return dispatch => {
     dispatch({
-      type: WalletTypeConstants.GET_WALLET_TYPE_REQUEST
+      type: WhaleSpaceConstants.GET_TOP_WALLET_REQUEST
     });
-    WalletTypeServices.getWalletType(token_name, chain_name)
+    WhaleSpaceServices.getTopWallet(token_name, chain_name, variable, is_contract)
       .then(res => {
         dispatch({
-          type: WalletTypeConstants.GET_WALLET_TYPE_SUCCESS,
+          type: WhaleSpaceConstants.GET_TOP_WALLET_SUCCESS,
           payload: res.data
         });
       })
       .catch(error => {
         dispatch({
-          type: WalletTypeConstants.GET_WALLET_TYPE_FAILURE,
+          type: WhaleSpaceConstants.GET_TOP_WALLET_FAILURE,
           error: error
         });
       });
   };
 }
 
+function getTopWalletTokenChangeLogs(token_name, chain_name) {
+  return dispatch => {
+    dispatch({
+      type: WhaleSpaceConstants.GET_TOP_WALLET_TOKEN_CHANGE_LOGS_REQUEST
+    });
+    WhaleSpaceServices.getTopWalletTokenChangeLogs(token_name, chain_name)
+      .then(res => {
+        dispatch({
+          type: WhaleSpaceConstants.GET_TOP_WALLET_TOKEN_CHANGE_LOGS_SUCCESS,
+          payload: res.data
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: WhaleSpaceConstants.GET_TOP_WALLET_TOKEN_CHANGE_LOGS_FAILURE,
+          error: error
+        });
+      });
+  };
+}
+
+function getTokenDistribution(token_name, chain_name) {
+  return dispatch => {
+    dispatch({
+      type: WhaleSpaceConstants.GET_TOKEN_DISTRIBUTION_REQUEST
+    });
+    WhaleSpaceServices.getTokenDistribution(token_name, chain_name)
+      .then(res => {
+        dispatch({
+          type: WhaleSpaceConstants.GET_TOKEN_DISTRIBUTION_SUCCESS,
+          payload: res.data
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: WhaleSpaceConstants.GET_TOKEN_DISTRIBUTION_FAILURE,
+          error: error
+        });
+      });
+  };
+}
 
 

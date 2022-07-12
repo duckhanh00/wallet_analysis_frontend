@@ -31,6 +31,20 @@ export function RelationGraph(state = {}, action) {
                 ...state,
             }
 
+        case RelationGraphConstants.GET_RELATIONSHIP_TOKEN_CHANGE_LOGS_REQUEST:
+            return {
+                ...state,
+            }
+        case RelationGraphConstants.GET_RELATIONSHIP_TOKEN_CHANGE_LOGS_SUCCESS:
+            return {
+                ...state,
+                relationshipTokenChangeLogs: action.payload
+            }
+        case RelationGraphConstants.GET_RELATIONSHIP_TOKEN_CHANGE_LOGS_FAILURE:
+            return {
+                ...state,
+            }
+
         default:
             return state;
     }

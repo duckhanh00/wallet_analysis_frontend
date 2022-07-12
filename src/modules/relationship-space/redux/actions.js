@@ -4,7 +4,8 @@ import { RelationGraphConstants } from './constants';
 
 export const RelationGraphActions = {
   getCloseRelationEdges,
-  getCloseRelationNodes
+  getCloseRelationNodes,
+  getRelationshipTokenChangeLogs
 };
 
 function getCloseRelationEdges(token_name, chain_name) {
@@ -49,3 +50,23 @@ function getCloseRelationNodes(token_name, chain_name) {
   };
 }
 
+function getRelationshipTokenChangeLogs(token_name, chain_name, address) {
+  return dispatch => {
+    dispatch({
+      type: RelationGraphConstants.GET_RELATIONSHIP_TOKEN_CHANGE_LOGS_REQUEST
+    });
+    RelationGraphServices.getRelationshipTokenChangeLogs(token_name, chain_name, address)
+      .then(res => {
+        dispatch({
+          type: RelationGraphConstants.GET_RELATIONSHIP_TOKEN_CHANGE_LOGS_SUCCESS,
+          payload: res.data
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: RelationGraphConstants.GET_RELATIONSHIP_TOKEN_CHANGE_LOGS_FAILURE,
+          error: error
+        });
+      });
+  };
+}
