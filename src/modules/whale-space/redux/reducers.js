@@ -16,16 +16,16 @@ export function WhaleSpace(state = {}, action) {
                 ...state,
             }
 
-        case WhaleSpaceConstants.GET_TOP_WALLET_REQUEST:
+        case WhaleSpaceConstants.GET_TOP_WHALE_WALLETS_REQUEST:
             return {
                 ...state,
             }
-        case WhaleSpaceConstants.GET_TOP_WALLET_SUCCESS:
+        case WhaleSpaceConstants.GET_TOP_WHALE_WALLETS_SUCCESS:
             return {
                 ...state,
-                topWallet: action.payload
+                topWhaleWallets: action.payload
             }
-        case WhaleSpaceConstants.GET_TOP_WALLET_FAILURE:
+        case WhaleSpaceConstants.GET_TOP_WHALE_WALLETS_FAILURE:
             return {
                 ...state,
             }

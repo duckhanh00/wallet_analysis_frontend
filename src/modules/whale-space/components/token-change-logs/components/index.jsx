@@ -104,8 +104,8 @@ function TokenChangeLogs(props) {
   const [isContract, setIsContract] = useState("1");
 
   useEffect(() => {
-    props.getTopWallet('trava', 'bsc', variable, isContract)
-  }, [variable, isContract])
+    props.getTopWhaleWallets('0x38_0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c')
+  }, [])
 
   useEffect(() => {
     props.getTopWalletTokenChangeLogs('trava', 'bsc')
@@ -24744,7 +24744,7 @@ function mapState(state) {
   return { WhaleSpace };
 }
 const actions = {
-  getTopWallet: WhaleSpaceActions.getTopWallet,
+  getTopWhaleWallets: WhaleSpaceActions.getTopWhaleWallets,
   getTopWalletTokenChangeLogs: WhaleSpaceActions.getTopWalletTokenChangeLogs
 };
 export default connect(mapState, actions)(TokenChangeLogs);

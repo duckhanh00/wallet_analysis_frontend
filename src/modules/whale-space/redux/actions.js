@@ -3,7 +3,7 @@ import { WhaleSpaceConstants } from './constants';
 
 export const WhaleSpaceActions = {
   getTokenInfomation,
-  getTopWallet,
+  getTopWhaleWallets,
   getTopWalletTokenChangeLogs,
   getTokenDistribution
 };
@@ -29,21 +29,21 @@ function getTokenInfomation() {
   };
 }
 
-function getTopWallet(token_key) {
+function getTopWhaleWallets(token_key) {
   return dispatch => {
     dispatch({
-      type: WhaleSpaceConstants.GET_TOP_WALLET_REQUEST
+      type: WhaleSpaceConstants.GET_TOP_WHALE_WALLETS_REQUEST
     });
-    WhaleSpaceServices.getTopWallet(token_key)
+    WhaleSpaceServices.getTopWhaleWallets(token_key)
       .then(res => {
         dispatch({
-          type: WhaleSpaceConstants.GET_TOP_WALLET_SUCCESS,
+          type: WhaleSpaceConstants.GET_TOP_WHALE_WALLETS_SUCCESS,
           payload: res.data
         });
       })
       .catch(error => {
         dispatch({
-          type: WhaleSpaceConstants.GET_TOP_WALLET_FAILURE,
+          type: WhaleSpaceConstants.GET_TOP_WHALE_WALLETS_FAILURE,
           error: error
         });
       });
