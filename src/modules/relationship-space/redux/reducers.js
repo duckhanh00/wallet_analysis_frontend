@@ -44,6 +44,20 @@ export function RelationshipSpace(state = {}, action) {
                 ...state,
             }
 
+        case RelationshipSpaceConstants.GET_CLUSTER_TOKEN_CHANGE_LOGS_REQUEST:
+            return {
+                ...state,
+            }
+        case RelationshipSpaceConstants.GET_CLUSTER_TOKEN_CHANGE_LOGS_SUCCESS:
+            return {
+                ...state,
+                topListCluster: action.payload
+            }
+        case RelationshipSpaceConstants.GET_CLUSTER_TOKEN_CHANGE_LOGS_FAILURE:
+            return {
+                ...state,
+            }
+
         default:
             return state;
     }

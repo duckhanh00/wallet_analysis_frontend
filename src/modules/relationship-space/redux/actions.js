@@ -72,3 +72,24 @@ function getTopListCluster(token_key, type) {
       });
   };
 }
+
+function getClusterTokenChangeLogs(token_key, rank) {
+  return dispatch => {
+    dispatch({
+      type: RelationshipSpaceConstants.GET_CLUSTER_TOKEN_CHANGE_LOGS_REQUEST
+    });
+    RelationshipSpaceService.getClusterTokenChangeLogs(token_key, rank)
+      .then(res => {
+        dispatch({
+          type: RelationshipSpaceConstants.GET_CLUSTER_TOKEN_CHANGE_LOGS_SUCCESS,
+          payload: res.data
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: RelationshipSpaceConstants.GET_CLUSTER_TOKEN_CHANGE_LOGS_FAILURE,
+          error: error
+        });
+      });
+  };
+}
