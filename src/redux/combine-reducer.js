@@ -1,13 +1,13 @@
 import { combineReducers } from 'redux';
 
 import ThemeOptions from './ThemeOptions';
-import { RelationGraph } from '../modules/relationship-space/redux/reducers'
+import { RelationshipSpace } from '../modules/relationship-space/redux/reducers'
 import { WhaleSpace } from '../modules/whale-space/redux/reducers'
 
 
 const appReducer = combineReducers({
     ThemeOptions,
-    RelationGraph,
+    RelationshipSpace,
     WhaleSpace
 })
 
