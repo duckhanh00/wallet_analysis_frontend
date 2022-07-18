@@ -2745,7 +2745,8 @@ const actions = {
     getTopWalletRelationship: RelationshipSpaceActions.getTopWalletRelationship,
     getTopClusterRelationship: RelationshipSpaceActions.getTopClusterRelationship,
     getTopListCluster: RelationshipSpaceActions.getTopListCluster,
-    getClusterTokenChangeLogs: RelationshipSpaceActions.getClusterTokenChangeLogs                                                                                        
+    getClusterTokenChangeLogs: RelationshipSpaceActions.getClusterTokenChangeLogs,
+    getLinkDetail: RelationshipSpaceActions.getLinkDetail                                                                             
 };
 
 export default connect(mapState, actions)(RelationshipSpace);

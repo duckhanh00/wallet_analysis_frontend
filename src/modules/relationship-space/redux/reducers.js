@@ -58,6 +58,20 @@ export function RelationshipSpace(state = {}, action) {
                 ...state,
             }
 
+        case RelationshipSpaceConstants.GET_LINK_DETAIL_REQUEST:
+            return {
+                ...state,
+            }
+        case RelationshipSpaceConstants.GET_LINK_DETAIL_SUCCESS:
+            return {
+                ...state,
+                linkDetail: action.payload
+            }
+        case RelationshipSpaceConstants.GET_LINK_DETAIL_FAILURE:
+            return {
+                ...state,
+            }
+
         default:
             return state;
     }

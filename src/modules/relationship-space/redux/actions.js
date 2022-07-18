@@ -93,3 +93,24 @@ function getClusterTokenChangeLogs(token_key, rank) {
       });
   };
 }
+
+function getLinkDetail(token_key, source, target) {
+  return dispatch => {
+    dispatch({
+      type: RelationshipSpaceConstants.GET_LINK_DETAIL_REQUEST
+    });
+    RelationshipSpaceService.getLinkDetail(token_key, source, target)
+      .then(res => {
+        dispatch({
+          type: RelationshipSpaceConstants.GET_LINK_DETAIL_SUCCESS,
+          payload: res.data
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: RelationshipSpaceConstants.GET_LINK_DETAIL_FAILURE,
+          error: error
+        });
+      });
+  };
+}
