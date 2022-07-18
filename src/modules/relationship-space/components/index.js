@@ -2742,7 +2742,8 @@ function mapState(state) {
     return { RelationshipSpace };
 }
 const actions = {
-    getTopWalletRelationship: RelationshipSpaceActions.getTopWalletRelationship
+    getTopWalletRelationship: RelationshipSpaceActions.getTopWalletRelationship,
+    getTopClusterRelationship: RelationshipSpaceActions.getTopClusterRelationship                                                                                         
 };
 
 export default connect(mapState, actions)(RelationshipSpace);

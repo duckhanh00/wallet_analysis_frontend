@@ -3,7 +3,11 @@ import { RelationshipSpaceConstants } from './constants';
 
 
 export const RelationshipSpaceActions = {
-  getTopWalletRelationship
+  getTopWalletRelationship,
+  getTopClusterRelationship,
+  getClusterTokenChangeLogs,
+  getTopListCluster,
+  getLinkDetail
 };
 
 function getTopWalletRelationship(token_key, type) {
@@ -12,6 +16,27 @@ function getTopWalletRelationship(token_key, type) {
       type: RelationshipSpaceConstants.GET_TOP_WALLET_RELATIONSHIP_REQUEST
     });
     RelationshipSpaceService.getTopWalletRelationship(token_key, type)
+      .then(res => {
+        dispatch({
+          type: RelationshipSpaceConstants.GET_TOP_WALLET_RELATIONSHIP_SUCCESS,
+          payload: res.data
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: RelationshipSpaceConstants.GET_TOP_WALLET_RELATIONSHIP_FAILURE,
+          error: error
+        });
+      });
+  };
+}
+
+function getTopClusterRelationship(token_key, type) {
+  return dispatch => {
+    dispatch({
+      type: RelationshipSpaceConstants.GET_TOP_WALLET_RELATIONSHIP_REQUEST
+    });
+    RelationshipSpaceService.getTopClusterRelationship(token_key, type)
       .then(res => {
         dispatch({
           type: RelationshipSpaceConstants.GET_TOP_WALLET_RELATIONSHIP_SUCCESS,
