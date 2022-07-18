@@ -1,70 +1,26 @@
-import { RelationGraphServices } from './services';
-import { RelationGraphConstants } from './constants';
+import { RelationshipSpaceService } from './services';
+import { RelationshipSpaceConstants } from './constants';
 
 
-export const RelationGraphActions = {
-  getCloseRelationEdges,
-  getCloseRelationNodes,
-  getRelationshipTokenChangeLogs
+export const RelationshipSpaceActions = {
+  getTopWalletRelationship
 };
 
-function getCloseRelationEdges(token_name, chain_name) {
+function getTopWalletRelationship(token_key, type) {
   return dispatch => {
     dispatch({
-      type: RelationGraphConstants.GET_CLOSE_RELATION_EDGES_REQUEST
+      type: RelationshipSpaceConstants.GET_TOP_WALLET_RELATIONSHIP_REQUEST
     });
-    RelationGraphServices.getCloseRelationEdges(token_name, chain_name)
+    RelationshipSpaceService.getTopWalletRelationship(token_key, type)
       .then(res => {
         dispatch({
-          type: RelationGraphConstants.GET_CLOSE_RELATION_EDGES_SUCCESS,
+          type: RelationshipSpaceConstants.GET_TOP_WALLET_RELATIONSHIP_SUCCESS,
           payload: res.data
         });
       })
       .catch(error => {
         dispatch({
-          type: RelationGraphConstants.GET_CLOSE_RELATION_EDGES_FAILURE,
-          error: error
-        });
-      });
-  };
-}
-
-function getCloseRelationNodes(token_name, chain_name) {
-  return dispatch => {
-    dispatch({
-      type: RelationGraphConstants.GET_CLOSE_RELATION_NODES_REQUEST
-    });
-    RelationGraphServices.getCloseRelationNodes(token_name, chain_name)
-      .then(res => {
-        dispatch({
-          type: RelationGraphConstants.GET_CLOSE_RELATION_NODES_SUCCESS,
-          payload: res.data
-        });
-      })
-      .catch(error => {
-        dispatch({
-          type: RelationGraphConstants.GET_CLOSE_RELATION_NODES_FAILURE,
-          error: error
-        });
-      });
-  };
-}
-
-function getRelationshipTokenChangeLogs(token_name, chain_name, address) {
-  return dispatch => {
-    dispatch({
-      type: RelationGraphConstants.GET_RELATIONSHIP_TOKEN_CHANGE_LOGS_REQUEST
-    });
-    RelationGraphServices.getRelationshipTokenChangeLogs(token_name, chain_name, address)
-      .then(res => {
-        dispatch({
-          type: RelationGraphConstants.GET_RELATIONSHIP_TOKEN_CHANGE_LOGS_SUCCESS,
-          payload: res.data
-        });
-      })
-      .catch(error => {
-        dispatch({
-          type: RelationGraphConstants.GET_RELATIONSHIP_TOKEN_CHANGE_LOGS_FAILURE,
+          type: RelationshipSpaceConstants.GET_TOP_WALLET_RELATIONSHIP_FAILURE,
           error: error
         });
       });

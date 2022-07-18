@@ -8,7 +8,7 @@ import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { Dropdown } from "react-bootstrap";
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass';
-import { RelationGraphActions } from '../redux/actions'
+import { RelationshipSpaceActions } from '../redux/actions'
 import { makeStyles } from "@material-ui/core/styles";
 import { useTheme } from '@mui/material/styles';
 import Table from "@material-ui/core/Table";
@@ -256,10 +256,6 @@ const outClusters = [
     { rank: "c#18", address: "#203 #324 #2343433", value: "13.222%" },
     { rank: "c#1111", address: "#203 #324 #2343433", value: "13.222%" }
 ]
-
-const clickToCluster = {
-    "c#1000": "0x1391be54e72f7e001f6bbc331777710b4f2999e3"
-}
 
 const linkDetail = {
     "0x1291be54e72f7e001f6bbc331777710b4f2999e2_0x1591be54e72f7e001f6bbc331777710b4f2999ef": {
@@ -1978,28 +1974,30 @@ const graphData = {
     ]
 }
 
-function RelationGraph(props) {
+function RelationshipSpace(props) {
     const clusterChangeLog = [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]]
 
     const classes = useStyles();
     const theme = useTheme();
 
-    const [addressWallet, setAddressWallet] = useState("0x0be840390e363f5bd2d922ca59e7c4c2dc2001e5")
-    const { RelationGraph } = props
+    const { RelationshipSpace } = props
     useEffect(() => {
-        // props.getCloseRelationEdges('trava', 'bsc'),
-        props.getCloseRelationNodes('trava', 'bsc')
+        props.getTopWalletRelationship('0x38_0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c', 'rank')
     }, [])
 
-    useEffect(() => {
-        props.getRelationshipTokenChangeLogs('trava', 'bsc', addressWallet)
-    }, [addressWallet])
+    let topWalletRelationship = []
+    if (RelationshipSpace?.topWalletRelationship) {
+        topWalletRelationship = RelationshipSpace?.topWalletRelationship
+    }
+    console.log(topWalletRelationship)
+
+    const [addressWallet, setAddressWallet] = useState("0x0be840390e363f5bd2d922ca59e7c4c2dc2001e5")
 
     let walletChangeLogs = []
-    if (RelationGraph?.relationshipTokenChangeLogs) {
-        walletChangeLogs = RelationGraph.relationshipTokenChangeLogs
-    }
-    // start menu 
+    // if (RelationshipSpace?.relationshipTokenChangeLogs) {
+    //     walletChangeLogs = RelationshipSpace.relationshipTokenChangeLogs
+    // }
+    // // start menu 
     const [tabMenu, setTabMenu] = useState(0);
     const handleChangeTab = (event, newValue) => {
         setTabMenu(newValue);
@@ -2077,13 +2075,13 @@ function RelationGraph(props) {
 
     // start react force graph
     let data_edges = {}
-    if (RelationGraph?.closeRelationEdges) {
-        data_edges = RelationGraph.closeRelationEdges
+    if (RelationshipSpace?.closeRelationEdges) {
+        data_edges = RelationshipSpace.closeRelationEdges
     }
 
     let data = {"nodes":[{}], "link":[{}]}
-    if (RelationGraph?.closeRelationNodes) {
-        data = RelationGraph.closeRelationNodes
+    if (RelationshipSpace?.getTopWalletRelationship) {
+        data = RelationshipSpace.getTopWalletRelationship
     }
 
     const fgRef = useRef();
@@ -2102,46 +2100,44 @@ function RelationGraph(props) {
         fgRef.current.postProcessingComposer().addPass(bloomPass);
     }, []);
 
-    // real 
+    // // real 
     // const [nodes, setNodes] = useState([])
     // useEffect(() => {
     //     setNodes(data_nodes);s
     // }, [data_nodes]);
 
-    // const [links, setLinks] = useState([])
-    // useEffect(() => {
-    //     setLinks(data_edges)
-    // }, [data_edges]);
+    // // const [links, setLinks] = useState([])
+    // // useEffect(() => {
+    // //     setLinks(data_edges)
+    // // }, [data_edges]);
 
 
-    // fake
-    // const [link_detail, setLinkDetail] = useState({})
-    // setLinkDetail(() => {
-    //     setNodes(data_edges);
-    // }, [data_edges]);
+    // // fake
+    // // const [link_detail, setLinkDetail] = useState({})
+    // // setLinkDetail(() => {
+    // //     setNodes(data_edges);
+    // // }, [data_edges]);
 
     const [nodes, setNodes] = useState([])
-    useEffect(() => {
-        setNodes(data['nodes']);
-    }, [data]);
-
-    const [links, setLinks] = useState([])
-    useEffect(() => {
-        setLinks(data['links']);
-    }, [data]);
-
-    console.log("nodes", nodes)
-    console.log("rankWallets", rankWallets)
-    // const [graphData, setGraphData] = useState()
     // useEffect(() => {
-    //     let data = { "nodes": nodes, "links": links }
-    //     setGraphData(data)
-    // }, [nodes, links])
+    //     setNodes(data['nodes']);
+    // }, [data]);
+
+    // const [links, setLinks] = useState([])
+    // useEffect(() => {
+    //     setLinks(data['links']);
+    // }, [data]);
+
+    // // const [graphData, setGraphData] = useState()
+    // // useEffect(() => {
+    // //     let data = { "nodes": nodes, "links": links }
+    // //     setGraphData(data)
+    // // }, [nodes, links])
 
     const [node_id, setSearchTerm] = useState("");
-    const handleChange = e => {
-        setSearchTerm(e.target.value);
-    };
+    // const handleChange = e => {
+    //     setSearchTerm(e.target.value);
+    // };
 
     const handleClickNode = (node) => {
         d3.selectAll("#node-info-container").remove();
@@ -2153,7 +2149,7 @@ function RelationGraph(props) {
             node, // lookAt ({ x, y, z })
             3000 // ms transition duration
         );
-        console.log(node)
+
         setAddressWallet(node['id'])
         handleClickOpenNodeDetail(node)
     }
@@ -2209,16 +2205,16 @@ function RelationGraph(props) {
         setNodes([...updated_node])
     }
 
-    const [random, setRandom] = useState(1)
-    const handleRandomColor = (item) => {
-        if (0) {
-            return ""
-        }
-        else return item["nodeColor"]
-    }
-    // end react force graph
+    // const [random, setRandom] = useState(1)
+    // const handleRandomColor = (item) => {
+    //     if (0) {
+    //         return ""
+    //     }
+    //     else return item["nodeColor"]
+    // }
+    // // end react force graph
 
-    // start token general infomation 
+    // // start token general infomation 
     const [openGeneral, setOpenGeneral] = useState(false);
     const [scroll, setScroll] = useState('paper');
 
@@ -2232,17 +2228,17 @@ function RelationGraph(props) {
     };
 
     const descriptionGeneralRef = useRef(null);
-    useEffect(() => {
-        if (openGeneral) {
-            const { current: descriptionGeneral } = descriptionGeneralRef;
-            if (descriptionGeneral !== null) {
-                descriptionGeneral.focus();
-            }
-        }
-    }, [openGeneral]);
-    // end token general infomation 
+    // useEffect(() => {
+    //     if (openGeneral) {
+    //         const { current: descriptionGeneral } = descriptionGeneralRef;
+    //         if (descriptionGeneral !== null) {
+    //             descriptionGeneral.focus();
+    //         }
+    //     }
+    // }, [openGeneral]);
+    // // end token general infomation 
 
-    // start node detail
+    // // start node detail
     const [openNodeDetail, setOpenNodeDetail] = useState(false);
     const [nodeDetail, setNodeDetail] = useState({"id": 1, "clusterRank":1, "walletRank": 1, "clusterPercent":1, "walletPercent": 1})
     const handleClickOpenNodeDetail = (row) => {
@@ -2251,7 +2247,6 @@ function RelationGraph(props) {
     };
 
     const handleClickToCluster = (rank) => {
-        console.log(clickToCluster[rank])
         setOpenNodeDetail(true);
     }
 
@@ -2260,14 +2255,14 @@ function RelationGraph(props) {
     };
 
     const descriptionNodeDetailRef = useRef(null);
-    useEffect(() => {
-        if (openNodeDetail) {
-            const { current: descriptionNodeDetail } = descriptionNodeDetailRef;
-            if (descriptionNodeDetail !== null) {
-                descriptionNodeDetail.focus();
-            }
-        }
-    }, [openNodeDetail]);
+    // useEffect(() => {
+    //     if (openNodeDetail) {
+    //         const { current: descriptionNodeDetail } = descriptionNodeDetailRef;
+    //         if (descriptionNodeDetail !== null) {
+    //             descriptionNodeDetail.focus();
+    //         }
+    //     }
+    // }, [openNodeDetail]);
 
     const [alignmentNodeDetail, setAlignmentNodeDetail] = useState("wallet");
     const handleChangeToggleNodeDetail = (event, newAlignment) => {
@@ -2341,7 +2336,7 @@ function RelationGraph(props) {
         },
         series: [{
             name: 'Token amount',
-            data: dataChart,
+            data: [],
             tooltip: {
                 valueDecimals: 2
             }
@@ -2352,7 +2347,6 @@ function RelationGraph(props) {
     // start link detail
     const [openLinkDetail, setOpenLinkDetail] = useState(false);
     const handleClickOpenLinkDetail = (address) => {
-        console.log(address)
         setOpenLinkDetail(true);
     };
 
@@ -2360,15 +2354,15 @@ function RelationGraph(props) {
         setOpenLinkDetail(false);
     };
 
-    const descriptionLinkDetailRef = useRef(null);
-    useEffect(() => {
-        if (openLinkDetail) {
-            const { current: descriptionLinkDetail } = descriptionLinkDetailRef;
-            if (descriptionLinkDetail !== null) {
-                descriptionLinkDetail.focus();
-            }
-        }
-    }, [openLinkDetail]);
+    // const descriptionLinkDetailRef = useRef(null);
+    // useEffect(() => {
+    //     if (openLinkDetail) {
+    //         const { current: descriptionLinkDetail } = descriptionLinkDetailRef;
+    //         if (descriptionLinkDetail !== null) {
+    //             descriptionLinkDetail.focus();
+    //         }
+    //     }
+    // }, [openLinkDetail]);
 
     const [alignmentLinkDetail, setAlignmentLinkDetail] = useState("wallet");
     const handleChangeToggleLinkDetail = (event, newAlignment) => {
@@ -2744,13 +2738,11 @@ function RelationGraph(props) {
 }
 
 function mapState(state) {
-    const { RelationGraph } = state;
-    return { RelationGraph };
+    const { RelationshipSpace } = state;
+    return { RelationshipSpace };
 }
 const actions = {
-    getCloseRelationEdges: RelationGraphActions.getCloseRelationEdges,
-    getCloseRelationNodes: RelationGraphActions.getCloseRelationNodes,
-    getRelationshipTokenChangeLogs: RelationGraphActions.getRelationshipTokenChangeLogs
+    getTopWalletRelationship: RelationshipSpaceActions.getTopWalletRelationship
 };
 
-export default connect(mapState, actions)(RelationGraph);
+export default connect(mapState, actions)(RelationshipSpace);
