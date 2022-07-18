@@ -1,0 +1,28 @@
+.logo-img {
+  height: 30px;
+}
+
+.selected-text {
+  font-weight: 700;
+  color: white;
+  margin-left: 5px
+}
+
+.unselected-text {
+  font-weight: 500;
+  color: white;
+  margin-left: 5px;
+  font-size: 16px;
+}
+
+.unselected-logo-img {
+  height: 20px;
+}
+
+.hide-box {
+  display: none
+}
+
+.unhide-box {
+  display: flex
+}

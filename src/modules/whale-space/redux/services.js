@@ -8,30 +8,30 @@ export const WhaleSpaceServices = {
     getTokenDistribution
 }
 
-function getTokenGeneral(token_name, chain_name) {
+function getTokenGeneral() {
     return sendRequestToServer({
         method: 'GET',
-        url: `${process.env.REACT_APP_SERVER}/wallet/token_general?token_name=${token_name}&chain_name=${chain_name}`
+        url: `${process.env.REACT_APP_SERVER}/list_all_tokens`
     })
 }
 
-function getTopWallet(token_name, chain_name, variable, is_contract) {
+function getTopWallet(token_key) {
     return sendRequestToServer({
         method: 'GET',
-        url: `${process.env.REACT_APP_SERVER}/wallet/top_wallet?token_name=${token_name}&chain_name=${chain_name}&variable=${variable}&is_contract=${is_contract}`
+        url: `${process.env.REACT_APP_SERVER}/top_whale_wallets?token_key=${token_key}`
     })
 }
 
-function getTopWalletTokenChangeLogs(token_name, chain_name) {
+function getTopWalletTokenChangeLogs(token_key, address) {
     return sendRequestToServer({
         method: 'GET',
-        url: `${process.env.REACT_APP_SERVER}/wallet/top_wallet_token_change_logs?token_name=${token_name}&chain_name=${chain_name}`
+        url: `${process.env.REACT_APP_SERVER}/top_change_logs?token_key=${token_key}&address=${address}`
     })
 }
 
-function getTokenDistribution(token_name, chain_name) {
+function getTokenDistribution(token_key) {
     return sendRequestToServer({
         method: 'GET',
-        url: `${process.env.REACT_APP_SERVER}/wallet/token_distribution?token_name=${token_name}&chain_name=${chain_name}`
+        url: `${process.env.REACT_APP_SERVER}/token_distribution?token_key=${token_key}`
     })
 }

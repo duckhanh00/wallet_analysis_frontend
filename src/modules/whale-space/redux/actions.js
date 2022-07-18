@@ -8,12 +8,12 @@ export const WhaleSpaceActions = {
   getTokenDistribution
 };
 
-function getTokenGeneral(token_name, chain_name) {
+function getTokenGeneral() {
   return dispatch => {
     dispatch({
       type: WhaleSpaceConstants.GET_TOKEN_GENERAL_REQUEST
     });
-    WhaleSpaceServices.getTokenGeneral(token_name, chain_name)
+    WhaleSpaceServices.getTokenGeneral()
       .then(res => {
         dispatch({
           type: WhaleSpaceConstants.GET_TOKEN_GENERAL_SUCCESS,
@@ -29,12 +29,12 @@ function getTokenGeneral(token_name, chain_name) {
   };
 }
 
-function getTopWallet(token_name, chain_name, variable, is_contract) {
+function getTopWallet(token_key) {
   return dispatch => {
     dispatch({
       type: WhaleSpaceConstants.GET_TOP_WALLET_REQUEST
     });
-    WhaleSpaceServices.getTopWallet(token_name, chain_name, variable, is_contract)
+    WhaleSpaceServices.getTopWallet(token_key)
       .then(res => {
         dispatch({
           type: WhaleSpaceConstants.GET_TOP_WALLET_SUCCESS,
@@ -50,12 +50,12 @@ function getTopWallet(token_name, chain_name, variable, is_contract) {
   };
 }
 
-function getTopWalletTokenChangeLogs(token_name, chain_name) {
+function getTopWalletTokenChangeLogs(token_key, address) {
   return dispatch => {
     dispatch({
       type: WhaleSpaceConstants.GET_TOP_WALLET_TOKEN_CHANGE_LOGS_REQUEST
     });
-    WhaleSpaceServices.getTopWalletTokenChangeLogs(token_name, chain_name)
+    WhaleSpaceServices.getTopWalletTokenChangeLogs(token_key, address)
       .then(res => {
         dispatch({
           type: WhaleSpaceConstants.GET_TOP_WALLET_TOKEN_CHANGE_LOGS_SUCCESS,
@@ -71,12 +71,12 @@ function getTopWalletTokenChangeLogs(token_name, chain_name) {
   };
 }
 
-function getTokenDistribution(token_name, chain_name) {
+function getTokenDistribution(token_key) {
   return dispatch => {
     dispatch({
       type: WhaleSpaceConstants.GET_TOKEN_DISTRIBUTION_REQUEST
     });
-    WhaleSpaceServices.getTokenDistribution(token_name, chain_name)
+    WhaleSpaceServices.getTokenDistribution(token_key)
       .then(res => {
         dispatch({
           type: WhaleSpaceConstants.GET_TOKEN_DISTRIBUTION_SUCCESS,
