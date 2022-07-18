@@ -32,10 +32,11 @@ function HomeSpace(props) {
     props.getListAllTokens()
   }, [])
 
-  let listAllTokens = []
+  let listAllTokens = null
   if (HomeSpace?.listAllTokens) {
     listAllTokens = HomeSpace.listAllTokens
   }
+
   console.log(listAllTokens)
   return (
     <Box sx={{minHeight: "92vh", paddingTop: "100px"}}>
@@ -66,10 +67,13 @@ function HomeSpace(props) {
           </Box>
 
           <Typography variant="h4" sx={{textAlign: "center", color: "white", fontWeight: 700 }}> Token List </Typography>
-          <TokenListItem/>
-          <TokenListItem/>
-          <TokenListItem/>
-          <TokenListItem/>
+          {listAllTokens ? <Box>
+            {HomeSpace.listAllTokens.map((token) => (
+              token.chainName == curChain ? <TokenListItem name={token.name} imgSrc={token.image} /> : " "
+            ))}
+          </Box> : ""
+           }
+         
         </Paper>
       </Container>
     </Box>
