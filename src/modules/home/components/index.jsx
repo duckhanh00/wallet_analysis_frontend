@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Box, Container , Paper, Typography} from "@mui/material";
+import { HomeSpaceActions } from '../redux/actions'
 import TokenListItem from "./token-list-item";
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 
@@ -26,6 +27,16 @@ function HomeSpace(props) {
     setDisplayToggle(false);
   }
 
+  const {HomeSpace} = props
+  useEffect(()=>{
+    props.getListAllTokens()
+  }, [])
+
+  let listAllTokens = []
+  if (HomeSpace?.listAllTokens) {
+    listAllTokens = HomeSpace.listAllTokens
+  }
+  console.log(listAllTokens)
   return (
     <Box sx={{minHeight: "92vh", paddingTop: "100px"}}>
       <Container>
@@ -66,9 +77,11 @@ function HomeSpace(props) {
 }
 
 function mapState(state) {
-  const { } = state;
-  return {};
+  const { HomeSpace } = state;
+  return { HomeSpace };
 }
-const actions = {};
+const actions = {
+  getListAllTokens: HomeSpaceActions.getListAllTokens
+};
 
 export default connect(mapState, actions)(HomeSpace);
