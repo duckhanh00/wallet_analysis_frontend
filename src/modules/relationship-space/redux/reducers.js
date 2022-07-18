@@ -30,6 +30,20 @@ export function RelationshipSpace(state = {}, action) {
                 ...state,
             }
 
+        case RelationshipSpaceConstants.GET_TOP_CLUSTER_RELATIONSHIP_REQUEST:
+            return {
+                ...state,
+            }
+        case RelationshipSpaceConstants.GET_TOP_CLUSTER_RELATIONSHIP_SUCCESS:
+            return {
+                ...state,
+                topListCluster: action.payload
+            }
+        case RelationshipSpaceConstants.GET_TOP_CLUSTER_RELATIONSHIP_FAILURE:
+            return {
+                ...state,
+            }
+
         default:
             return state;
     }

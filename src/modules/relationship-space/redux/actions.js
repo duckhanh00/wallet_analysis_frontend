@@ -51,3 +51,24 @@ function getTopClusterRelationship(token_key, type) {
       });
   };
 }
+
+function getTopListCluster(token_key, type) {
+  return dispatch => {
+    dispatch({
+      type: RelationshipSpaceConstants.GET_TOP_LIST_CLUSTER_REQUEST
+    });
+    RelationshipSpaceService.getTopListCluster(token_key, type)
+      .then(res => {
+        dispatch({
+          type: RelationshipSpaceConstants.GET_TOP_LIST_CLUSTER_SUCCESS,
+          payload: res.data
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: RelationshipSpaceConstants.GET_TOP_LIST_CLUSTER_FAILURE,
+          error: error
+        });
+      });
+  };
+}
