@@ -2,13 +2,21 @@
 import { sendRequestToServer, filterObject } from '../../../helpers';
 
 export const WhaleSpaceServices = {
-    getTokenGeneral,
+    getTokenInfomation,
+    getListAllTokens,
     getTopWallet,
     getTopWalletTokenChangeLogs,
     getTokenDistribution
 }
 
-function getTokenGeneral() {
+function getTokenInfomation() {
+    return sendRequestToServer({
+        method: 'GET',
+        url: `${process.env.REACT_APP_SERVER}/token_infomation?token_key=${token_key}`
+    })
+}
+
+function getListAllTokens() {
     return sendRequestToServer({
         method: 'GET',
         url: `${process.env.REACT_APP_SERVER}/list_all_tokens`

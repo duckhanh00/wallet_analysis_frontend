@@ -9,7 +9,7 @@ function GeneralTokenInfo(props) {
   const { WhaleSpace } = props
   console.log('general', WhaleSpace)
   useEffect(() => {
-    props.getTokenGeneral('trava', 'bsc')
+    props.getTokenInfomation('0x38_0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c')
   }, [])
 
   // const [tokenGeneral, setTokenGeneral] = useState([])
@@ -95,6 +95,6 @@ function mapState(state) {
   return { WhaleSpace };
 }
 const actions = {
-  getTokenGeneral: WhaleSpaceActions.getTokenGeneral
+  getTokenInfomation: WhaleSpaceActions.getTokenInfomation
 };
 export default connect(mapState, actions)(GeneralTokenInfo);

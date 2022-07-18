@@ -2,27 +2,27 @@ import { WhaleSpaceServices } from './services';
 import { WhaleSpaceConstants } from './constants';
 
 export const WhaleSpaceActions = {
-  getTokenGeneral,
+  getTokenInfomation,
   getTopWallet,
   getTopWalletTokenChangeLogs,
   getTokenDistribution
 };
 
-function getTokenGeneral() {
+function getTokenInfomation() {
   return dispatch => {
     dispatch({
-      type: WhaleSpaceConstants.GET_TOKEN_GENERAL_REQUEST
+      type: WhaleSpaceConstants.GET_TOKEN_INFOMATION_REQUEST
     });
-    WhaleSpaceServices.getTokenGeneral()
+    WhaleSpaceServices.getTokenInfomation()
       .then(res => {
         dispatch({
-          type: WhaleSpaceConstants.GET_TOKEN_GENERAL_SUCCESS,
+          type: WhaleSpaceConstants.GET_TOKEN_INFOMATION_SUCCESS,
           payload: res.data
         });
       })
       .catch(error => {
         dispatch({
-          type: WhaleSpaceConstants.GET_TOKEN_GENERAL_FAILURE,
+          type: WhaleSpaceConstants.GET_TOKEN_INFOMATION_FAILURE,
           error: error
         });
       });

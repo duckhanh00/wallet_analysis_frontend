@@ -2,16 +2,16 @@ import { WhaleSpaceConstants } from './constants';
 
 export function WhaleSpace(state = {}, action) {
     switch (action.type) {
-        case WhaleSpaceConstants.GET_TOKEN_GENERAL_REQUEST:
+        case WhaleSpaceConstants.GET_TOKEN_INFOMATION_REQUEST:
             return {
                 ...state,
             }
-        case WhaleSpaceConstants.GET_TOKEN_GENERAL_SUCCESS:
+        case WhaleSpaceConstants.GET_TOKEN_INFOMATION_SUCCESS:
             return {
                 ...state,
-                tokenGeneral: action.payload
+                tokenInfomation: action.payload
             }
-        case WhaleSpaceConstants.GET_TOKEN_GENERAL_FAILURE:
+        case WhaleSpaceConstants.GET_TOKEN_INFOMATION_FAILURE:
             return {
                 ...state,
             }
