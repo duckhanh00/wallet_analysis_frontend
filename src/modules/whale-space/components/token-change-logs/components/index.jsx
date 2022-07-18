@@ -108,9 +108,11 @@ function TokenChangeLogs(props) {
   }, [])
 
   useEffect(() => {
-    props.getTopWalletTokenChangeLogs('trava', 'bsc')
+    props.getTokenChangeLogs('0x38_0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c', '0x0240013a2b8a2ff7a4f740a3625ab75d23276332')
   }, [])
 
+  let topWhaleWallets = {}
+  
 
   let topWallet = {
     "walletInfo": [
@@ -24745,6 +24747,6 @@ function mapState(state) {
 }
 const actions = {
   getTopWhaleWallets: WhaleSpaceActions.getTopWhaleWallets,
-  getTopWalletTokenChangeLogs: WhaleSpaceActions.getTopWalletTokenChangeLogs
+  getTokenChangeLogs: WhaleSpaceActions.getTokenChangeLogs
 };
 export default connect(mapState, actions)(TokenChangeLogs);

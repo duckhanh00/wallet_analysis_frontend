@@ -15,58 +15,16 @@ import "./style.scss";
 function TokenDistribution(props) {
   const { WhaleSpace } = props
   useEffect(() => {
-    props.getTokenDistribution('trava', 'bsc')
+    props.getTokenDistribution('0x38_0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c')
   }, [])
 
-  let tokenDistribution = {
-    "tokenAmount": [
-      3193,
-      97,
-      24,
-      7,
-      5,
-      2,
-      1,
-      1,
-      1
-    ],
-    "tokenAmountNotContract": [
-      2802,
-      206,
-      82,
-      41,
-      25,
-      16,
-      7,
-      3,
-      2
-    ],
-    "totalBalance": [
-      2471,
-      301,
-      164,
-      95,
-      50,
-      124,
-      1,
-      1,
-      20
-    ],
-    "totalBalanceNotContract": [
-      2033,
-      380,
-      191,
-      143,
-      133,
-      69,
-      134,
-      12,
-      89
-    ]
-  }
+  let tokenDistribution = {}
+
   if (WhaleSpace?.tokenDistribution) {
     tokenDistribution = WhaleSpace.tokenDistribution
   }
+  console.log(tokenDistribution)
+
   const [isContract, setIsContract] = useState("1");
 
   const handleIsContract = (event) => {

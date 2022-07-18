@@ -30,16 +30,16 @@ export function WhaleSpace(state = {}, action) {
                 ...state,
             }
 
-        case WhaleSpaceConstants.GET_TOP_WALLET_TOKEN_CHANGE_LOGS_REQUEST:
+        case WhaleSpaceConstants.GET_TOKEN_CHANGE_LOGS_REQUEST:
             return {
                 ...state,
             }
-        case WhaleSpaceConstants.GET_TOP_WALLET_TOKEN_CHANGE_LOGS_SUCCESS:
+        case WhaleSpaceConstants.GET_TOKEN_CHANGE_LOGS_SUCCESS:
             return {
                 ...state,
-                topWalletTokenChangeLogs: action.payload
+                tokenChangeLogs: action.payload
             }
-        case WhaleSpaceConstants.GET_TOP_WALLET_TOKEN_CHANGE_LOGS_FAILURE:
+        case WhaleSpaceConstants.GET_TOKEN_CHANGE_LOGS_FAILURE:
             return {
                 ...state,
             }

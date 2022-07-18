@@ -5,7 +5,7 @@ export const WhaleSpaceServices = {
     getTokenInfomation,
     getListAllTokens,
     getTopWhaleWallet,
-    getTopWalletTokenChangeLogs,
+    getTokenChangeLogs,
     getTokenDistribution
 }
 
@@ -30,7 +30,7 @@ function getTopWhaleWallet(token_key) {
     })
 }
 
-function getTopWalletTokenChangeLogs(token_key, address) {
+function getTokenChangeLogs(token_key, address) {
     return sendRequestToServer({
         method: 'GET',
         url: `${process.env.REACT_APP_SERVER}/top_change_logs?token_key=${token_key}&address=${address}`

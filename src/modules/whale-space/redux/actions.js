@@ -4,7 +4,7 @@ import { WhaleSpaceConstants } from './constants';
 export const WhaleSpaceActions = {
   getTokenInfomation,
   getTopWhaleWallets,
-  getTopWalletTokenChangeLogs,
+  getTokenChangeLogs,
   getTokenDistribution
 };
 
@@ -50,21 +50,21 @@ function getTopWhaleWallets(token_key) {
   };
 }
 
-function getTopWalletTokenChangeLogs(token_key, address) {
+function getTokenChangeLogs(token_key, address) {
   return dispatch => {
     dispatch({
-      type: WhaleSpaceConstants.GET_TOP_WALLET_TOKEN_CHANGE_LOGS_REQUEST
+      type: WhaleSpaceConstants.GET_TOKEN_CHANGE_LOGS_REQUEST
     });
-    WhaleSpaceServices.getTopWalletTokenChangeLogs(token_key, address)
+    WhaleSpaceServices.getTokenChangeLogs(token_key, address)
       .then(res => {
         dispatch({
-          type: WhaleSpaceConstants.GET_TOP_WALLET_TOKEN_CHANGE_LOGS_SUCCESS,
+          type: WhaleSpaceConstants.GET_TOKEN_CHANGE_LOGS_SUCCESS,
           payload: res.data
         });
       })
       .catch(error => {
         dispatch({
-          type: WhaleSpaceConstants.GET_TOP_WALLET_TOKEN_CHANGE_LOGS_FAILURE,
+          type: WhaleSpaceConstants.GET_TOKEN_CHANGE_LOGS_FAILURE,
           error: error
         });
       });
