@@ -8,12 +8,12 @@ export const WhaleSpaceActions = {
   getTokenDistribution
 };
 
-function getTokenInfomation() {
+function getTokenInfomation(tokey_key) {
   return dispatch => {
     dispatch({
       type: WhaleSpaceConstants.GET_TOKEN_INFOMATION_REQUEST
     });
-    WhaleSpaceServices.getTokenInfomation()
+    WhaleSpaceServices.getTokenInfomation(tokey_key)
       .then(res => {
         dispatch({
           type: WhaleSpaceConstants.GET_TOKEN_INFOMATION_SUCCESS,

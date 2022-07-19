@@ -4,7 +4,7 @@ import { Grid } from "@material-ui/core";
 
 import GeneralTokenInfo from "./general-token-info/components/index.jsx";
 import TokenDistribution from "./token-distribution/components/index.jsx";
-import TokenChangeLogs from "./token-change-logs/components/index.jsx"
+import TopWhaleInfo from "./token-change-logs/components/index.jsx"
 // import AntDesignGrid from "./wallet-table/AntDesignGrid.js";
 
 import './style.scss'
@@ -13,7 +13,7 @@ function WhaleSpace(props) {
     <Fragment>
       <div className="whale-space">
         <GeneralTokenInfo />
-        <TokenChangeLogs />
+        <TopWhaleInfo />
         <TokenDistribution />
       </div>
     </Fragment>

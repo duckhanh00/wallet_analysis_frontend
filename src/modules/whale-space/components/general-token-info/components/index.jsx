@@ -5,8 +5,9 @@ import { connect } from "react-redux";
 import "./style.scss";
 import { WhaleSpaceActions } from "../../../redux/actions";
 
-function tokenInfomationTokenInfo(props) {
-
+function GeneralTokenInfo(props) {
+  
+  const { WhaleSpace } = props
   useEffect(() => {
     props.getTokenInfomation('0x38_0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c')
   }, [])
@@ -16,7 +17,7 @@ function tokenInfomationTokenInfo(props) {
   if (WhaleSpace?.tokenInfomation) {   
     tokenInfomation = WhaleSpace.tokenInfomation
   }
-  console.log(tokenInfomation)
+  console.log("tokenInfomation", tokenInfomation)
   return (
     <Fragment>
       <div className="coin-container">
@@ -31,7 +32,7 @@ function tokenInfomationTokenInfo(props) {
             <div className="coin-logo">{tokenInfomation['symbol']}</div>
           </h1>
           <ul className="list-desc">
-            <li className="desc-item">Chain name: {tokenInfomation['chain_name']}</li>
+            <li className="desc-item">Chain name: {tokenInfomation['chainName']}</li>
           </ul>
         </div>
 
@@ -45,14 +46,14 @@ function tokenInfomationTokenInfo(props) {
           <div className="market">
             <div className="market__item">
               <div className="coin-desc">Market cap</div>
-              <div className="market__price">{tokenInfomation['market_cap']} USD</div>
+              <div className="market__price">{tokenInfomation['marketCap']} USD</div>
               {/* <span>1.38%</span> */}
             </div>
             <div className="market__item">
               <div className="coin-desc">
                 Fully Diluted Market Cap
               </div>
-              <div className="market__price">{tokenInfomation['total_supply']*tokenInfomation['price']} USD</div>
+              <div className="market__price">{tokenInfomation['totalSupply']*tokenInfomation['price']} USD</div>
               {/* <span>1.38%</span> */}
             </div>
             <div className="market__item">
@@ -60,14 +61,13 @@ function tokenInfomationTokenInfo(props) {
                 {/* Khối lượng <span className="desc-item">24 giờ</span> */}
                 Circulating Supply
               </div>
-              <div className="market__price">{tokenInfomation['circulating_supply']}</div>
-              <span>75.00%</span>
+              <div className="market__price">{tokenInfomation['circulatingSupply']}</div>
               <div className="coin-desc">Total supply</div>
-              <div className="market__price">{tokenInfomation['total_supply']}</div>
+              <div className="market__price">{tokenInfomation['totalSupply']}</div>
             </div>
             <div className="market__item">
-              <div className="coin-desc">Total holders</div>
-              <div className="market__price">{tokenInfomation['total_holders']} holders</div>
+              <div className="coin-desc">Total wallets</div> 
+              <div className="market__price">{tokenInfomation['totalWallets']} wallets</div>
             </div>
           </div>
         </div>
@@ -84,4 +84,4 @@ function mapState(state) {
 const actions = {
   getTokenInfomation: WhaleSpaceActions.getTokenInfomation
 };
-export default connect(mapState, actions)(tokenInfomationTokenInfo);
+export default connect(mapState, actions)(GeneralTokenInfo);

@@ -4,12 +4,12 @@ import { sendRequestToServer, filterObject } from '../../../helpers';
 export const WhaleSpaceServices = {
     getTokenInfomation,
     getListAllTokens,
-    getTopWhaleWallet,
+    getTopWhaleWallets,
     getTokenChangeLogs,
     getTokenDistribution
 }
 
-function getTokenInfomation() {
+function getTokenInfomation(token_key) {
     return sendRequestToServer({
         method: 'GET',
         url: `${process.env.REACT_APP_SERVER}/token_infomation?token_key=${token_key}`
@@ -23,7 +23,7 @@ function getListAllTokens() {
     })
 }
 
-function getTopWhaleWallet(token_key) {
+function getTopWhaleWallets(token_key) {
     return sendRequestToServer({
         method: 'GET',
         url: `${process.env.REACT_APP_SERVER}/top_whale_wallets?token_key=${token_key}`
@@ -33,7 +33,7 @@ function getTopWhaleWallet(token_key) {
 function getTokenChangeLogs(token_key, address) {
     return sendRequestToServer({
         method: 'GET',
-        url: `${process.env.REACT_APP_SERVER}/top_change_logs?token_key=${token_key}&address=${address}`
+        url: `${process.env.REACT_APP_SERVER}/token_change_logs?token_key=${token_key}&address=${address}`
     })
 }
 
