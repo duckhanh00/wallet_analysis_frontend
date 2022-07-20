@@ -106,6 +106,8 @@ function TokenDistribution(props) {
     },
     yAxis: {
       type: 'logarithmic',
+      tickAmount: 7,
+      gridLineColor: "#323546",
       style: {
         color: "#a1a7bb",
       },
@@ -172,6 +174,8 @@ function TokenDistribution(props) {
       enabled: false
     },
     yAxis: {
+      tickAmount: 7,
+      gridLineColor: "#323546",
       type: 'logarithmic',
       style: {
         color: "#a1a7bb",

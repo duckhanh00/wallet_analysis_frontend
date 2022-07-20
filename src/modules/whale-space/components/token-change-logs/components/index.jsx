@@ -244,18 +244,7 @@ function TopWhaleInfo(props) {
     subtitle: {
       text: subTitle
     },
-    // xAxis: {
-    //   categories: data["label"],
-    //   labels: {
-    //     style: {
-    //       color: "#a1a7ac",
-    //     },
-    //   },
-    // },
     xAxis: { 
-      // labels: {
-      //   formatter: () => timeConverter(this.value),
-      // }
       type: 'datetime',
       labels: {
         formatter: function() {
@@ -307,7 +296,7 @@ function TopWhaleInfo(props) {
     { field: 'id', headerName: 'Address', width: 125, valueFormatter: params => addr(params.value)},
     { field: 'walletTokenAmount', headerName: 'Token Amount', width: 125, valueFormatter: params => abbrNum(params.value, 2) },
     { field: 'walletTokenBalance', headerName: 'Token Amount (USD)', width: 150, valueFormatter: params => abbrNum(params.value, 2) },
-    { field: 'walletTotalBalance', headerName: 'Token Balance (USD)', width: 150, valueFormatter: params => abbrNum(params.value, 2) },
+    { field: 'walletTotalBalance', headerName: 'Total Balance (USD)', width: 150, valueFormatter: params => abbrNum(params.value, 2) },
     { field: 'walletTokenTotalBalancePercentage', headerName: '% total balance', width: 125, valueFormatter: params => BigNumber(params.value).toFixed(2)  },
     { field: 'walletTokenTotalSupplyPercentage', headerName: '% total supply', width: 125, valueFormatter: params => BigNumber(params.value).toFixed(2) },
     { field: 'walletTokenChange', headerName: 'Change', width: 70, valueFormatter: params => abbrNum(params.value, 2) }
