@@ -15,8 +15,11 @@ const chains = {
 }
 
 function HomeSpace(props) {
-  const [curChain, setCurChain] = useState("polygon");
+  const [curChain, setCurChain] = useState("bsc");
   const [displayToggle, setDisplayToggle] = useState(false);
+  const [listAllTokens, setListAllTokens] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const {HomeSpace} = props;
 
   const handleChangeDisplayToggle = () => {
     setDisplayToggle(!displayToggle);
@@ -27,23 +30,25 @@ function HomeSpace(props) {
     setDisplayToggle(false);
   }
 
-  const {HomeSpace} = props
-  useEffect(()=>{
-    props.getListAllTokens()
-  }, [])
-
-  let listAllTokens = null
-  if (HomeSpace?.listAllTokens) {
-    listAllTokens = HomeSpace.listAllTokens
+  const fetchData = async () => {
+      setLoading(true);
+      await props.getListAllTokens();
+      setLoading(false);
   }
 
-  console.log(listAllTokens)
+  useEffect(() => {
+    fetchData();  
+    if(!loading) {
+      setListAllTokens(HomeSpace.listAllTokens);
+    }
+  }, [loading])
+
   return (
     <Box sx={{minHeight: "92vh", paddingTop: "100px"}}>
       <Container>
         <Paper elevation={3} sx={{width: "50%", minHeight: "200px", backgroundColor: "#17171a", padding: "20px 0 40px 0", margin: "0 auto", border: "1px solid #323546", boxShadow: "rgb(232 179 11 / 20%) 0px 0px 24px"}}> 
           
-          <Box sx={{backgroundColor: "#17171a", padding: "0 10px", borderRadius: "15px", display: "flex", width: "90%", margin: "0 auto"}}>
+          <Box sx={{backgroundColor: "#17171a", padding: "0 10px", borderRadius: "15px", display: "flex", width: "90%", margin: "0 auto"}} onClick={() => handleChangeDisplayToggle()}>
             <Box sx={{display: "flex", alignItems: "center", justifyContent: "center", width: "142px", height: "35px", backgroundColor: "rgba(35,31,39,.5)", borderRadius: "15px"}}>
               <img
                 className="logo-img"
@@ -51,7 +56,7 @@ function HomeSpace(props) {
                 alt="lo"
               />
               <Typography variant="body1" className="selected-text">{chains[curChain][2]}</Typography>
-              <ArrowRightIcon sx={{color: "white"}} onClick={() => handleChangeDisplayToggle()}/>
+              <ArrowRightIcon sx={{color: "white"}}/>
             </Box>
             {Object.keys(chains).map((chain) => (
               chain == curChain ? " " :
@@ -68,7 +73,7 @@ function HomeSpace(props) {
 
           <Typography variant="h4" sx={{textAlign: "center", color: "white", fontWeight: 700 }}> Token List </Typography>
           {listAllTokens ? <Box>
-            {HomeSpace.listAllTokens.map((token) => (
+            {listAllTokens.map((token) => (
               token.chainName == curChain ? <TokenListItem name={token.name} imgSrc={token.image} /> : " "
             ))}
           </Box> : ""
