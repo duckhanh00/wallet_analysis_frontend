@@ -1,5 +1,6 @@
 
 import React, { Fragment, useEffect, useState, useRef, useCallback } from 'react';
+import { addr, abbrNum, timeConverter } from '../../../helpers';
 import ReactDOM from "react-dom";
 import { connect } from 'react-redux';
 import { ForceGraph3D } from "react-force-graph";
@@ -138,9 +139,21 @@ const useStyles = makeStyles({
         verticalAlign: 'top',
     },
     nodeDetail: {
+        "& .MuiPaper-root": {
+            margin: 0
+        },
         position: 'absolute !important',
-        left: 0,
-        top: 170
+        left: "30%",
+        minWidth: "40%",
+        margin: 0,
+        top: 0,
+    },
+    nodeDetailBig: {
+        position: 'absolute !important',
+        left: "25%",
+        minWidth: "50%",
+        margin: 0,
+        top: 0,
     },
     toggerNodeDetail: {
         width: "50%"
@@ -2240,7 +2253,7 @@ function RelationshipSpace(props) {
 
     // // start node detail
     const [openNodeDetail, setOpenNodeDetail] = useState(false);
-    const [nodeDetail, setNodeDetail] = useState({"id": 1, "clusterRank":1, "walletRank": 1, "clusterPercent":1, "walletPercent": 1})
+    const [nodeDetail, setNodeDetail] = useState({"id": "1", "clusterRank":1, "walletRank": 1, "clusterPercent":1, "walletPercent": 1})
     const handleClickOpenNodeDetail = (row) => {
         setNodeDetail(row)
         setOpenNodeDetail(true);
@@ -2283,7 +2296,7 @@ function RelationshipSpace(props) {
         chart: {
             backgroundColor: "#17171a",
             height: 300,
-            width: 500
+            width: 600
         },
         rangeSelector: {
             selected: 1
@@ -2481,6 +2494,11 @@ function RelationshipSpace(props) {
                                             <div style={{ overflow: 'auto', height: '520px' }}>
                                                 <Table style={{ tableLayout: 'fixed' }}>
                                                     <TableBody>
+                                                        <TableRow className={classes.tableRow}>
+                                                            <TableCell style={{ width: 20, overflow: "hidden" }} align="left">Rank</TableCell>
+                                                            <TableCell style={{ width: 100, overflow: "hidden" }} align="center">Address</TableCell>
+                                                            <TableCell style={{ width: 80, overflow: "hidden" }} align="center">Wallet Percent</TableCell>
+                                                        </TableRow>
                                                         {(rowsPerPage > 0
                                                             ? rankWallets.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                                             : rankWallets
@@ -2488,9 +2506,9 @@ function RelationshipSpace(props) {
                                                             <TableRow className={classes.tableRow} key={row.id} onClick={() => {
                                                                 handleClickNode(row);
                                                             }}>
-                                                                <TableCell style={{ width: 10, overflow: "hidden" }} align="left">{row["walletRank"]}</TableCell>
-                                                                <TableCell style={{ width: 100, overflow: "hidden" }} align="left">{row["id"]}</TableCell>
-                                                                <TableCell style={{ width: 10, overflow: "hidden" }} align="left">{row["walletPercent"]}</TableCell>
+                                                                <TableCell style={{ width: 20, overflow: "hidden" }} align="left">{row["walletRank"]}</TableCell>
+                                                                <TableCell style={{ width: 100, overflow: "hidden" }} align="center">{addr(row["id"])}</TableCell>
+                                                                <TableCell style={{ width: 80, overflow: "hidden" }} align="center">{row["walletPercent"]}</TableCell>
                                                             </TableRow>
                                                         ))}
                                                     </TableBody>
@@ -2589,7 +2607,7 @@ function RelationshipSpace(props) {
                         //     scrollPaper: classes.topScrollPaper,
                         //     paperScrollBody: classes.topPaperScrollBody,
                         // }}
-                        classes={{ paper: classes.nodeDetail }}
+                        classes={classes.nodeDetail}
                         aria-labelledby="node-detail-title"
                         aria-describedby="node-detail-description"
                     >
@@ -2613,16 +2631,16 @@ function RelationshipSpace(props) {
 
                             </DialogContentText> */}
 
-                            <h5>Address: {nodeDetail["id"]}</h5>
+                            <h5>Address: {addr(nodeDetail["id"])}</h5>
                             <h5>Wallet rank: #{nodeDetail["walletRank"]}</h5>
                             <h5>Wallet percentage: {nodeDetail["walletPercent"]}%</h5>
-                            <h5>Token amount in wallet: 10000000000000 TRAVA</h5>
-                            <h5>Total balance in wallet: 10000 USD</h5>
+                            <h5>Token amount in wallet: {abbrNum(10000000000000, 2)} TRAVA</h5>
+                            <h5>Total balance in wallet: {abbrNum(10000, 2)} USD</h5>
                             <h5>Cluster rank: #{nodeDetail["clusterRank"]}</h5>
                             <h5>Cluster percentage: {nodeDetail["clusterPercent"]}%</h5>
-                            <h5>Token amount in cluster: 20000000000000 TRAVA</h5>
-                            <h5>Total balance in cluster: 20000 USD</h5>
-                            <h5>Token change in month: 122332</h5>
+                            <h5>Token amount in cluster: {abbrNum(20000000000000, 2)} TRAVA</h5>
+                            <h5>Total balance in cluster: {abbrNum(20000, 2)} USD</h5>
+                            <h5>Token change in month: {abbrNum(122332, 2)}</h5>
                             <ToggleButtonGroup
                                 className={classes.toggerGroup}
                                 color="standard"
@@ -2649,16 +2667,16 @@ function RelationshipSpace(props) {
                         //     scrollPaper: classes.topScrollPaper,
                         //     paperScrollBody: classes.topPaperScrollBody,
                         // }}
-                        classes={{ paper: classes.LinkDetail }}
+                        classes={{ paper: classes.nodeDetailBig}}
                         aria-labelledby="node-detail-title"
                         aria-describedby="node-detail-description"
                     >
                         <DialogTitle id="node-detail-title">Selected link</DialogTitle>
                         <DialogContent dividers={scroll === 'paper'}>
-                            <h5>#1: 0x1191be54e72f7e001f6bbc331777710b4f2999e1</h5>
-                            <h5>#343: 0x1191be54e72f7e001f6bbc331777710b4f212345</h5>
-                            <h5>Average #1 to #343: 20000 (USD)</h5>
-                            <h5>Average #343 to #1: 123123 (USD)</h5>
+                            <h5>#1: {addr("0x1191be54e72f7e001f6bbc331777710b4f2999e1")}</h5>
+                            <h5>#343: {addr("0x1191be54e72f7e001f6bbc331777710b4f212345")}</h5>
+                            <h5>Average #1 to #343: {abbrNum(20000,2)} (USD)</h5>
+                            <h5>Average #343 to #1: {abbrNum(123123 ,2)}(USD)</h5>
                             <h5>Transfer Change Logs: </h5>
                             <Paper sx={{ width: '100%', overflow: 'hidden' }}>
                                 <TableContainer sx={{ maxHeight: 500 }}>
@@ -2669,7 +2687,8 @@ function RelationshipSpace(props) {
                                                     <TableCell>Time</TableCell>
                                                     <TableCell>Balance (USD)</TableCell>
                                                     <TableCell>Tokens</TableCell>
-                                                    <TableCell>From, To</TableCell>
+                                                    <TableCell>From</TableCell>
+                                                    <TableCell>To</TableCell>
                                                 </TableRow>
                                             </TableHead>
                                             <TableBody>
@@ -2678,9 +2697,10 @@ function RelationshipSpace(props) {
                                                     : linkDetail['0x1291be54e72f7e001f6bbc331777710b4f2999e2_0x1591be54e72f7e001f6bbc331777710b4f2999ef']['transferChangeLogs']
                                                 ).map((row) => (
                                                     <TableRow className={classes.tableRow} key={row.time}>
-                                                        <TableCell style={{ width: 70, overflow: "hidden" }} align="left">{row.time}</TableCell>
+                                                        <TableCell style={{ width: 70, overflow: "hidden" }} align="left">{timeConverter(row.time)}</TableCell>
                                                         <TableCell style={{ width: 70, overflow: "hidden" }} align="left">{row.balanceInUSD}</TableCell>
                                                         <TableCell style={{ width: 40, overflow: "hidden" }} align="left">{row.tokens}</TableCell>
+                                                        <TableCell style={{ width: 40, overflow: "hidden" }} align="left">{row.fromTo}</TableCell>
                                                         <TableCell style={{ width: 40, overflow: "hidden" }} align="left">{row.fromTo}</TableCell>
                                                     </TableRow>
                                                 ))}
