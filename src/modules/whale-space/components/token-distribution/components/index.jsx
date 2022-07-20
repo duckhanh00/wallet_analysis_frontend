@@ -86,23 +86,40 @@ function TokenDistribution(props) {
 
   let amountOptions = {
     chart: {
-      type: 'column'
+      backgroundColor: "#17171a",
+      type: 'column',
+      color: "white"
     },
     title: {
-      text: 'Token distribution'
+      text: 'Amount-based token distribution',
+      style: { color: "#a1a7bb", fontSize: "18px" },
     },
     subtitle: {
       text: 'Token distribution of wallets sort by token amount'
     },
     xAxis: {
       categories: xAxisAmount,
+      style: {
+        color: "white",
+      },
       crosshair: true
     },
     yAxis: {
       type: 'logarithmic',
+      style: {
+        color: "#a1a7bb",
+      },
       title: {
         text: 'wallets'
-      }
+      },
+      labels: {
+        style: {
+          color: "#a1a7ac",
+        },
+      },
+    },
+    navigator: {
+      enabled: false
     },
     tooltip: {
       headerFormat: '<span style="font-size:10px">Threshold: {point.key}</span><table>',
@@ -118,6 +135,9 @@ function TokenDistribution(props) {
         borderWidth: 0
       }
     },
+    credits: {
+      enabled: false
+    },
     series: [{
       name: 'Number of wallets',
       data: yAxisAmount
@@ -127,23 +147,43 @@ function TokenDistribution(props) {
 
   let balanceOptions = {
     chart: {
-      type: 'column'
+      backgroundColor: "#17171a",
+      type: 'column',
+      color: "white"
     },
     title: {
-      text: 'Token distribution'
+      text: 'Balance-based token distribution',
+      style: { color: "#a1a7bb", fontSize: "18px" },
     },
     subtitle: {
       text: 'Token distribution of wallets sort by total balance'
     },
     xAxis: {
       categories: xAxisBalance,
+      style: {
+        color: "white",
+      },
       crosshair: true
+    },
+    navigator: {
+      enabled: false
+    },
+    credits: {
+      enabled: false
     },
     yAxis: {
       type: 'logarithmic',
+      style: {
+        color: "#a1a7bb",
+      },
       title: {
         text: 'wallets'
-      }
+      },
+      labels: {
+        style: {
+          color: "#a1a7ac",
+        },
+      },
     },
     tooltip: {
       headerFormat: '<span style="font-size:10px">Threshold: {point.key} (USD)</span><table>',

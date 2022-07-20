@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { addr, abbrNum } from "../../../../../helpers";
+import { addr, abbrNum, timeConverter} from "../../../../../helpers";
 import { connect } from "react-redux";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
@@ -252,6 +252,17 @@ function TopWhaleInfo(props) {
     //     },
     //   },
     // },
+    xAxis: { 
+      // labels: {
+      //   formatter: () => timeConverter(this.value),
+      // }
+      type: 'datetime',
+      labels: {
+        formatter: function() {
+            return Highcharts.dateFormat('%d %b %y', this.value);
+       }
+   }
+    },
     credits: {
       enabled: false
     },
