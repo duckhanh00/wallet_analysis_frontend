@@ -37,8 +37,8 @@ function HomeSpace(props) {
   }
 
   useEffect(() => {
-    fetchData();  
-    if(!loading) {
+    if(loading) {
+      fetchData();
       setListAllTokens(HomeSpace.listAllTokens);
     }
   }, [loading])

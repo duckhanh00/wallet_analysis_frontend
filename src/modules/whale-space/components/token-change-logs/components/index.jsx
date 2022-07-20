@@ -1,4 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
+import { addr, abbrNum } from "../../../../../helpers";
 import { connect } from "react-redux";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
@@ -13,6 +14,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { Box } from "@mui/material";
 import { WhaleSpaceActions } from "../../../redux/actions";
+import BigNumber from "bignumber.js";
 import "./style.scss";
 
 export function SortedDescendingIcon() {
@@ -131,7 +133,7 @@ function TopWhaleInfo(props) {
   if (type === "totalBalance" && isContract === "contract") {
     if (WhaleSpace?.topWhaleWallets) {
       listTopWallet = WhaleSpace.topWhaleWallets["totalBalance"]?.["walletInfo"]
-    }
+      }
   }
   if (type === "totalBalance" && isContract === "notContract") {
     if (WhaleSpace?.topWhaleWallets) {
@@ -198,8 +200,6 @@ function TopWhaleInfo(props) {
         });
     }
   }
-console.log(addressWallet)
-console.log(tokenChangeLogs)
   const handleType = (event) => {
     if (event.target.value === "totalBalance") {
       setType("totalBalance")
@@ -230,8 +230,8 @@ console.log(tokenChangeLogs)
   let options = {
     chart: {
       backgroundColor: "#17171a",
-      height: 550,
-      width: 960
+      height: 500,
+      width: 450
     },
     rangeSelector: {
       selected: 1
@@ -292,14 +292,14 @@ console.log(tokenChangeLogs)
   }
 
   const columns: GridColDef[] = [
-    { field: 'walletRank', headerName: 'Rank', width: 100 },
-    { field: 'id', headerName: 'Address', width: 100 },
-    { field: 'walletTokenAmount', headerName: 'Token Amount', width: 100 },
-    { field: 'walletTokenBalance', headerName: 'Token Amount (USD)', width: 100 },
-    { field: 'walletTotalBalance', headerName: 'Token Balance (USD)', width: 100 },
-    { field: 'walletTokenTotalBalancePercentage', headerName: '% token balance per total balance', width: 100 },
-    { field: 'walletTokenTotalSupplyPercentage', headerName: '% token balance per total supply', width: 100 },
-    { field: 'walletTokenChange', headerName: 'Change', width: 100 }
+    { field: 'walletRank', headerName: 'Rank', width: 50 },
+    { field: 'id', headerName: 'Address', width: 125, valueFormatter: params => addr(params.value)},
+    { field: 'walletTokenAmount', headerName: 'Token Amount', width: 125, valueFormatter: params => abbrNum(params.value, 2) },
+    { field: 'walletTokenBalance', headerName: 'Token Amount (USD)', width: 150, valueFormatter: params => abbrNum(params.value, 2) },
+    { field: 'walletTotalBalance', headerName: 'Token Balance (USD)', width: 150, valueFormatter: params => abbrNum(params.value, 2) },
+    { field: 'walletTokenTotalBalancePercentage', headerName: '% token balance per total balance', width: 80, valueFormatter: params => BigNumber(params.value).toFixed(2)  },
+    { field: 'walletTokenTotalSupplyPercentage', headerName: '% token balance per total supply', width: 80, valueFormatter: params => BigNumber(params.value).toFixed(2) },
+    { field: 'walletTokenChange', headerName: 'Change', width: 120, valueFormatter: params => abbrNum(params.value, 2) }
   ];
 
   return (
@@ -352,11 +352,9 @@ console.log(tokenChangeLogs)
         </div>
         <div className="row">
 
-          <div className="col">
+          <Box className="col wallet-table" sx={{ marginTop: "40px", display: "flex", justifyContent: "space-around" }}>
             <HighchartsReact highcharts={Highcharts} options={options} />
-          </div>
-          <Box className="col wallet-table" sx={{ marginTop: "40px" }}>
-            <div style={{ height: 600, width: '720px', margin: "0 auto" }}>
+            <div style={{ height: 600, width: '950px', margin: "0 0 0 20px" }}>
               <ThemeProvider theme={theme}>
                 <DataGrid
                   rows={listTopWallet}
