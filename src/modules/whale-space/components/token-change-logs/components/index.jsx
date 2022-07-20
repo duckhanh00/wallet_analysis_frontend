@@ -230,7 +230,7 @@ function TopWhaleInfo(props) {
   let options = {
     chart: {
       backgroundColor: "#17171a",
-      height: 500,
+      height: 360,
       width: 450
     },
     rangeSelector: {
@@ -297,9 +297,9 @@ function TopWhaleInfo(props) {
     { field: 'walletTokenAmount', headerName: 'Token Amount', width: 125, valueFormatter: params => abbrNum(params.value, 2) },
     { field: 'walletTokenBalance', headerName: 'Token Amount (USD)', width: 150, valueFormatter: params => abbrNum(params.value, 2) },
     { field: 'walletTotalBalance', headerName: 'Token Balance (USD)', width: 150, valueFormatter: params => abbrNum(params.value, 2) },
-    { field: 'walletTokenTotalBalancePercentage', headerName: '% token balance per total balance', width: 80, valueFormatter: params => BigNumber(params.value).toFixed(2)  },
-    { field: 'walletTokenTotalSupplyPercentage', headerName: '% token balance per total supply', width: 80, valueFormatter: params => BigNumber(params.value).toFixed(2) },
-    { field: 'walletTokenChange', headerName: 'Change', width: 120, valueFormatter: params => abbrNum(params.value, 2) }
+    { field: 'walletTokenTotalBalancePercentage', headerName: '% total balance', width: 125, valueFormatter: params => BigNumber(params.value).toFixed(2)  },
+    { field: 'walletTokenTotalSupplyPercentage', headerName: '% total supply', width: 125, valueFormatter: params => BigNumber(params.value).toFixed(2) },
+    { field: 'walletTokenChange', headerName: 'Change', width: 70, valueFormatter: params => abbrNum(params.value, 2) }
   ];
 
   return (
@@ -354,13 +354,13 @@ function TopWhaleInfo(props) {
 
           <Box className="col wallet-table" sx={{ marginTop: "40px", display: "flex", justifyContent: "space-around" }}>
             <HighchartsReact highcharts={Highcharts} options={options} />
-            <div style={{ height: 600, width: '950px', margin: "0 0 0 20px" }}>
+            <div style={{ height: 360, width: '950px', margin: "0 0 0 20px" }}>
               <ThemeProvider theme={theme}>
                 <DataGrid
                   rows={listTopWallet}
                   columns={columns}
-                  pageSize={10}
-                  rowsPerPageOptions={[10]}
+                  pageSize={5}
+                  rowsPerPageOptions={[5]}
                   onRowClick={(e) => { handleClickRow(e.row.id) }}
                   getRowClassName={(params) =>
                     params.indexRelativeToCurrentPage % 2 === 0 ? 'even' : 'odd'
