@@ -9,6 +9,11 @@ const PermissionRoute = {
         title: "Relationship Space"
     },
 
+    RELATIONSHIP_SPACE_TOKEN: {
+        path: "/relationship-space/:slug",
+        title: "Relationship Space"
+    },
+
     WHALE_SPACE: {
         path: "/whale-space",
         title: "Whale Space"

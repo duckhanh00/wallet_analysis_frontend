@@ -27,13 +27,13 @@
 }
 
 .button-change-size {
-  margin-top: 800px;
+  margin-top: 150px;
   bottom: auto;
   transform: none !important;
   z-index: 10000;
   position: absolute;
-  top: 15px;
-  right: 1%;
+  top: 2%;
+  left: 1%;
 }
 
 .relationship-space-container {
@@ -56,14 +56,13 @@
   background-color: #435176;
 }
 
-.button-wallet-list {
-  bottom: auto;
-  width: 100px;
-  transform: none !important;
-  z-index: 10000;
+.button-wallet-list-add {
+  bottom: 100px;
+  width: 70px;
   // position: fixed;
   top: 15px;
   right: 1%;
+  margin-top: 0;
   background: #979a98;
   padding: 0px;
 }

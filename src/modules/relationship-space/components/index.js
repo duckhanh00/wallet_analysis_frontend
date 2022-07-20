@@ -114,17 +114,19 @@ const useStyles = makeStyles({
         right: 10,
         top: 10,
         position: "absolute",
-        backgroundColor: "#616264",
-        color: "#a1a7ac"
+        backgroundColor: "#1d1d1e",
+        color: "white",
+        borderRadius: "4px",
     },
     dropdownToggle: {
-        backgroundColor: "#616264",
-        color: "#a1a7ac",
+        backgroundColor: "#1d1d1e",
+        color: "white",
+        borderRadius: "4px",
         "&:hover": {
-            backgroundColor: "#4a4b4e"
+            backgroundColor:  "250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
         },
         "&.dropdown-menu>li>a:focus": {
-            backgroundColor: "white"
+            backgroundColor: "#1d1d1f"
         }
     },
     tableRow: {
@@ -667,7 +669,7 @@ function RelationshipSpace(props) {
 
     return (
         <Fragment>
-            <Box style={{ maxHeight: '100vh', position: "fixed" }}>
+            <Box style={{ maxHeight: '80vh' }}>
 
                 <div className="relationship-space-container">
                     <Button className={classes.general} onClick={handleClickOpenGeneral('paper')}>
@@ -676,13 +678,13 @@ function RelationshipSpace(props) {
                             src={"https://assets.coingecko.com/coins/images/17553/large/TRAVA_OFFICIAL_LOGO.png?1628509820"}
                             alt="Logo"
                         /></span>
-                        <span>Trava Finance (TRAVA)&nbsp;</span>
+                        <Typography variant="h5" ml={1}>Trava Finance (TRAVA)&nbsp;</Typography>
                         <span><MoreHorizIcon /></span>
                     </Button>
 
                     <Box style={{ position: "absolute", zIndex: 1000, top: 60, left: 30 }}>
-                        <h4>Wallets: 4000</h4>
-                        <h4>Clusters: 300</h4>
+                        <Typography variant="h6">Wallets: 4000</Typography>
+                        <Typography variant="h6">Clusters: 300</Typography>
                     </Box>
 
                     <Dialog
@@ -716,21 +718,10 @@ function RelationshipSpace(props) {
                         </DialogActions>
                     </Dialog>
 
-
-                    <div className='button-change-size'>
-                        <Fab className='button-change-size' color="default" aria-label="add">
-                            <AddIcon onClick={handleIncreaseSize} />
-                        </Fab>
-                        <Fab className='button-change-size' color="default" aria-label="remove">
-                            <RemoveIcon onClick={handleDecreaseSize} />
-                        </Fab>
-                    </div>
-
                     <Dropdown className={classes.dropdown}>
                         <Dropdown.Toggle className={classes.dropdownToggle}>
                             Menu
                         </Dropdown.Toggle>
-
                         <Dropdown.Menu>
                             <Box
                                 sx={{
@@ -1008,6 +999,14 @@ function RelationshipSpace(props) {
                     />
                 </div>
             </Box>
+            <div className='button-change-size'>
+                <Fab className='button-change-size-add' color="primary" aria-label="add">
+                    <AddIcon onClick={handleIncreaseSize} />
+                </Fab>
+                <Fab className='button-change-size-remove' color="primary" aria-label="remove" sx={{marginLeft: "20px"}}>
+                    <RemoveIcon onClick={handleDecreaseSize} />
+                </Fab>
+            </div>
         </Fragment>
     );
 }

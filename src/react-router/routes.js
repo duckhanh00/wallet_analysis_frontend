@@ -11,6 +11,7 @@ import { PublicRoute } from './publicRoute';
 import { PermissionRoute, AllRoute } from './permission';
 
 const RelationshipSpace = lazy(() => import('../modules/relationship-space/components'))
+const RelationshipSpaceToken = lazy(() => import('../modules/relationship-space-token/components'))
 const WhaleSpace = lazy(() => import('../modules/whale-space/components'))
 const Home = lazy(() => import('../modules/home/components'))
 
@@ -61,6 +62,11 @@ const Routes = props => {
                   path={PermissionRoute.HOME.path}
                   title={PermissionRoute.HOME.title}
                   component={Home}
+                />
+                <PublicRoute
+                  path={PermissionRoute.RELATIONSHIP_SPACE_TOKEN.path}
+                  title={PermissionRoute.RELATIONSHIP_SPACE_TOKEN.title}
+                  component={RelationshipSpaceToken}
                 />
                 <PublicRoute
                   path={PermissionRoute.RELATIONSHIP_SPACE.path}
