@@ -259,7 +259,7 @@ function TopWhaleInfo(props) {
       type: 'datetime',
       labels: {
         formatter: function() {
-            return Highcharts.dateFormat('%d %b %y', this.value);
+            return Highcharts.dateFormat('%d %b %y', this.value * 1000);
        }
    }
     },
