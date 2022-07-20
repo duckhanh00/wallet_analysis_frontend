@@ -1,4 +1,3 @@
-// import React, { Fragment, useEffect, useState } from "react";
 import React, { Fragment, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import Highcharts from "highcharts";
@@ -14,6 +13,9 @@ import "./style.scss";
 
 function TokenDistribution(props) {
   const { WhaleSpace } = props
+
+  const [isContract, setIsContract] = useState("contract");
+
   useEffect(() => {
     props.getTokenDistribution('0x38_0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c')
   }, [])
@@ -23,167 +25,153 @@ function TokenDistribution(props) {
   if (WhaleSpace?.tokenDistribution) {
     tokenDistribution = WhaleSpace.tokenDistribution
   }
-  console.log(tokenDistribution)
 
-  const [isContract, setIsContract] = useState("1");
-
-  const handleIsContract = (event) => {
-    if (event.target.value === "1") {
-      setIsContract(event.target.value);
-      handleDataAmountChart("1")
-      handleDataBalanceChart("1")
-    } else {
-      setIsContract(event.target.value);
-      handleDataAmountChart ("0")
-      handleDataBalanceChart("0")
+  let xAxisBalance = []
+  let yAxisBalance = []
+  let xAxisAmount = []
+  let yAxisAmount = []
+  if (isContract === "contract") {
+    if (WhaleSpace?.tokenDistribution) {
+      let tokenDistribution = WhaleSpace.tokenDistribution["totalBalance"]?.["distribution"]
+      yAxisBalance = tokenDistribution.map((item) => {
+        return parseInt(item[0])
+      })
+      xAxisBalance = tokenDistribution.map( (item) => {
+        let xVal = WhaleSpace.tokenDistribution["totalBalance"]?.["threshold"]
+        return parseInt(xVal)
+      })
     }
-  };
 
-  const [subTitle, setSubTitle] = useState("Top 100 wallets");
-  const handleSubTitle = (title) => {
-    setSubTitle(title)
-  }
-
-  const [dataAmountChart, setDataAmountChart] = useState(tokenDistribution['tokenAmount'])
-  const [dataBalanceChart, setDataBalanceChart] = useState(tokenDistribution['totalBalance'])
-  const handleDataBalanceChart = (_isContract) => {
-    if (_isContract === "1") {
-      setDataBalanceChart(tokenDistribution['totalBalance'])
-    }
-    else {
-      setDataBalanceChart(tokenDistribution['totalBalanceNotContract'])
+    if (WhaleSpace?.tokenDistribution) {
+      let tokenDistribution = WhaleSpace.tokenDistribution["tokenAmount"]?.["distribution"]
+      yAxisAmount = tokenDistribution.map((item) => {
+        return parseInt(item[0])
+      })
+      xAxisAmount = tokenDistribution.map( (item) => {
+        let xVal = WhaleSpace.tokenDistribution["tokenAmount"]?.["threshold"]
+        return parseInt(xVal)
+      })
     }
   }
 
-  const handleDataAmountChart = (_isContract) => {
-    if (_isContract === "1") {
-      setDataAmountChart(tokenDistribution['totalAmount'])
+  if (isContract === "notContract") {
+    if (WhaleSpace?.tokenDistribution) {
+      let tokenDistribution = WhaleSpace.tokenDistribution["totalBalanceNotContract"]?.["distribution"]
+      yAxisBalance = tokenDistribution.map((item) => {
+        return item[0]
+      })
+      xAxisBalance = tokenDistribution.map( (item) => {
+        let xVal = WhaleSpace.tokenDistribution["totalBalanceNotContract"]?.["threshold"]
+        return parseInt(xVal)
+      })
     }
-    else {
-      setDataAmountChart(tokenDistribution['totalAmountNotContract'])
+
+    if (WhaleSpace?.tokenDistribution) {
+      let tokenDistribution = WhaleSpace.tokenDistribution["tokenAmountNotContract"]?.["distribution"]
+      yAxisAmount = tokenDistribution.map((item) => {
+        return item[0]
+      })
+      xAxisAmount = tokenDistribution.map( (item) => {
+        let xVal = WhaleSpace.tokenDistribution["tokenAmountNotContract"]?.["threshold"]
+        return parseInt(xVal)
+      })
     }
   }
+
+  console.log(xAxisBalance,
+     yAxisBalance,
+     xAxisAmount,
+     yAxisAmount)
+
 
   let amountOptions = {
     chart: {
-      type: 'area',
-      backgroundColor: "#17171a",
+      type: 'column'
     },
     title: {
-      text: 'Token amount distribution',
-      style: { color: "#a1a7bb", fontSize: "18px" }
-    },
-    credits: {
-      enabled: false
+      text: 'Token distribution'
     },
     subtitle: {
-      text: subTitle
+      text: 'Token distribution of wallets sort by token amount'
     },
     xAxis: {
-      categories: [],
-      title: {
-        enabled: false
-      }
+      categories: xAxisAmount,
+      crosshair: true
     },
     yAxis: {
-      // min: 0,
+      type: 'logarithmic',
       title: {
-        text: null,
-      },
-      style: {
-        color: "#a1a7bb",
-      },
-      tickAmount: 7,
-      gridLineColor: "#323546",
-      labels: {
-        style: {
-          color: "#a1a7ac",
-        },
-      },
+        text: 'wallets'
+      }
     },
     tooltip: {
-      split: true
+      headerFormat: '<span style="font-size:10px">Threshold: {point.key}</span><table>',
+      pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+        '<td style="padding:0"><b> {point.y:.1f} wallets</b></td></tr>',
+      footerFormat: '</table>',
+      shared: true,
+      useHTML: true
     },
     plotOptions: {
-      area: {
-        stacking: 'normal',
-        lineColor: '#666666',
-        lineWidth: 1,
-        marker: {
-          lineWidth: 1,
-          lineColor: '#666666'
-        }
+      column: {
+        pointPadding: 0.2,
+        borderWidth: 0
       }
     },
     series: [{
-      name: 'Number of holders',
-      data: dataAmountChart
+      name: 'Number of wallets',
+      data: yAxisAmount
+
     }]
   };
 
   let balanceOptions = {
     chart: {
-      type: 'area',
-      backgroundColor: "#17171a",
+      type: 'column'
     },
     title: {
-      text: 'Token blance distribution',
-      style: { color: "#a1a7bb", fontSize: "18px" }
-    },
-    credits: {
-      enabled: false
+      text: 'Token distribution'
     },
     subtitle: {
-      text: subTitle
+      text: 'Token distribution of wallets sort by total balance'
     },
     xAxis: {
-      categories: [],
-      title: {
-        enabled: false
-      }
+      categories: xAxisBalance,
+      crosshair: true
     },
     yAxis: {
-      // min: 0,
+      type: 'logarithmic',
       title: {
-        text: null,
-      },
-      style: {
-        color: "#a1a7bb",
-      },
-      tickAmount: 7,
-      gridLineColor: "#323546",
-      labels: {
-        style: {
-          color: "#a1a7ac",
-        },
-      },
+        text: 'wallets'
+      }
     },
     tooltip: {
-      split: true
+      headerFormat: '<span style="font-size:10px">Threshold: {point.key} (USD)</span><table>',
+      pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+        '<td style="padding:0"><b>{point.y:.1f} wallets</b></td></tr>',
+      footerFormat: '</table>',
+      shared: true,
+      useHTML: true
     },
     plotOptions: {
-      area: {
-        stacking: 'normal',
-        lineColor: '#666666',
-        lineWidth: 1,
-        marker: {
-          lineWidth: 1,
-          lineColor: '#666666'
-        }
+      column: {
+        pointPadding: 0.2,
+        borderWidth: 0
       }
     },
     series: [{
-      name: 'Number of holders',
-      data: dataBalanceChart
+      name: 'Number of wallets',
+      data: yAxisBalance
+
     }]
   };
-  
+
 
   return (
     <Fragment>
       <div className="block-in-page">
         <div className="row">
-          <Box className="action__chart" sx={{padding: "10px 0"}}>
+          <Box className="action__chart" sx={{ padding: "10px 0" }}>
             <FormControl sx={{ m: 1, minWidth: 140 }} size="small">
               <InputLabel id="demo-select-small"></InputLabel>
               <Select
@@ -194,28 +182,22 @@ function TokenDistribution(props) {
                 inputProps={{ MenuProps: { disableScrollLock: true } }}
                 sx={{ color: "#a1a7ac", backgroundColor: "#1e1f22" }}
                 onChange={(e) => {
-                  if (e.target.value === "1") {
-                    console.log("tokenAmount")
-                    setDataAmountChart(tokenDistribution['tokenAmount'])
-                    setDataBalanceChart(tokenDistribution['totalBalance'])
-                    setIsContract("1")
+                  if (e.target.value === "contract") {
+                    setIsContract("contract")
                   }
                   else {
-                    console.log("tokenAmountNotContract")
-                    setDataAmountChart(tokenDistribution['tokenAmountNotContract'])
-                    setDataBalanceChart(tokenDistribution['totalBalanceNotContract'])
-                    setIsContract("0")
+                    setIsContract("notContract")
                   }
                 }}
               >
-                <MenuItem value={"1"}>All</MenuItem>
-                <MenuItem value={"0"}>Not Contract</MenuItem>
+                <MenuItem value={"contract"}>All</MenuItem>
+                <MenuItem value={"notContract"}>Not Contract</MenuItem>
               </Select>
             </FormControl>
-            <Box className="action__chart" sx={{display: "flex", justifyContent: "space-between"}}></Box>
+            <Box className="action__chart" sx={{ display: "flex", justifyContent: "space-between" }}></Box>
           </Box>
         </div>
-        <Box className="action__chart" sx={{display: "flex", justifyContent: "space-between"}}>
+        <Box className="action__chart" sx={{ display: "flex", justifyContent: "space-between" }}>
           <HighchartsReact highcharts={Highcharts} options={amountOptions} />
           <HighchartsReact highcharts={Highcharts} options={balanceOptions} />
         </Box>
