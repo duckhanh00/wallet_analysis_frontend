@@ -17,7 +17,7 @@ const TokenListItem = ({tokenId, name, imgSrc}) => {
         <a href={"/relationship-space/" + tokenId} >
           <BubbleChartIcon sx={{color: "white", fontSize: "32px", marginRight: "15px"}}/>
         </a>
-        <a href="/home">
+        <a href={"/whale-space/" + tokenId}>
           <InfoIcon sx={{color: "white", fontSize: "32px"}}/>
         </a>
       </Box>

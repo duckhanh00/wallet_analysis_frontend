@@ -2,6 +2,15 @@ export function addr(address) {
   return address.slice(0,5) + "..." + address.slice(-4, -1);
 }
 
+export function numberWithCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+export function upperText(myString) {        
+  return myString.toUpperCase();
+}
+
+
 // abbrNum(12 , 1)          => 12
 // abbrNum(0 , 2)           => 0
 // abbrNum(1234 , 0)        => 1k

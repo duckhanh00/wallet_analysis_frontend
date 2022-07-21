@@ -14,6 +14,7 @@ const RelationshipSpace = lazy(() => import('../modules/relationship-space/compo
 const RelationshipSpaceToken = lazy(() => import('../modules/relationship-space-token/components'))
 const WhaleSpace = lazy(() => import('../modules/whale-space/components'))
 const Home = lazy(() => import('../modules/home/components'))
+const WhaleSpaceToken = lazy(() => import('../modules/whale-space copy/components'))
 
 const Routes = props => {
   const location = useLocation();
@@ -72,6 +73,11 @@ const Routes = props => {
                   path={PermissionRoute.RELATIONSHIP_SPACE.path}
                   title={PermissionRoute.RELATIONSHIP_SPACE.title}
                   component={RelationshipSpace}
+                />
+                <PublicRoute
+                  path={PermissionRoute.WHALE_SPACE_TOKEN.path}
+                  title={PermissionRoute.WHALE_SPACE_TOKEN.title}
+                  component={WhaleSpaceToken}
                 />
                 <PublicRoute
                   path={PermissionRoute.WHALE_SPACE.path}
