@@ -127,7 +127,7 @@ const useStyles = makeStyles({
             backgroundColor:  "250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
         },
         "&.dropdown-menu>li>a:focus": {
-            backgroundColor: "#1d1d1f"
+            backgroundColor: "#2E8BC0"
         }
     },
     tableRow: {
@@ -322,7 +322,7 @@ function RelationshipSpace(props) {
     let nodeGraphWalletIn = []
     let nodeGraphWalletOut = []
     let linkGraphWalletRank = []
-    let tokenInformation = []
+    let tokenInfomation = []
 
     if (RelationshipSpace?.walletNodeRelationship) {
         nodeGraphWalletRank = RelationshipSpace.walletNodeRelationship["rank"]
@@ -331,8 +331,8 @@ function RelationshipSpace(props) {
         linkGraphWalletRank = RelationshipSpace.walletLinkRelationship["rank"]
     }
 
-    if (RelationshipSpace?.tokenInformation) {
-        tokenInformation = RelationshipSpace.tokenInformation
+    if (RelationshipSpace?.tokenInfomation) {
+        tokenInfomation = RelationshipSpace.tokenInfomation
     }
 
     const [addressWallet, setAddressWallet] = useState("0x0be840390e363f5bd2d922ca59e7c4c2dc2001e5")
@@ -651,16 +651,16 @@ function RelationshipSpace(props) {
                     <Button className={classes.general} onClick={handleClickOpenGeneral('paper')}>
                         <span><img
                             className='logo'
-                            src={"https://assets.coingecko.com/coins/images/17553/large/TRAVA_OFFICIAL_LOGO.png?1628509820"}
+                            src={tokenInfomation.image}
                             alt="Logo"
                         /></span>
-                        <Typography variant="h5" ml={1}>Trava Finance (TRAVA)&nbsp;</Typography>
+                        <Typography variant="h5" ml={1}>{tokenInfomation?.name} ({tokenInfomation?.symbol})&nbsp;</Typography>
                         <span><MoreHorizIcon /></span>
                     </Button>
 
                     <Box style={{ position: "absolute", zIndex: 1000, top: 60, left: 30 }}>
-                        <Typography variant="h6">Wallets: 4000</Typography>
-                        <Typography variant="h6">Clusters: 300</Typography>
+                        <Typography variant="h6">Wallets: {tokenInfomation?.totalWallets} </Typography>
+                        <Typography variant="h6">Clusters: {tokenInfomation?.totalClusters}</Typography>
                     </Box>
 
                     <Dialog
@@ -670,27 +670,31 @@ function RelationshipSpace(props) {
                         scroll={scroll}
                         aria-labelledby="general-title"
                         aria-describedby="general-description"
+                        sx={{width: "1200px", height: "1000px", margin: "0 auto"}}
                     >
-                        <DialogTitle id="general-title">Trava-Finance</DialogTitle>
-                        <DialogContent
+                        <DialogTitle id="general-title" sx={{textAlign: "center", backgroundColor: "#1d1d1e", display: "flex", justifyContent: "center", alignItems: "center", paddingRight: "10px", borderBottom: "1px solid grey"}}><img
+                            className='logo'
+                            src={tokenInfomation.image}
+                            alt="Logo"
+                        /> <Typography sx={{fontSize: "24px", fontWeight: 700, color: "white", marginLeft: "10px"}}>{tokenInfomation?.name} </Typography></DialogTitle>
+                        <DialogContent sx={{backgroundColor: "#1d1d1e", borderBottom: "1px solid grey"}}
                             dividers={scroll === 'paper'}>
                             <DialogContentText
                                 id="general-description"
                                 ref={descriptionGeneralRef}
                                 tabIndex={-1}
                             >
-                                <h4>Wallets: 5000</h4>
-                                <h4>Clusters: 200</h4>
-                                <h4>Active wallets in month: 1000</h4>
-                                <h4>Active wallets in quarter: 2000</h4>
-                                <h4>New wallets in month: 200</h4>
-                                <h5>Total balance of new wallets in month: 2000 USD</h5>
-                                <h5>Token amount of new wallets in month: 2000000000000 TRAVA</h5>
+                                <Typography variant="h6" sx={{fontSize: "20px", fontWeight: 500, color: "white", display: "flex", marginTop: "5px"}}><Typography sx={{fontSize: "20px",fontWeight: 700, color: "#2E8BC0", marginRight: "5px"}}>Wallets:  </Typography> {tokenInfomation?.totalWallets}</Typography>
+                                <Typography variant="h6" sx={{fontSize: "20px", fontWeight: 500, color: "white", display: "flex", marginTop: "5px"}}><Typography sx={{fontSize: "20px",fontWeight: 700, color: "#2E8BC0", marginRight: "5px"}}>Clusters:  </Typography>  {tokenInfomation?.totalClusters}</Typography>
+                                <Typography variant="h6" sx={{fontSize: "20px", fontWeight: 500, color: "white", display: "flex", marginTop: "5px"}}><Typography sx={{fontSize: "20px",fontWeight: 700, color: "#2E8BC0", marginRight: "5px"}}>Active wallets in month:  </Typography>  {tokenInfomation?.totalActiveWalletsInMonth}</Typography>
+                                <Typography variant="h6" sx={{fontSize: "20px", fontWeight: 500, color: "white", display: "flex", marginTop: "5px"}}><Typography sx={{fontSize: "20px",fontWeight: 700, color: "#2E8BC0", marginRight: "5px"}}>New wallets in month:  </Typography>  {tokenInfomation?.newWalletsInMonth?.number}</Typography>
+                                <Typography variant="h6" sx={{fontSize: "20px", fontWeight: 500, color: "white", display: "flex", marginTop: "5px"}}><Typography sx={{fontSize: "20px",fontWeight: 700, color: "#2E8BC0", marginRight: "5px"}}>Total balance of new wallets in month:  </Typography>  {abbrNum(tokenInfomation?.newWalletsInMonth?.totalBalance, 2)} USD</Typography>
+                                <Typography variant="h6" sx={{fontSize: "20px", fontWeight: 500, color: "white", display: "flex", marginTop: "5px"}}><Typography sx={{fontSize: "20px",fontWeight: 700, color: "#2E8BC0", marginRight: "5px"}}>Token amount of new wallets in month:  </Typography>  {abbrNum(tokenInfomation?.newWalletsInMonth?.tokenBalance, 2)}  TRAVA</Typography>
 
                             </DialogContentText>
                         </DialogContent>
-                        <DialogActions>
-                            <Button onClick={handleCloseGeneral}>Cancel</Button>
+                        <DialogActions sx={{backgroundColor: "#1d1d1e"}}>
+                            <Button onClick={handleCloseGeneral}><Typography sx={{fontSize: "16px", fontWeight: 700, color: "white", marginLeft: "10px"}}>Cancel </Typography></Button>
                         </DialogActions>
                     </Dialog>
 

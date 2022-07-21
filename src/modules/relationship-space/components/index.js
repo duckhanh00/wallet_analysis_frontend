@@ -126,7 +126,7 @@ const useStyles = makeStyles({
             backgroundColor:  "250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
         },
         "&.dropdown-menu>li>a:focus": {
-            backgroundColor: "#1d1d1f"
+            backgroundColor: "#2E8BC0"
         }
     },
     tableRow: {
@@ -720,7 +720,7 @@ function RelationshipSpace(props) {
 
                     <Dropdown className={classes.dropdown} sx={{maxHeight: 100}}>
                         <Dropdown.Toggle className={classes.dropdownToggle}>
-                            Menu
+                            <Button>Menu</Button>
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
                             <Box
