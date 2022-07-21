@@ -342,6 +342,10 @@ const default_test = {
 
 function RelationshipSpace(props) {
     const clusterChangeLog = [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]]
+    const [addressWallet, setAddressWallet] = useState("0x0be840390e363f5bd2d922ca59e7c4c2dc2001e5")
+    const [clusterRank, setClusterRank] = useState(1)
+    const [sourceAddress, setSourceAddress] = useState('0xdf97761eb48058d8c9800f97f9ff45e3a76983fe')
+    const [targetAddress, setTargetAddress] = useState('0x8735fe4006d4f969737b948b268923b9018ecc52')
 
     const classes = useStyles();
     const theme = useTheme();
@@ -355,24 +359,46 @@ function RelationshipSpace(props) {
         props.getListCluster('0x38_0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c')
     }, [])
 
+    useEffect(() => {
+        props.getTokenChangeLogs('0x38_0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c', addressWallet)
+    }, [addressWallet])
+
+    useEffect(() => {
+        props.getClusterTokenChangeLogs('0x38_0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c', clusterRank)
+    }, [clusterRank])
+
+    // useEffect(() => {
+    //     props.getLinkDetail('0x38_0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c', sourceAddress, targetAddress)
+    // }, [sourceAddress, targetAddress])
+
     console.log(RelationshipSpace)
 
     let nodeGraphWallet = []
     let linkGraphWallet = []
-
     if (RelationshipSpace?.walletNodeRelationship) {
         nodeGraphWallet = RelationshipSpace.walletNodeRelationship["rank"]
         linkGraphWallet = RelationshipSpace.walletLinkRelationship["rank"]
     }
 
+    let walletTokenChangeLogs = []
+    let clusterTokenChangeLogs = []
+    if (RelationshipSpace?.walletTokenChangeLogs) {
+        let objs = RelationshipSpace.walletTokenChangeLogs
+        walletTokenChangeLogs = Object.keys(objs)
+          .map(function (key) {
+            return [parseInt(key), objs[key]];
+          });
+    }
+    if (RelationshipSpace?.clusterTokenChangeLogs) {
+        let objs = RelationshipSpace.clusterTokenChangeLogs
+        clusterTokenChangeLogs = Object.keys(objs)
+          .map(function (key) {
+            return [parseInt(key), objs[key]];
+          });
+    }
+    console.log(walletTokenChangeLogs)
+    console.log(clusterTokenChangeLogs)
 
-    const [addressWallet, setAddressWallet] = useState("0x0be840390e363f5bd2d922ca59e7c4c2dc2001e5")
-
-    let walletChangeLogs = []
-    // if (RelationshipSpace?.relationshipTokenChangeLogs) {
-    //     walletChangeLogs = RelationshipSpace.relationshipTokenChangeLogs
-    // }
-    // // start menu 
     const [tabMenu, setTabMenu] = useState(0);
     const handleChangeTab = (event, newValue) => {
         setTabMenu(newValue);
@@ -459,13 +485,13 @@ function RelationshipSpace(props) {
         // fgRef.current.d3Force("charge").distanceMax(200);
     }, [lenLink]);
 
-    // useEffect(() => {
-    //     const bloomPass = new UnrealBloomPass();
-    //     bloomPass.strength = 1;
-    //     bloomPass.radius = 1;
-    //     bloomPass.threshold = 0.1;
-    //     fgRef.current.postProcessingComposer().addPass(bloomPass);
-    // }, []);
+    useEffect(() => {
+        const bloomPass = new UnrealBloomPass();
+        bloomPass.strength = 1;
+        bloomPass.radius = 1;
+        bloomPass.threshold = 0.7;
+        fgRef.current.postProcessingComposer().addPass(bloomPass);
+    }, []);
 
 
     const [nodes, setNodes] = useState([])
@@ -507,6 +533,7 @@ function RelationshipSpace(props) {
             link.source, // lookAt ({ x, y, z })
             3000 // ms transition duration
         );
+        console.log(link.source.id, link.target.id)
         handleClickOpenLinkDetail(link.source.id, link.target.id)
 
     }
@@ -579,10 +606,10 @@ function RelationshipSpace(props) {
     const [dataChart, setDataChart] = useState();
     const handleTypeNodeDetail = (type) => {
         if (type === "wallet") {
-            setDataChart(walletChangeLogs)
+            setDataChart(walletTokenChangeLogs)
         }
         else if (type === "cluster") {
-            setDataChart(clusterChangeLog)
+            setDataChart(clusterTokenChangeLogs)
         }
     }
 
@@ -632,7 +659,7 @@ function RelationshipSpace(props) {
         },
         series: [{
             name: 'Token amount',
-            data: [],
+            data: walletTokenChangeLogs,
             tooltip: {
                 valueDecimals: 2
             }
@@ -645,7 +672,7 @@ function RelationshipSpace(props) {
     let linkDetail = default_test["0x1291be54e72f7e001f6bbc331777710b4f2999e2_0x1591be54e72f7e001f6bbc331777710b4f2999ef"]
     
     const handleClickOpenLinkDetail = (source, target) => {
-        props.getLinkDetail('0x89_0x8505b9d2254a7ae468c0e9dd10ccea3a837aef5c', source, target)
+        props.getLinkDetail('0x38_0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c', source, target)
         setOpenLinkDetail(true);
     };
 
@@ -834,7 +861,6 @@ function RelationshipSpace(props) {
                                                             : nodeGraphWallet
                                                         ).map((row) => (
                                                             <TableRow className={classes.tableRow} key={row.id} onClick={() => {
-                                                                handleClickOpenLinkDetail(row.rank);
                                                             }}>
                                                                 <TableCell style={{ width: 70, overflow: "hidden" }} align="left">{row.walletRank}</TableCell>
                                                                 <TableCell style={{ width: 70, overflow: "hidden" }} align="left">{row.id}</TableCell>
@@ -1029,7 +1055,8 @@ const actions = {
     getClusterLinkRelationship: RelationshipSpaceActions.getClusterLinkRelationship,
     getListCluster: RelationshipSpaceActions.getListCluster,
     getClusterTokenChangeLogs: RelationshipSpaceActions.getClusterTokenChangeLogs,
-    getLinkDetail: RelationshipSpaceActions.getLinkDetail
+    getLinkDetail: RelationshipSpaceActions.getLinkDetail,
+    getTokenChangeLogs: RelationshipSpaceActions.getTokenChangeLogs
 };
 
 export default connect(mapState, actions)(RelationshipSpace);

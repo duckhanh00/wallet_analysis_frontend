@@ -79,7 +79,7 @@ export function RelationshipSpace(state = {}, action) {
         case RelationshipSpaceConstants.GET_CLUSTER_TOKEN_CHANGE_LOGS_SUCCESS:
             return {
                 ...state,
-                topListCluster: action.payload
+                clusterTokenChangeLogs: action.payload
             }
         case RelationshipSpaceConstants.GET_CLUSTER_TOKEN_CHANGE_LOGS_FAILURE:
             return {
@@ -96,6 +96,20 @@ export function RelationshipSpace(state = {}, action) {
                 linkDetail: action.payload
             }
         case RelationshipSpaceConstants.GET_LINK_DETAIL_FAILURE:
+            return {
+                ...state,
+            }
+
+        case RelationshipSpaceConstants.GET_TOKEN_CHANGE_LOGS_REQUEST:
+            return {
+                ...state,
+            }
+        case RelationshipSpaceConstants.GET_TOKEN_CHANGE_LOGS_SUCCESS:
+            return {
+                ...state,
+                walletTokenChangeLogs: action.payload
+            }
+        case RelationshipSpaceConstants.GET_TOKEN_CHANGE_LOGS_FAILURE:
             return {
                 ...state,
             }
