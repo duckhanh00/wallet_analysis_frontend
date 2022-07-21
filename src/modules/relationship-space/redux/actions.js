@@ -3,12 +3,34 @@ import { RelationshipSpaceConstants } from './constants';
 
 
 export const RelationshipSpaceActions = {
+  getWalletNodeRelationship,
   getClusterNodeRelationship,
   getClusterLinkRelationship,
   getClusterTokenChangeLogs,
   getListCluster,
   getLinkDetail
 };
+
+function getWalletNodeRelationship(token_key) {
+  return dispatch => {
+    dispatch({
+      type: RelationshipSpaceConstants.GET_WALLET_NODE_RELATIONSHIP_REQUEST
+    });
+    RelationshipSpaceService.getWalletNodeRelationship(token_key)
+      .then(res => {
+        dispatch({
+          type: RelationshipSpaceConstants.GET_WALLET_NODE_RELATIONSHIP_SUCCESS,
+          payload: res.data
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: RelationshipSpaceConstants.GET_WALLET_NODE_RELATIONSHIP_FAILURE,
+          error: error
+        });
+      });
+  };
+}
 
 function getClusterNodeRelationship(token_key) {
   return dispatch => {

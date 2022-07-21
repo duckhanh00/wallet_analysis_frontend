@@ -2,6 +2,20 @@ import { RelationshipSpaceConstants } from './constants';
 
 export function RelationshipSpace(state = {}, action) {
     switch (action.type) {
+        case RelationshipSpaceConstants.GET_WALLET_NODE_RELATIONSHIP_REQUEST:
+            return {
+                ...state,
+            }
+        case RelationshipSpaceConstants.GET_WALLET_NODE_RELATIONSHIP_SUCCESS:
+            return {
+                ...state,
+                walletNodeRelationship: action.payload
+            }
+        case RelationshipSpaceConstants.GET_WALLET_NODE_RELATIONSHIP_FAILURE:
+            return {
+                ...state,
+            }
+
         case RelationshipSpaceConstants.GET_CLUSTER_NODE_RELATIONSHIP_REQUEST:
             return {
                 ...state,

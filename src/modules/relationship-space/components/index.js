@@ -1016,6 +1016,7 @@ function mapState(state) {
     return { RelationshipSpace };
 }
 const actions = {
+    getWalletNodeRelationship: RelationshipSpaceActions.getWalletNodeRelationship,
     getClusterNodeRelationship: RelationshipSpaceActions.getClusterNodeRelationship,
     getClusterLinkRelationship: RelationshipSpaceActions.getClusterLinkRelationship,
     getListCluster: RelationshipSpaceActions.getListCluster,
