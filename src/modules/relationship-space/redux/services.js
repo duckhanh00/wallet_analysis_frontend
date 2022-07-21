@@ -6,7 +6,7 @@ export const RelationshipSpaceService = {
     getWalletLinkRelationship,
     getClusterNodeRelationship,
     getClusterLinkRelationship,
-    getTopListCluster,
+    getListCluster,
     getClusterTokenChangeLogs,
     getLinkDetail
 }
@@ -39,10 +39,10 @@ function getClusterLinkRelationship(token_key) {
     })
 }
 
-function getTopListCluster(token_key) {
+function getListCluster(token_key) {
     return sendRequestToServer({
         method: 'GET',
-        url: `${process.env.REACT_APP_SERVER}/top_list_cluster?token_key=${token_key}`
+        url: `${process.env.REACT_APP_SERVER}/list_cluster_relationship?token_key=${token_key}`
     })
 }
 

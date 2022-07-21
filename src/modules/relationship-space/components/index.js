@@ -348,16 +348,39 @@ function RelationshipSpace(props) {
 
     const { RelationshipSpace } = props
     useEffect(() => {
-        props.getTopWalletRelationship('0x89_0x8505b9d2254a7ae468c0e9dd10ccea3a837aef5c', 'rank')
+        props.getWalletNodeRelationship('0x89_0x8505b9d2254a7ae468c0e9dd10ccea3a837aef5c')
     }, [])
+
+    useEffect(() => {
+        props.getWalletLinkRelationship('0x89_0x8505b9d2254a7ae468c0e9dd10ccea3a837aef5c')
+    }, [])
+
+    useEffect(() => {
+        props.getClusterNodeRelationship('0x89_0x8505b9d2254a7ae468c0e9dd10ccea3a837aef5c')
+    }, [])
+
+    useEffect(() => {
+        props.getClusterLinkRelationship('0x89_0x8505b9d2254a7ae468c0e9dd10ccea3a837aef5c')
+    }, [])
+
+    useEffect(() => {
+        props.getListCluster('0x89_0x8505b9d2254a7ae468c0e9dd10ccea3a837aef5c')
+    }, [])
+
+    console.log(RelationshipSpace)
 
     let nodeGraph = []
     let linkGraph = []
 
-    if (RelationshipSpace?.topWalletRelationship) {
-        nodeGraph = RelationshipSpace.topWalletRelationship["nodes"]
-        linkGraph = RelationshipSpace.topWalletRelationship["links"]
+    if (RelationshipSpace?.walletNodeRelationship) {
+        nodeGraph = RelationshipSpace.walletNodeRelationship["rank"]
     }
+
+    if (RelationshipSpace?.walletLinkRelationship) {
+        linkGraph = RelationshipSpace.walletLinkRelationship["rank"]
+    }
+
+
 
     const [addressWallet, setAddressWallet] = useState("0x0be840390e363f5bd2d922ca59e7c4c2dc2001e5")
 
