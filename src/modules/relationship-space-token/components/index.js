@@ -313,6 +313,7 @@ function RelationshipSpace(props) {
         props.getClusterNodeRelationship(tokenAddress)
         props.getClusterLinkRelationship(tokenAddress)
         props.getListCluster(tokenAddress)
+        props.getTokenInformation(tokenAddress)
     }, [])
 
     console.log(RelationshipSpace)
@@ -321,6 +322,7 @@ function RelationshipSpace(props) {
     let nodeGraphWalletIn = []
     let nodeGraphWalletOut = []
     let linkGraphWalletRank = []
+    let tokenInformation = []
 
     if (RelationshipSpace?.walletNodeRelationship) {
         nodeGraphWalletRank = RelationshipSpace.walletNodeRelationship["rank"]
@@ -329,6 +331,9 @@ function RelationshipSpace(props) {
         linkGraphWalletRank = RelationshipSpace.walletLinkRelationship["rank"]
     }
 
+    if (RelationshipSpace?.tokenInformation) {
+        tokenInformation = RelationshipSpace.tokenInformation
+    }
 
     const [addressWallet, setAddressWallet] = useState("0x0be840390e363f5bd2d922ca59e7c4c2dc2001e5")
 
@@ -910,7 +915,7 @@ function RelationshipSpace(props) {
                                                 </TableRow>
                                             </TableHead>
                                             <TableBody>
-                                                {(rowsPerPage > 0
+                                                {/* {(rowsPerPage > 0
                                                     ? linkDetail['transferChangeLogs'].slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                                     : linkDetail['transferChangeLogs']
                                                 ).map((row) => (
@@ -921,7 +926,7 @@ function RelationshipSpace(props) {
                                                         <TableCell style={{ width: 40, overflow: "hidden" }} align="left">{row.from}</TableCell>
                                                         <TableCell style={{ width: 40, overflow: "hidden" }} align="left">{row.to}</TableCell>
                                                     </TableRow>
-                                                ))}
+                                                ))} */}
                                             </TableBody>
                                         </Table>
                                     </div>
@@ -992,7 +997,8 @@ const actions = {
     getClusterLinkRelationship: RelationshipSpaceActions.getClusterLinkRelationship,
     getListCluster: RelationshipSpaceActions.getListCluster,
     getClusterTokenChangeLogs: RelationshipSpaceActions.getClusterTokenChangeLogs,
-    getLinkDetail: RelationshipSpaceActions.getLinkDetail
+    getLinkDetail: RelationshipSpaceActions.getLinkDetail,
+    getTokenInformation: RelationshipSpaceActions.getTokenInformation
 };
 
 export default connect(mapState, actions)(RelationshipSpace);
