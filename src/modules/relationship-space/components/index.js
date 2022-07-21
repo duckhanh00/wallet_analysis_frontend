@@ -669,7 +669,7 @@ function RelationshipSpace(props) {
 
     return (
         <Fragment>
-            <Box style={{ maxHeight: '80vh' }}>
+            <Box style={{ maxHeight: '100vh' }}>
 
                 <div className="relationship-space-container">
                     <Button className={classes.general} onClick={handleClickOpenGeneral('paper')}>
