@@ -3,6 +3,7 @@ import { sendRequestToServer, filterObject } from '../../../helpers/';
 
 export const RelationshipSpaceService = {
     getWalletNodeRelationship,
+    getWalletLinkRelationship,
     getClusterNodeRelationship,
     getClusterLinkRelationship,
     getTopListCluster,
@@ -14,6 +15,13 @@ function getWalletNodeRelationship(token_key) {
     return sendRequestToServer({
         method: 'GET',
         url: `${process.env.REACT_APP_SERVER}/wallet_node_relationship?token_key=${token_key}`
+    })
+}
+
+function getWalletLinkRelationship(token_key) {
+    return sendRequestToServer({
+        method: 'GET',
+        url: `${process.env.REACT_APP_SERVER}/wallet_link_relationship?token_key=${token_key}`
     })
 }
 

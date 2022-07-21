@@ -4,6 +4,7 @@ import { RelationshipSpaceConstants } from './constants';
 
 export const RelationshipSpaceActions = {
   getWalletNodeRelationship,
+  getWalletLinkRelationship,
   getClusterNodeRelationship,
   getClusterLinkRelationship,
   getClusterTokenChangeLogs,
@@ -26,6 +27,27 @@ function getWalletNodeRelationship(token_key) {
       .catch(error => {
         dispatch({
           type: RelationshipSpaceConstants.GET_WALLET_NODE_RELATIONSHIP_FAILURE,
+          error: error
+        });
+      });
+  };
+}
+
+function getWalletLinkRelationship(token_key) {
+  return dispatch => {
+    dispatch({
+      type: RelationshipSpaceConstants.GET_WALLET_LINK_RELATIONSHIP_REQUEST
+    });
+    RelationshipSpaceService.getWalletLinkRelationship(token_key)
+      .then(res => {
+        dispatch({
+          type: RelationshipSpaceConstants.GET_WALLET_LINK_RELATIONSHIP_SUCCESS,
+          payload: res.data
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: RelationshipSpaceConstants.GET_WALLET_LINK_RELATIONSHIP_FAILURE,
           error: error
         });
       });

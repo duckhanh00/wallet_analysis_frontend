@@ -16,6 +16,20 @@ export function RelationshipSpace(state = {}, action) {
                 ...state,
             }
 
+        case RelationshipSpaceConstants.GET_WALLET_LINK_RELATIONSHIP_REQUEST:
+            return {
+                ...state,
+            }
+        case RelationshipSpaceConstants.GET_WALLET_LINK_RELATIONSHIP_SUCCESS:
+            return {
+                ...state,
+                walletLinkRelationship: action.payload
+            }
+        case RelationshipSpaceConstants.GET_WALLET_LINK_RELATIONSHIP_FAILURE:
+            return {
+                ...state,
+            }
+
         case RelationshipSpaceConstants.GET_CLUSTER_NODE_RELATIONSHIP_REQUEST:
             return {
                 ...state,
