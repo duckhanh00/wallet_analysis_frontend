@@ -1017,6 +1017,7 @@ function mapState(state) {
 }
 const actions = {
     getClusterNodeRelationship: RelationshipSpaceActions.getClusterNodeRelationship,
+    getClusterLinkRelationship: RelationshipSpaceActions.getClusterLinkRelationship,
     getListCluster: RelationshipSpaceActions.getListCluster,
     getClusterTokenChangeLogs: RelationshipSpaceActions.getClusterTokenChangeLogs,
     getLinkDetail: RelationshipSpaceActions.getLinkDetail

@@ -16,6 +16,20 @@ export function RelationshipSpace(state = {}, action) {
                 ...state,
             }
 
+        case RelationshipSpaceConstants.GET_CLUSTER_LINK_RELATIONSHIP_REQUEST:
+            return {
+                ...state,
+            }
+        case RelationshipSpaceConstants.GET_CLUSTER_LINK_RELATIONSHIP_SUCCESS:
+            return {
+                ...state,
+                clusterLinkRelationship: action.payload
+            }
+        case RelationshipSpaceConstants.GET_CLUSTER_LINK_RELATIONSHIP_FAILURE:
+            return {
+                ...state,
+            }
+
         case RelationshipSpaceConstants.GET_LIST_CLUSTER_REQUEST:
             return {
                 ...state,

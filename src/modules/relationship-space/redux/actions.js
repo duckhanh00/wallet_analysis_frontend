@@ -4,6 +4,7 @@ import { RelationshipSpaceConstants } from './constants';
 
 export const RelationshipSpaceActions = {
   getClusterNodeRelationship,
+  getClusterLinkRelationship,
   getClusterTokenChangeLogs,
   getListCluster,
   getLinkDetail
@@ -24,6 +25,27 @@ function getClusterNodeRelationship(token_key) {
       .catch(error => {
         dispatch({
           type: RelationshipSpaceConstants.GET_CLUSTER_NODE_RELATIONSHIP_FAILURE,
+          error: error
+        });
+      });
+  };
+}
+
+function getClusterLinkRelationship(token_key) {
+  return dispatch => {
+    dispatch({
+      type: RelationshipSpaceConstants.GET_CLUSTER_LINK_RELATIONSHIP_REQUEST
+    });
+    RelationshipSpaceService.getClusterLinkRelationship(token_key)
+      .then(res => {
+        dispatch({
+          type: RelationshipSpaceConstants.GET_CLUSTER_LINK_RELATIONSHIP_SUCCESS,
+          payload: res.data
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: RelationshipSpaceConstants.GET_CLUSTER_LINK_RELATIONSHIP_FAILURE,
           error: error
         });
       });
