@@ -348,38 +348,22 @@ function RelationshipSpace(props) {
 
     const { RelationshipSpace } = props
     useEffect(() => {
-        props.getWalletNodeRelationship('0x89_0x8505b9d2254a7ae468c0e9dd10ccea3a837aef5c')
-    }, [])
-
-    useEffect(() => {
-        props.getWalletLinkRelationship('0x89_0x8505b9d2254a7ae468c0e9dd10ccea3a837aef5c')
-    }, [])
-
-    useEffect(() => {
-        props.getClusterNodeRelationship('0x89_0x8505b9d2254a7ae468c0e9dd10ccea3a837aef5c')
-    }, [])
-
-    useEffect(() => {
-        props.getClusterLinkRelationship('0x89_0x8505b9d2254a7ae468c0e9dd10ccea3a837aef5c')
-    }, [])
-
-    useEffect(() => {
-        props.getListCluster('0x89_0x8505b9d2254a7ae468c0e9dd10ccea3a837aef5c')
+        props.getWalletNodeRelationship('0x38_0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c')
+        props.getWalletLinkRelationship('0x38_0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c')
+        props.getClusterNodeRelationship('0x38_0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c')
+        props.getClusterLinkRelationship('0x38_0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c')
+        props.getListCluster('0x38_0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c')
     }, [])
 
     console.log(RelationshipSpace)
 
-    let nodeGraph = []
-    let linkGraph = []
+    let nodeGraphWallet = []
+    let linkGraphWallet = []
 
     if (RelationshipSpace?.walletNodeRelationship) {
-        nodeGraph = RelationshipSpace.walletNodeRelationship["rank"]
+        nodeGraphWallet = RelationshipSpace.walletNodeRelationship["rank"]
+        linkGraphWallet = RelationshipSpace.walletLinkRelationship["rank"]
     }
-
-    if (RelationshipSpace?.walletLinkRelationship) {
-        linkGraph = RelationshipSpace.walletLinkRelationship["rank"]
-    }
-
 
 
     const [addressWallet, setAddressWallet] = useState("0x0be840390e363f5bd2d922ca59e7c4c2dc2001e5")
@@ -403,13 +387,13 @@ function RelationshipSpace(props) {
     const [clusterRows, setRowCluster] = useState(rankClusters);
     const handleTypeWallet = (type) => {
         if (type === "rank") {
-            setRowWallet(rankWallets)
+            setRowWallet(nodeGraphWallet["rank"])
         }
         else if (type == "in") {
-            setRowWallet(inWallets)
+            setRowWallet(nodeGraphWallet["in"])
         }
         else {
-            setRowWallet(outWallets)
+            setRowWallet(nodeGraphWallet["out"])
         }
     }
 
@@ -507,7 +491,7 @@ function RelationshipSpace(props) {
     }
 
     const handleSearchNode = (address) => {
-        const result = nodeGraph.filter(item =>
+        const result = nodeGraphWallet.filter(item =>
             item['id'].includes(address)
         );
         handleClickNode(result[0])
@@ -796,8 +780,8 @@ function RelationshipSpace(props) {
                                                             <TableCell style={{ width: 80, overflow: "hidden" }} align="center">Token Amount</TableCell>
                                                         </TableRow>
                                                         {(rowsPerPage > 0
-                                                            ? nodeGraph.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                                            : rankWallets
+                                                            ? walletRows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                                            : walletRows
                                                         ).map((row) => (
                                                             <TableRow className={classes.tableRow} key={row.id} onClick={() => {
                                                                 handleClickOpenNodeDetail(row)
@@ -846,8 +830,8 @@ function RelationshipSpace(props) {
                                                 <Table style={{ tableLayout: 'fixed' }}>
                                                     <TableBody>
                                                         {(rowsPerPage > 0
-                                                            ? nodeGraph.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                                            : nodeGraph
+                                                            ? nodeGraphWallet.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                                            : nodeGraphWallet
                                                         ).map((row) => (
                                                             <TableRow className={classes.tableRow} key={row.id} onClick={() => {
                                                                 handleClickOpenLinkDetail(row.rank);
@@ -999,7 +983,7 @@ function RelationshipSpace(props) {
                     <ForceGraph3D
                         height="100vh"
                         ref={fgRef}
-                        graphData={{ "nodes": nodeGraph, "links": linkGraph }}
+                        graphData={{ "nodes": nodeGraphWallet, "links": linkGraphWallet }}
                         nodeLabel={node => `${node.id}: #${node.walletRank}`}
                         nodeAutoColorBy="clusterRank"
                         // linkWidth={1}

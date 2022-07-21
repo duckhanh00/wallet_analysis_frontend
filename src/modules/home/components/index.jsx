@@ -44,7 +44,7 @@ function HomeSpace(props) {
   }, [loading])
 
   return (
-    <Box sx={{minHeight: "92vh", paddingTop: "100px"}}>
+    <Box sx={{minHeight: "100vh", paddingTop: "100px"}}>
       <Container>
         <Paper elevation={3} sx={{width: "50%", minHeight: "200px", backgroundColor: "#17171a", padding: "20px 0 40px 0", margin: "0 auto", border: "1px solid #323546", boxShadow: "rgb(232 179 11 / 20%) 0px 0px 24px"}}> 
           
