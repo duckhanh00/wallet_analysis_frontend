@@ -114,6 +114,20 @@ export function RelationshipSpace(state = {}, action) {
                 ...state,
             }
 
+        case RelationshipSpaceConstants.GET_TOKEN_INFOMATION_REQUEST:
+            return {
+                ...state,
+            }
+        case RelationshipSpaceConstants.GET_TOKEN_INFOMATION_SUCCESS:
+            return {
+                ...state,
+                tokenInfomation: action.payload
+            }
+        case RelationshipSpaceConstants.GET_TOKEN_INFOMATION_FAILURE:
+            return {
+                ...state,
+            }
+
         default:
             return state;
     }

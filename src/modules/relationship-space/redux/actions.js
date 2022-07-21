@@ -10,7 +10,8 @@ export const RelationshipSpaceActions = {
   getClusterTokenChangeLogs,
   getListCluster,
   getLinkDetail,
-  getTokenChangeLogs
+  getTokenChangeLogs,
+  getTokenInfomation
 };
 
 function getWalletNodeRelationship(token_key) {
@@ -176,6 +177,27 @@ function getTokenChangeLogs(token_key, address) {
       .catch(error => {
         dispatch({
           type: RelationshipSpaceConstants.GET_TOKEN_CHANGE_LOGS_FAILURE,
+          error: error
+        });
+      });
+  };
+}
+
+function getTokenInfomation(token_key) {
+  return dispatch => {
+    dispatch({
+      type: RelationshipSpaceConstants.GET_TOKEN_INFOMATION_REQUEST
+    });
+    RelationshipSpaceService.getTokenInfomation(token_key)
+      .then(res => {
+        dispatch({
+          type: RelationshipSpaceConstants.GET_TOKEN_INFOMATION_SUCCESS,
+          payload: res.data
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: RelationshipSpaceConstants.GET_TOKEN_INFOMATION_FAILURE,
           error: error
         });
       });

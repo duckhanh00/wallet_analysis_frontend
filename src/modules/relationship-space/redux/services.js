@@ -9,7 +9,8 @@ export const RelationshipSpaceService = {
     getListCluster,
     getClusterTokenChangeLogs,
     getLinkDetail,
-    getTokenChangeLogs
+    getTokenChangeLogs,
+    getTokenInfomation
 }
 
 function getWalletNodeRelationship(token_key) {
@@ -65,5 +66,12 @@ function getTokenChangeLogs(token_key, address) {
     return sendRequestToServer({
         method: 'GET',
         url: `${process.env.REACT_APP_SERVER}/token_change_logs?token_key=${token_key}&address=${address}`
+    })
+}
+
+function getTokenInfomation(token_key) {
+    return sendRequestToServer({
+        method: 'GET',
+        url: `${process.env.REACT_APP_SERVER}/token_infomation?token_key=${token_key}`
     })
 }

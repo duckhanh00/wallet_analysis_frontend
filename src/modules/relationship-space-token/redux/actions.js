@@ -9,7 +9,8 @@ export const RelationshipSpaceActions = {
   getClusterLinkRelationship,
   getClusterTokenChangeLogs,
   getListCluster,
-  getLinkDetail
+  getLinkDetail,
+  getTokenInfomation
 };
 
 function getWalletNodeRelationship(token_key) {
@@ -158,4 +159,25 @@ function getLinkDetail(token_key, source, target) {
         });
       });
   };
-}z
+}
+
+function getTokenInfomation(token_key) {
+  return dispatch => {
+    dispatch({
+      type: RelationshipSpaceConstants.GET_TOKEN_INFOMATION_REQUEST
+    });
+    RelationshipSpaceService.getTokenInfomation(token_key)
+      .then(res => {
+        dispatch({
+          type: RelationshipSpaceConstants.GET_TOKEN_INFOMATION_SUCCESS,
+          payload: res.data
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: RelationshipSpaceConstants.GET_TOKEN_INFOMATION_FAILURE,
+          error: error
+        });
+      });
+  };
+}

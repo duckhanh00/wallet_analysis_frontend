@@ -313,7 +313,7 @@ function RelationshipSpace(props) {
         props.getClusterNodeRelationship(tokenAddress)
         props.getClusterLinkRelationship(tokenAddress)
         props.getListCluster(tokenAddress)
-        props.getTokenInformation(tokenAddress)
+        props.getTokenInfomation(tokenAddress)
     }, [])
 
     console.log(RelationshipSpace)
@@ -998,7 +998,7 @@ const actions = {
     getListCluster: RelationshipSpaceActions.getListCluster,
     getClusterTokenChangeLogs: RelationshipSpaceActions.getClusterTokenChangeLogs,
     getLinkDetail: RelationshipSpaceActions.getLinkDetail,
-    getTokenInformation: RelationshipSpaceActions.getTokenInformation
+    getTokenInfomation: RelationshipSpaceActions.getTokenInfomation
 };
 
 export default connect(mapState, actions)(RelationshipSpace);

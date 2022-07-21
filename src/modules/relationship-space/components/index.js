@@ -315,6 +315,7 @@ function RelationshipSpace(props) {
         props.getClusterNodeRelationship('0x38_0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c')
         props.getClusterLinkRelationship('0x38_0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c')
         props.getListCluster('0x38_0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c')
+        props.getTokenInfomation('0x38_0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c')
     }, [])
 
     useEffect(() => {
@@ -1020,7 +1021,8 @@ const actions = {
     getListCluster: RelationshipSpaceActions.getListCluster,
     getClusterTokenChangeLogs: RelationshipSpaceActions.getClusterTokenChangeLogs,
     getLinkDetail: RelationshipSpaceActions.getLinkDetail,
-    getTokenChangeLogs: RelationshipSpaceActions.getTokenChangeLogs
+    getTokenChangeLogs: RelationshipSpaceActions.getTokenChangeLogs,
+    getTokenInfomation: RelationshipSpaceActions.getTokenInfomation
 };
 
 export default connect(mapState, actions)(RelationshipSpace);
