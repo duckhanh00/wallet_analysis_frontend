@@ -17,7 +17,6 @@ const chains = {
 function HomeSpace(props) {
   const [curChain, setCurChain] = useState("bsc");
   const [displayToggle, setDisplayToggle] = useState(false);
-  const [listAllTokens, setListAllTokens] = useState(null);
   const [loading, setLoading] = useState(true);
   const {HomeSpace} = props;
 
@@ -37,11 +36,14 @@ function HomeSpace(props) {
   }
 
   useEffect(() => {
-    if(loading) {
       fetchData();
-      setListAllTokens(HomeSpace.listAllTokens);
-    }
   }, [loading])
+
+  let listAllTokens = []
+
+  if (HomeSpace?.listAllTokens) {
+    listAllTokens = HomeSpace.listAllTokens;
+  }
 
   return (
     <Box sx={{minHeight: "100vh", paddingTop: "100px"}}>
