@@ -1016,9 +1016,8 @@ function mapState(state) {
     return { RelationshipSpace };
 }
 const actions = {
-    getTopWalletRelationship: RelationshipSpaceActions.getTopWalletRelationship,
-    getTopClusterRelationship: RelationshipSpaceActions.getTopClusterRelationship,
-    getTopListCluster: RelationshipSpaceActions.getTopListCluster,
+    getClusterNodeRelationship: RelationshipSpaceActions.getClusterNodeRelationship,
+    getListCluster: RelationshipSpaceActions.getListCluster,
     getClusterTokenChangeLogs: RelationshipSpaceActions.getClusterTokenChangeLogs,
     getLinkDetail: RelationshipSpaceActions.getLinkDetail
 };

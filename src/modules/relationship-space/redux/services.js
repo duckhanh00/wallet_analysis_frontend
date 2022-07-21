@@ -2,31 +2,23 @@
 import { sendRequestToServer, filterObject } from '../../../helpers/';
 
 export const RelationshipSpaceService = {
-    getTopWalletRelationship,
-    getTopClusterRelationship,
+    getClusterNodeRelationship,
     getTopListCluster,
     getClusterTokenChangeLogs,
     getLinkDetail
 }
 
-function getTopWalletRelationship(token_key, type) {
+function getClusterNodeRelationship(token_key) {
     return sendRequestToServer({
         method: 'GET',
-        url: `${process.env.REACT_APP_SERVER}/top_wallet_relationship?token_key=${token_key}&type=${type}`
+        url: `${process.env.REACT_APP_SERVER}/cluster_node_relationship?token_key=${token_key}`
     })
 }
 
-function getTopClusterRelationship(token_key, type) {
+function getTopListCluster(token_key) {
     return sendRequestToServer({
         method: 'GET',
-        url: `${process.env.REACT_APP_SERVER}/top_cluster_relationship?token_key=${token_key}&type=${type}`
-    })
-}
-
-function getTopListCluster(token_key, type) {
-    return sendRequestToServer({
-        method: 'GET',
-        url: `${process.env.REACT_APP_SERVER}/top_list_cluster?token_key=${token_key}&type=${type}`
+        url: `${process.env.REACT_APP_SERVER}/top_list_cluster?token_key=${token_key}`
     })
 }
 
