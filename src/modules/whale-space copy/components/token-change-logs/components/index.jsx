@@ -233,8 +233,10 @@ function TopWhaleInfo(props) {
   let options = {
     chart: {
       backgroundColor: "#17171a",
-      height: 360,
-      width: 450
+      height: 500,
+      width: 750
+      // maxWidth: 10000,
+      // minWidth: 2000
     },
     rangeSelector: {
       selected: 1
@@ -302,7 +304,7 @@ function TopWhaleInfo(props) {
     { field: 'walletTotalBalance', headerName: 'Total Balance (USD)', width: 150, valueFormatter: params => abbrNum(params.value, 2) },
     { field: 'walletTokenTotalBalancePercentage', headerName: '% total balance', width: 125, valueFormatter: params => BigNumber(params.value).toFixed(2)  },
     { field: 'walletTokenTotalSupplyPercentage', headerName: '% total supply', width: 125, valueFormatter: params => BigNumber(params.value).toFixed(2) },
-    { field: 'walletTokenChange', headerName: 'Change', width: 70, valueFormatter: params => abbrNum(params.value, 2) }
+    { field: 'walletTokenChange', headerName: 'Change', width: 100, valueFormatter: params => abbrNum(params.value, 2) }
   ];
 
   return (
@@ -355,15 +357,15 @@ function TopWhaleInfo(props) {
         </div>
         <div className="row">
 
-          <Box className="col wallet-table" sx={{ marginTop: "40px", display: "flex", justifyContent: "space-around" }}>
+          <Box className="col wallet-table" sx={{ marginTop: "0px", display: "flex", justifyContent: "space-between" }}>
             <HighchartsReact highcharts={Highcharts} options={options} />
-            <div style={{ height: 360, width: '950px', margin: "0 0 0 20px" }}>
+            <div style={{ height: 500, width: 970, margin: "0 0 0 0"}}>
               <ThemeProvider theme={theme}>
                 <DataGrid
                   rows={listTopWallet}
                   columns={columns}
-                  pageSize={5}
-                  rowsPerPageOptions={[5]}
+                  pageSize={10}
+                  rowsPerPageOptions={[10]}
                   onRowClick={(e) => { handleClickRow(e.row.id) }}
                   getRowClassName={(params) =>
                     params.indexRelativeToCurrentPage % 2 === 0 ? 'even' : 'odd'

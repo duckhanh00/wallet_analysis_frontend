@@ -80,17 +80,13 @@ function TokenDistribution(props) {
     }
   }
 
-  console.log(xAxisBalance,
-     yAxisBalance,
-     xAxisAmount,
-     yAxisAmount)
-
-
   let amountOptions = {
     chart: {
       backgroundColor: "#17171a",
       type: 'column',
-      color: "white"
+      color: "white",
+      width: 880,
+      height: 600
     },
     title: {
       text: 'Amount-based token distribution',
@@ -153,7 +149,9 @@ function TokenDistribution(props) {
     chart: {
       backgroundColor: "#17171a",
       type: 'column',
-      color: "white"
+      color: "white",
+      width: 850,
+      height: 600
     },
     title: {
       text: 'Balance-based token distribution',

@@ -21,7 +21,15 @@ function GeneralTokenInfo(props) {
   if (WhaleSpace?.tokenInfomation) {   
     tokenInfomation = WhaleSpace.tokenInfomation
   }
-  console.log("tokenInfomation", tokenInfomation)
+  const handlePrice = (price) => {
+    if (price < 1) {
+      const i = Math.floor(Math.log(price) / Math.log(10));
+      return BigNumber(price).toFixed(-i+2)
+    }
+    if (price > 1) {
+      return BigNumber(price).toFixed(2)
+    }
+  }
   return (
     <Fragment>
       <div className="coin-container">
@@ -43,7 +51,7 @@ function GeneralTokenInfo(props) {
         <div className="coin-right">
           <span className="coin-desc">Price {tokenInfomation['name']} ({tokenInfomation['symbol']})</span>
           <div className="coin-price">
-            <h1> {BigNumber(tokenInfomation['price']).toFixed(2)} USD</h1>
+            <h1> {handlePrice(tokenInfomation['price'])} USD</h1>
             {/* <div className="coin-up">&#x25B2; 0.81%</div> */}
           </div>
 

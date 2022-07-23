@@ -958,7 +958,8 @@ function RelationshipSpace(props) {
                         graphData={{ "nodes": nodeGraphWalletRank, "links": linkGraphWalletRank }}
                         nodeLabel={node => `${node.id}: #${node.walletRank}`}
                         nodeAutoColorBy="clusterRank"
-                        // linkWidth={1}
+                        linkWidth={0.3}
+                        linkAutoColorBy="clusterRank"
                         // linkDirectionalParticles={1}
                         nodeThreeObjectExtend={true}
                         nodeVisibility={true}
