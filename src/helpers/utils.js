@@ -26,18 +26,31 @@ export function abbrNum(number, decPlaces) {
   if (number === 0) return '0';
   if (number > 0) {
     const i = Math.floor(Math.log(number) / Math.log(k));
+    if (i > 9) {
+      return ">1e+30"
+    }
+    if (i < -10) {
+      return "0"
+    }
     if (i < 0) {
       const miniSize = ['e-3', 'e-6', 'e-9', 'e-12', 'e-15', 'e-18', 'e-21', 'e-24', 'e-27', 'e-30'];
       return parseFloat((number / Math.pow(k, i)).toFixed(dm)) + ' ' + miniSize[-i-1];
     }
+
     return parseFloat((number / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
   }
   if (number < 0) {
     const num = -number
     const i = Math.floor(Math.log(num) / Math.log(k));
+    if (i > 9) {
+      return "<-1e+30"
+    }
+    if (i < -10) {
+      return "0"
+    }
     if (i < 0) {
       const miniSize = ['e-3', 'e-6', 'e-9', 'e-12', 'e-15', 'e-18', 'e-21', 'e-24', 'e-27', 'e-30'];
-      return parseFloat((number / Math.pow(k, i)).toFixed(dm)) + ' ' + miniSize[-i-1];
+      return -parseFloat((number / Math.pow(k, i)).toFixed(dm)) + ' ' + miniSize[-i-1];
     }
     return -parseFloat((num / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
   }

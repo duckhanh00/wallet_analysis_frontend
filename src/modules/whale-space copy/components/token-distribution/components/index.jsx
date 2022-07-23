@@ -8,7 +8,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { Box } from "@mui/material";
 import { useLocation } from "react-router-dom";
-
+import { addr, abbrNum, timeConverter} from "../../../../../helpers";
 import { WhaleSpaceActions } from "../../../redux/actions";
 import "./style.scss";
 
@@ -39,8 +39,7 @@ function TokenDistribution(props) {
         return parseInt(item[0])
       })
       xAxisBalance = tokenDistribution.map( (item) => {
-        let xVal = WhaleSpace.tokenDistribution["totalBalance"]?.["threshold"]
-        return parseInt(xVal)
+        return `${abbrNum(item[2], 0)} - ${abbrNum(item[3], 0)}`
       })
     }
 
@@ -50,8 +49,7 @@ function TokenDistribution(props) {
         return parseInt(item[0])
       })
       xAxisAmount = tokenDistribution.map( (item) => {
-        let xVal = WhaleSpace.tokenDistribution["tokenAmount"]?.["threshold"]
-        return parseInt(xVal)
+        return `${abbrNum(item[2], 0)} - ${abbrNum(item[3], 0)}`
       })
     }
   }
@@ -63,8 +61,7 @@ function TokenDistribution(props) {
         return item[0]
       })
       xAxisBalance = tokenDistribution.map( (item) => {
-        let xVal = WhaleSpace.tokenDistribution["totalBalanceNotContract"]?.["threshold"]
-        return parseInt(xVal)
+        return `${abbrNum(item[2], 0)} - ${abbrNum(item[3], 0)}`
       })
     }
 
@@ -74,8 +71,7 @@ function TokenDistribution(props) {
         return item[0]
       })
       xAxisAmount = tokenDistribution.map( (item) => {
-        let xVal = WhaleSpace.tokenDistribution["tokenAmountNotContract"]?.["threshold"]
-        return parseInt(xVal)
+        return `${abbrNum(item[2], 0)} - ${abbrNum(item[3], 0)}`
       })
     }
   }
@@ -100,6 +96,11 @@ function TokenDistribution(props) {
       style: {
         color: "white",
       },
+      labels: {
+        style: {
+          color: "white",
+        },
+      },
       crosshair: true
     },
     yAxis: {
@@ -114,7 +115,7 @@ function TokenDistribution(props) {
       },
       labels: {
         style: {
-          color: "#a1a7ac",
+          color: "white",
         },
       },
     },
@@ -122,9 +123,9 @@ function TokenDistribution(props) {
       enabled: false
     },
     tooltip: {
-      headerFormat: '<span style="font-size:10px">Threshold: {point.key}</span><table>',
-      pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-        '<td style="padding:0"><b> {point.y:.1f} wallets</b></td></tr>',
+      headerFormat: '<span style="font-size:20px"><b>Min - Max:<b/> <b>{point.key}<b/></span><table>',
+      pointFormat: '<tr><td style="font-size:20px"><b>{series.name}: </b> </td>' +
+                  '<td style="font-size:20px"><b>&nbsp;{point.y:.0f} wallets</b></td></tr>',
       footerFormat: '</table>',
       shared: true,
       useHTML: true
@@ -150,7 +151,7 @@ function TokenDistribution(props) {
       backgroundColor: "#17171a",
       type: 'column',
       color: "white",
-      width: 850,
+      width: 880,
       height: 600
     },
     title: {
@@ -163,7 +164,12 @@ function TokenDistribution(props) {
     xAxis: {
       categories: xAxisBalance,
       style: {
-        color: "white",
+        color: "#a1a7bb",
+      },
+      labels: {
+        style: {
+          color: "white",
+        },
       },
       crosshair: true
     },
@@ -185,14 +191,14 @@ function TokenDistribution(props) {
       },
       labels: {
         style: {
-          color: "#a1a7ac",
+          color: "white",
         },
       },
     },
     tooltip: {
-      headerFormat: '<span style="font-size:10px">Threshold: {point.key} (USD)</span><table>',
-      pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-        '<td style="padding:0"><b>{point.y:.1f} wallets</b></td></tr>',
+      headerFormat: '<span style="font-size:20px"><b>Min - Max:<b/> <b>{point.key} (USD)<b/></span><table>',
+      pointFormat: '<tr><td style="font-size:20px"><b>{series.name}: </b></td>' +
+        '<td style="font-size:20px"><b>&nbsp;{point.y:.0f} wallets</b></td></tr>',
       footerFormat: '</table>',
       shared: true,
       useHTML: true
@@ -206,7 +212,6 @@ function TokenDistribution(props) {
     series: [{
       name: 'Number of wallets',
       data: yAxisBalance
-
     }]
   };
 

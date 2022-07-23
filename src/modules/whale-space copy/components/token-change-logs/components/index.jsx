@@ -235,8 +235,6 @@ function TopWhaleInfo(props) {
       backgroundColor: "#17171a",
       height: 500,
       width: 750
-      // maxWidth: 10000,
-      // minWidth: 2000
     },
     rangeSelector: {
       selected: 1
