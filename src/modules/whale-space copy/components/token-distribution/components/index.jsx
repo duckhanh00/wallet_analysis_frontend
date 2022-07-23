@@ -81,7 +81,7 @@ function TokenDistribution(props) {
       backgroundColor: "#17171a",
       type: 'column',
       color: "white",
-      width: 880,
+      width: 840,
       height: 600
     },
     title: {
@@ -151,7 +151,7 @@ function TokenDistribution(props) {
       backgroundColor: "#17171a",
       type: 'column',
       color: "white",
-      width: 880,
+      width: 840,
       height: 600
     },
     title: {

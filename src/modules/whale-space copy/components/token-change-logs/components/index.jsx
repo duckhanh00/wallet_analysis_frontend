@@ -245,7 +245,7 @@ function TopWhaleInfo(props) {
     chart: {
       backgroundColor: "#17171a",
       height: 500,
-      width: 750
+      width: 700
     },
     rangeSelector: {
       selected: 1
@@ -289,8 +289,7 @@ function TopWhaleInfo(props) {
       series: {
         label: {
           connectorAllowed: false
-        },
-        pointStart: 2010
+        }
       }
     },
     navigator: {
@@ -309,7 +308,7 @@ function TopWhaleInfo(props) {
     chart: {
       backgroundColor: "#17171a",
       height: 500,
-      width: 750
+      width: 700
     },
     rangeSelector: {
       selected: 1
@@ -353,8 +352,7 @@ function TopWhaleInfo(props) {
       series: {
         label: {
           connectorAllowed: false
-        },
-        pointStart: 2010
+        }
       }
     },
     navigator: {
