@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { addr, abbrNum, timeConverter} from "../../../../../helpers";
+import { addr, abbrNum, timeConverter } from "../../../../../helpers";
 import { connect } from "react-redux";
 import Highcharts from "highcharts";
 import { useLocation } from "react-router-dom";
@@ -16,6 +16,13 @@ import Select from '@mui/material/Select';
 import { Box } from "@mui/material";
 import { WhaleSpaceActions } from "../../../redux/actions";
 import BigNumber from "bignumber.js";
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Typography from '@mui/material/Typography';
+import Button from '@material-ui/core/Button';
 import "./style.scss";
 
 export function SortedDescendingIcon() {
@@ -113,20 +120,6 @@ function TopWhaleInfo(props) {
     props.getTopWhaleWallets(tokenAddress)
   }, [])
 
-  const [isTop, setIsTop] = useState("topWallet");
-  const handleIsTop = (type) => {
-    if (type === "topWallet") {
-      setIsTop(type);
-      handleSubTitle("Top 100 wallets")
-    }
-    else {
-      setIsTop(type);
-      console.log("addressWallet", addressWallet)
-      props.getTokenChangeLogs(tokenAddress, addressWallet)
-      handleSubTitle("Wallet")
-    }
-  };
-
   let topWhaleWallets = {}
   if (WhaleSpace?.topWhaleWallets) {
     topWhaleWallets = WhaleSpace.topWhaleWallets
@@ -136,7 +129,7 @@ function TopWhaleInfo(props) {
   if (type === "totalBalance" && isContract === "contract") {
     if (WhaleSpace?.topWhaleWallets) {
       listTopWallet = WhaleSpace.topWhaleWallets["totalBalance"]?.["walletInfo"]
-      }
+    }
   }
   if (type === "totalBalance" && isContract === "notContract") {
     if (WhaleSpace?.topWhaleWallets) {
@@ -155,7 +148,7 @@ function TopWhaleInfo(props) {
   }
 
   let tokenChangeLogs = []
-  if (isTop === "topWallet") {
+ 
     if (type === "totalBalance" && isContract === "contract") {
       if (WhaleSpace?.topWhaleWallets) {
         let objs = WhaleSpace.topWhaleWallets["totalBalance"]?.["tokenChangeLogs"]
@@ -192,16 +185,17 @@ function TopWhaleInfo(props) {
           });
       }
     }
-  }
+  
 
-  if (isTop === "wallet") {
-    if (WhaleSpace?.tokenChangeLogs) {
-      let objs = WhaleSpace.tokenChangeLogs
-      tokenChangeLogs = Object.keys(objs)
-        .map(function (key) {
-          return [parseInt(key), objs[key]];
-        });
-    }
+  let walletTokenChangeLogs = []
+
+  if (WhaleSpace?.tokenChangeLogs) {
+    let objs = WhaleSpace.tokenChangeLogs
+    walletTokenChangeLogs = Object.keys(objs)
+      .map(function (key) {
+        return [parseInt(key), objs[key]];
+      });
+
   }
   const handleType = (event) => {
     if (event.target.value === "totalBalance") {
@@ -224,10 +218,27 @@ function TopWhaleInfo(props) {
     setSubTitle(title)
   }
 
+
+  // pop up token change logs
+  const [openNodeDetail, setOpenNodeDetail] = useState(false);
+  const handleClickOpenNodeDetail = (row) => {
+    setOpenNodeDetail(true);
+  };
+
+  const handleCloseNodeDetail = () => {
+    setOpenNodeDetail(false);
+  };
+
+  const [alignmentNodeDetail, setAlignmentNodeDetail] = useState("wallet");
+  const handleChangeToggleNodeDetail = (event, newAlignment) => {
+    setAlignmentNodeDetail(newAlignment);
+  };
+  // pop up token change logs
+
   const handleClickRow = (address) => {
-    setIsTop("wallet")
     setAddressWallet(address)
-    props.getTokenChangeLogs('0x38_0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c', address)
+    setOpenNodeDetail(true)
+    props.getTokenChangeLogs(tokenAddress, address)
   }
 
   let options = {
@@ -247,13 +258,13 @@ function TopWhaleInfo(props) {
     subtitle: {
       text: subTitle
     },
-    xAxis: { 
+    xAxis: {
       type: 'datetime',
       labels: {
-        formatter: function() {
-            return Highcharts.dateFormat('%d %b %y', this.value * 1000);
-       }
-   }
+        formatter: function () {
+          return Highcharts.dateFormat('%d %b %y', this.value * 1000);
+        }
+      }
     },
     credits: {
       enabled: false
@@ -294,13 +305,77 @@ function TopWhaleInfo(props) {
     }]
   }
 
+  let optionsWalletTokenChangeLogs = {
+    chart: {
+      backgroundColor: "#17171a",
+      height: 500,
+      width: 750
+    },
+    rangeSelector: {
+      selected: 1
+    },
+
+    title: {
+      text: 'Token change logs',
+      style: { color: "#a1a7bb", fontSize: "18px" },
+    },
+    // subtitle: {
+    //   text: subTitle
+    // },
+    xAxis: {
+      type: 'datetime',
+      labels: {
+        formatter: function () {
+          return Highcharts.dateFormat('%d %b %y', this.value * 1000);
+        }
+      }
+    },
+    credits: {
+      enabled: false
+    },
+    yAxis: {
+      // min: 0,
+      title: {
+        text: null,
+      },
+      style: {
+        color: "#a1a7bb",
+      },
+      tickAmount: 7,
+      gridLineColor: "#323546",
+      labels: {
+        style: {
+          color: "#a1a7ac",
+        },
+      },
+    },
+    plotOptions: {
+      series: {
+        label: {
+          connectorAllowed: false
+        },
+        pointStart: 2010
+      }
+    },
+    navigator: {
+      enabled: false
+    },
+    series: [{
+      name: 'Token amount',
+      data: walletTokenChangeLogs,
+      tooltip: {
+        valueDecimals: 2
+      }
+    }]
+  }
+
   const columns: GridColDef[] = [
     { field: 'walletRank', headerName: 'Rank', width: 50 },
-    { field: 'id', headerName: 'Address', width: 125, valueFormatter: params => addr(params.value)},
+    { field: 'id', headerName: 'Address', width: 125, valueFormatter: params => addr(params.value) },
     { field: 'walletTokenAmount', headerName: 'Token Amount', width: 125, valueFormatter: params => abbrNum(params.value, 2) },
     { field: 'walletTokenBalance', headerName: 'Token Amount (USD)', width: 150, valueFormatter: params => abbrNum(params.value, 2) },
     { field: 'walletTotalBalance', headerName: 'Total Balance (USD)', width: 150, valueFormatter: params => abbrNum(params.value, 2) },
-    { field: 'walletTokenTotalBalancePercentage', headerName: '% total balance', width: 125, valueFormatter: params => BigNumber(params.value).toFixed(2)  },
+    { field: 'walletTokenTotalBalancePercentage', headerName: '% total balance', width: 125, valueFormatter: params => BigNumber(params.value).toFixed(2) },
     { field: 'walletTokenTotalSupplyPercentage', headerName: '% total supply', width: 125, valueFormatter: params => BigNumber(params.value).toFixed(2) },
     { field: 'walletTokenChange', headerName: 'Change', width: 100, valueFormatter: params => abbrNum(params.value, 2) }
   ];
@@ -310,16 +385,6 @@ function TopWhaleInfo(props) {
       <Box className="block-in-page" sx={{ padding: "20px 0" }}>
         <div className="row">
           <Box className="action__1" sx={{ display: "flex", alignItems: "center", paddingBottom: "10px" }}>
-            <div className="action">
-              <div className={
-                "action__btn " + (isTop === "topWallet" ? "active" : "")
-              }
-                onClick={() => handleIsTop("topWallet")}>Top 100 Wallets</div>
-              <div className={
-                "action__btn " + (isTop === "wallet" ? "active" : "")
-              }
-                onClick={() => handleIsTop("wallet")}>Wallet</div>
-            </div>
             <FormControl sx={{ m: 1, minWidth: 150 }} size="small">
               <InputLabel id="demo-select-small"></InputLabel>
               <Select
@@ -357,7 +422,7 @@ function TopWhaleInfo(props) {
 
           <Box className="col wallet-table" sx={{ marginTop: "0px", display: "flex", justifyContent: "space-between" }}>
             <HighchartsReact highcharts={Highcharts} options={options} />
-            <div style={{ height: 500, width: 970, margin: "0 0 0 0"}}>
+            <div style={{ height: 500, width: 970, margin: "0 0 0 0" }}>
               <ThemeProvider theme={theme}>
                 <DataGrid
                   rows={listTopWallet}
@@ -480,7 +545,25 @@ function TopWhaleInfo(props) {
             </div>
           </Box>
         </div>
-
+        <Dialog
+          open={openNodeDetail}
+          onClose={handleCloseNodeDetail}
+          disableScrollLock
+          // fullWidth={true}
+          fullScreen={true}
+          // scroll="paper"
+          sx={{ marginTop: '10%', margin: 'auto', width: 810, height: 642 }}
+        >
+          <DialogTitle id="wallet-token-chang-log-title" sx={{ textAlign: "left", backgroundColor: "#1d1d1e", display: "flex", justifyContent: "left", alignItems: "center", paddingRight: "10px", borderBottom: "1px solid grey" }}>
+            <Typography sx={{ fontSize: "24px", fontWeight: 700, color: "white", marginLeft: "10px" }}>Wallet: {addressWallet}</Typography>
+          </DialogTitle>
+          <DialogContent sx={{ backgroundColor: "#17171a", borderBottom: "1px solid grey" }}>
+            <HighchartsReact highcharts={Highcharts} options={optionsWalletTokenChangeLogs} />
+          </DialogContent>
+          <DialogActions sx={{ backgroundColor: "#1d1d1e" }}>
+            <Button onClick={handleCloseNodeDetail}><Typography sx={{ fontSize: "16px", fontWeight: 700, color: "white", marginLeft: "10px" }}>Cancel </Typography></Button>
+          </DialogActions>
+        </Dialog>
       </Box>
 
     </Fragment>

@@ -123,9 +123,9 @@ function TokenDistribution(props) {
       enabled: false
     },
     tooltip: {
-      headerFormat: '<span style="font-size:20px"><b>Min - Max:<b/> <b>{point.key}<b/></span><table>',
-      pointFormat: '<tr><td style="font-size:20px"><b>{series.name}: </b> </td>' +
-                  '<td style="font-size:20px"><b>&nbsp;{point.y:.0f} wallets</b></td></tr>',
+      headerFormat: '<span style="font-size:15px"><b>Min - Max:<b/> <b>{point.key}<b/></span><table>',
+      pointFormat: '<tr><td style="font-size:15px"><b>{series.name}: </b> </td>' +
+                  '<td style="font-size:15px"><b>&nbsp;{point.y:.0f} wallets</b></td></tr>',
       footerFormat: '</table>',
       shared: true,
       useHTML: true
@@ -196,9 +196,9 @@ function TokenDistribution(props) {
       },
     },
     tooltip: {
-      headerFormat: '<span style="font-size:20px"><b>Min - Max:<b/> <b>{point.key} (USD)<b/></span><table>',
-      pointFormat: '<tr><td style="font-size:20px"><b>{series.name}: </b></td>' +
-        '<td style="font-size:20px"><b>&nbsp;{point.y:.0f} wallets</b></td></tr>',
+      headerFormat: '<span style="font-size:15px"><b>Min - Max:<b/> <b>{point.key} (USD)<b/></span><table>',
+      pointFormat: '<tr><td style="font-size:15px"><b>{series.name}: </b></td>' +
+        '<td style="font-size:15px"><b>&nbsp;{point.y:.0f} wallets</b></td></tr>',
       footerFormat: '</table>',
       shared: true,
       useHTML: true

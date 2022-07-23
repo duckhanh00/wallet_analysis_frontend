@@ -1,5 +1,5 @@
 export function addr(address) {
-  return address.slice(0,5) + "..." + address.slice(-4, -1);
+  return address.slice(0,5) + "..." + address.slice(-4, -1) + address.at(-1);
 }
 
 export function numberWithCommas(x) {
