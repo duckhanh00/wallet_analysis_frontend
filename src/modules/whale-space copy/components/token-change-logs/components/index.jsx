@@ -555,7 +555,7 @@ function TopWhaleInfo(props) {
           <DialogTitle id="wallet-token-chang-log-title" sx={{ textAlign: "left", backgroundColor: "#1d1d1e", display: "flex", justifyContent: "left", alignItems: "center", paddingRight: "10px", borderBottom: "1px solid grey" }}>
             <Typography sx={{ fontSize: "24px", fontWeight: 700, color: "white", marginLeft: "10px" }}>Wallet: {addressWallet}</Typography>
           </DialogTitle>
-          <DialogContent sx={{ backgroundColor: "#17171a", borderBottom: "1px solid grey" }}>
+          <DialogContent sx={{ backgroundColor: "#17171a", borderBottom: "1px solid grey", paddingLeft: 7}}>
             <HighchartsReact highcharts={Highcharts} options={optionsWalletTokenChangeLogs} />
           </DialogContent>
           <DialogActions sx={{ backgroundColor: "#1d1d1e" }}>
