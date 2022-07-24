@@ -46,16 +46,16 @@ import './style.scss'
 export function clusterDetail(nodeDetail) {
     if (nodeDetail.clusterRank) {
         return (
-        <div>
-        <h4>Cluster</h4>
-        <h5>rank: #{nodeDetail["clusterRank"]}</h5>
-        <h5>Token amount in cluster: {abbrNum(nodeDetail["clusterTokenAmount"], 2)}</h5>
-        <h5>Token amount total supply : {abbrNum(nodeDetail["clusterTokenTotalSupplyPercentage"])}%</h5>
-        <h5>Token amount in USD: {abbrNum(nodeDetail["clusterTokenBalance"], 2)} USD</h5>
-        <h5>Total balance in cluster: {abbrNum(nodeDetail["clusterTotalBalance"], 2)} USD</h5>
-        <h5>Token amount per total balance : {abbrNum(nodeDetail["clusterTokenTotalBalancePercentage"])}%</h5>
-        <h5>Token change in month: {abbrNum(nodeDetail["clusterTokenChange"], 2)}</h5>
-        </div>)
+            <div>
+                <h4>Cluster</h4>
+                <h5>Cluster rank: #{nodeDetail["clusterRank"]}</h5>
+                <h5>Token amount in cluster: {abbrNum(nodeDetail["clusterTokenAmount"], 2)}</h5>
+                <h5>Token amount total supply : {abbrNum(nodeDetail["clusterTokenTotalSupplyPercentage"])}%</h5>
+                <h5>Token amount in USD: {abbrNum(nodeDetail["clusterTokenBalance"], 2)} USD</h5>
+                <h5>Total balance in cluster: {abbrNum(nodeDetail["clusterTotalBalance"], 2)} USD</h5>
+                <h5>Token amount per total balance : {abbrNum(nodeDetail["clusterTokenTotalBalancePercentage"])}%</h5>
+                <h5>Token change in month: {abbrNum(nodeDetail["clusterTokenChange"], 2)}</h5>
+            </div>)
     }
 }
 function TabPanel(props) {
@@ -362,15 +362,15 @@ function RelationshipSpace(props) {
     if (typeTokenChangeLogs === 'walletTokenChangeLogs') {
         let objs = walletTokenChangeLogs
         tokenChangeLogs = Object.keys(objs).map(function (key) {
-        return [parseInt(key), objs[key]];
-      });
+            return [parseInt(key), objs[key]];
+        });
     }
 
     if (typeTokenChangeLogs === 'clusterTokenChangeLogs') {
         let objs = clusterTokenChangeLogs
         tokenChangeLogs = Object.keys(objs).map(function (key) {
-        return [parseInt(key), objs[key]];
-      });
+            return [parseInt(key), objs[key]];
+        });
     }
 
     console.log('tokenChnageLogs', tokenChangeLogs)
@@ -489,7 +489,7 @@ function RelationshipSpace(props) {
 
         setAddressWallet(node['id'])
         props.getTokenChangeLogs(tokenAddress, node?.['id'])
-        if (node.clusterRank){
+        if (node.clusterRank) {
             props.getClusterTokenChangeLogs(tokenAddress, node['clusterRank'])
         }
         setTypeTokenChangeLogs("walletTokenChangeLogs")
@@ -786,15 +786,45 @@ function RelationshipSpace(props) {
                                                         {(rowsPerPage > 0
                                                             ? walletRows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                                             : walletRows
-                                                        ).map((row) => (
-                                                            <TableRow className={classes.tableRow} key={row.id} onClick={() => {
-                                                                handleClickOpenNodeDetail(row)
-                                                            }}>
-                                                                <TableCell style={{ width: 20, overflow: "hidden" }} align="left">{row["walletRank"]}</TableCell>
-                                                                <TableCell style={{ width: 100, overflow: "hidden" }} align="center">{addr(row["id"])}</TableCell>
-                                                                <TableCell style={{ width: 80, overflow: "hidden" }} align="center">{row["walletTokenAmount"]}</TableCell>
-                                                            </TableRow>
-                                                        ))}
+                                                        ).map((row) => {
+                                                            if (walletType === 'rank') {
+                                                                return (
+                                                                    <TableRow className={classes.tableRow} key={row.id} onClick={() => {
+                                                                        handleClickOpenNodeDetail(row)
+                                                                    }}>
+                                                                        <TableCell style={{ width: 20, overflow: "hidden" }} align="left">{row["walletRank"]}</TableCell>
+                                                                        <TableCell style={{ width: 100, overflow: "hidden" }} align="center">{addr(row["id"])}</TableCell>
+                                                                        <TableCell style={{ width: 80, overflow: "hidden" }} align="center">{abbrNum(row["walletTokenAmount"], 2)}</TableCell>
+                                                                    </TableRow>
+
+                                                                )
+                                                            }
+                                                            if (walletType === 'in') {
+                                                                return (
+                                                                    <TableRow className={classes.tableRow} key={row.id} onClick={() => {
+                                                                        handleClickOpenNodeDetail(row)
+                                                                    }}>
+                                                                        <TableCell style={{ width: 20, overflow: "hidden" }} align="left">{row["walletRank"]}</TableCell>
+                                                                        <TableCell style={{ width: 100, overflow: "hidden" }} align="center">{addr(row["id"])}</TableCell>
+                                                                        <TableCell style={{ width: 80, overflow: "hidden" }} align="center">{abbrNum(row["walletTokenChange"], 2)}</TableCell>
+                                                                    </TableRow>
+
+                                                                )
+                                                            }
+                                                            if (walletType === 'out') {
+                                                                return (
+                                                                    <TableRow className={classes.tableRow} key={row.id} onClick={() => {
+                                                                        handleClickOpenNodeDetail(row)
+                                                                    }}>
+                                                                        <TableCell style={{ width: 20, overflow: "hidden" }} align="left">{row["walletRank"]}</TableCell>
+                                                                        <TableCell style={{ width: 100, overflow: "hidden" }} align="center">{addr(row["id"])}</TableCell>
+                                                                        <TableCell style={{ width: 80, overflow: "hidden" }} align="center">{abbrNum(row["walletTokenChange"], 2)}</TableCell>
+                                                                    </TableRow>
+
+                                                                )
+                                                            }
+                                                        }
+                                                        )}
                                                     </TableBody>
                                                 </Table>
                                             </div>
@@ -833,6 +863,11 @@ function RelationshipSpace(props) {
                                             <div style={{ overflow: 'auto', height: '520px' }}>
                                                 <Table style={{ tableLayout: 'fixed' }}>
                                                     <TableBody>
+                                                    <TableRow className={classes.tableRow} sx={{}}>
+                                                            <TableCell style={{ width: 20, overflow: "hidden" }} align="left">Rank</TableCell>
+                                                            <TableCell style={{ width: 100, overflow: "hidden" }} align="center">Large Wallet</TableCell>
+                                                            <TableCell style={{ width: 80, overflow: "hidden" }} align="center">Token Amount</TableCell>
+                                                        </TableRow>
                                                         {(rowsPerPage > 0
                                                             ? clusterRows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                                             : clusterRows
@@ -840,9 +875,9 @@ function RelationshipSpace(props) {
                                                             <TableRow className={classes.tableRow} key={row.id} onClick={() => {
                                                                 handleClickOpenLinkDetail(row.rank);
                                                             }}>
-                                                                <TableCell style={{ width: 70, overflow: "hidden" }} align="left">{row.clusterRank}</TableCell>
-                                                                <TableCell style={{ width: 70, overflow: "hidden" }} align="left">{row.clusterInfo}</TableCell>
-                                                                <TableCell style={{ width: 40, overflow: "hidden" }} align="left">{row.clusterValue}</TableCell>
+                                                                <TableCell style={{ width: 20, overflow: "hidden" }} align="left">{row.clusterRank}</TableCell>
+                                                                <TableCell style={{ width: 100, overflow: "hidden" }} align="center">{addr(row.clusterInfo)}</TableCell>
+                                                                <TableCell style={{ width: 80, overflow: "hidden" }} align="center">{abbrNum(row.clusterValue, 2)}</TableCell>
                                                             </TableRow>
                                                         ))}
                                                     </TableBody>
