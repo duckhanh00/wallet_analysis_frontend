@@ -939,8 +939,8 @@ function RelationshipSpace(props) {
                                             </TableHead>
                                             <TableBody>
                                                 {(rowsPerPage > 0
-                                                    ? linkDetail['transferChangeLogs'].slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                                    : linkDetail['transferChangeLogs']
+                                                    ? linkDetail['transferChangeLogs'].reverse().slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                                    : linkDetail['transferChangeLogs'].reverse()
                                                 ).map((row) => (
                                                     <TableRow className={classes.tableRow} key={row.time}>
                                                         <TableCell style={{ width: 70, overflow: "hidden" }} align="left">{timeConverter(row.time)}</TableCell>

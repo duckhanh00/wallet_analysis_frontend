@@ -180,71 +180,21 @@ const useStyles = makeStyles({
 });
 
 const default_test = {
-    "0x1291be54e72f7e001f6bbc331777710b4f2999e2_0x1591be54e72f7e001f6bbc331777710b4f2999ef": {
         "source": "0x8735fe4006d4f969737b948b268923b9018ecc52",
         "target": "0xdf97761eb48058d8c9800f97f9ff45e3a76983fe",
         "sourceRank": 1,
-        "targetRank": 2,
-        "sourceToTarget": 2000,
-        "targetToSource": 23000,
+        "targetRank": 1,
+        "sourceToTarget": 1,
+        "targetToSource": 1,
         "transferChangeLogs": [{
-            "time": 1633011823,
-            "valueInUSD": 15841.320483548183,
-            "tokens": "0x (3.884838006329056); ",
-            "from": 15226,
-            "to": 2139
-        },
-        {
-            "time": 1635038613,
-            "valueInUSD": 17861.03989287565,
-            "tokens": "0x (29.497514315); ",
-            "from": 2139,
-            "to": 15226
-        },
-        {
-            "time": 1640274375,
-            "valueInUSD": 95.85872879859052,
-            "tokens": "0x (0.02865731802648446); ",
-            "from": 2139,
-            "to": 15226
-        },
-        {
-            "time": 1640718653,
-            "valueInUSD": 11900,
-            "tokens": "0xdac17f958d2ee523a2206206994597c13d831ec7 (11900); ",
-            "from": 2139,
-            "to": 15226
-        },
-        {
-            "time": 1640721963,
-            "valueInUSD": 3387.5558,
-            "tokens": "0x (1.07); ",
-            "from": 15226,
-            "to": 2139
-        },
-        {
-            "time": 1640722190,
-            "valueInUSD": 419.80200062498653,
-            "tokens": "0x43f11c02439e2736800433b4594994bd43cd066d (10164697.35169459); ",
-            "from": 15226,
-            "to": 2139
-        },
-        {
-            "time": 1641301785,
-            "valueInUSD": 636.1543146689006,
-            "tokens": "0x249e38ea4102d0cf8264d3701f1a0e39c4f2dc3b (156303271.4174203); ",
-            "from": 15226,
-            "to": 2139
-        },
-        {
-            "time": 1641737547,
-            "valueInUSD": 8068.597500000001,
-            "tokens": "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c (21.75); ",
-            "from": 2139,
-            "to": 15226
+            "time": 1,
+            "valueInUSD": 1,
+            "tokens": "1 ETH; ",
+            "from": 1,
+            "to": 1
         }]
     }
-}
+
 
 
 function RelationshipSpace(props) {
@@ -293,6 +243,8 @@ function RelationshipSpace(props) {
     let clusterTokenChangeLogs = []
     let walletTokenChangeLogs = []
 
+    let linkDetail = default_test
+
     if (RelationshipSpace?.walletNodeRelationship && RelationshipSpace?.walletLinkRelationship) {
         nodeGraphWalletRank = RelationshipSpace.walletNodeRelationship["rank"]
         nodeGraphWalletIn = RelationshipSpace.walletNodeRelationship["in"]
@@ -324,6 +276,10 @@ function RelationshipSpace(props) {
 
     if (RelationshipSpace?.walletTokenChangeLogs) {
         walletTokenChangeLogs = RelationshipSpace.walletTokenChangeLogs
+    }
+
+    if (RelationshipSpace?.linkDetail) {
+        linkDetail = RelationshipSpace.linkDetail
     }
 
     let nodeGraph = []
@@ -373,23 +329,10 @@ function RelationshipSpace(props) {
         });
     }
 
-    console.log('tokenChnageLogs', tokenChangeLogs)
-    console.log('typeTokenChangeLogs', typeTokenChangeLogs)
-    // if (RelationshipSpace?.relationshipTokenChangeLogs) {
-    //     walletChangeLogs = RelationshipSpace.relationshipTokenChangeLogs
-    // }
     // // start menu     
 
     const [walletRows, setRowWallet] = useState(nodeGraph)
     const [clusterRows, setRowCluster] = useState(listCluster);
-    // useEffect(() => {
-    //     setRowWallet(nodeGraph)
-    // }, [nodeGraph])
-
-    // useEffect(() => {
-    //     setRowCluster(listCluster)
-    // }, [listCluster])
-
     const [tabMenu, setTabMenu] = useState(0);
     const handleChangeTab = (event, newValue) => {
         setTabMenu(newValue);
@@ -457,7 +400,7 @@ function RelationshipSpace(props) {
         // forceRef.current.d3Force("collide", d3.forceCollide(13));
         fgRef.current.d3Force("charge").strength(-10);
         fgRef.current.d3Force("link").distance(lenLink);
-        // fgRef.current.d3Force("charge").distanceMax(200);
+        fgRef.current.d3Force("charge").distanceMax(200);
     }, [lenLink]);
 
     // useEffect(() => {
@@ -498,7 +441,7 @@ function RelationshipSpace(props) {
     }
 
     const handleSearchNode = (address) => {
-        const result = nodeGraphWalletRank.filter(item =>
+        const result = nodeGraph.filter(item =>
             item['id'].includes(address)
         );
         handleClickNode(result[0])
@@ -514,8 +457,9 @@ function RelationshipSpace(props) {
             link.source, // lookAt ({ x, y, z })
             3000 // ms transition duration
         );
-        handleClickOpenLinkDetail(link.source.id, link.target.id)
 
+        props.getLinkDetail(tokenAddress, link.source.id, link.target.id)
+        handleClickOpenLinkDetail()
     }
 
 
@@ -597,9 +541,14 @@ function RelationshipSpace(props) {
             text: 'Token change logs',
             style: { color: "#a1a7bb", fontSize: "18px" },
         },
-        credits: {
-            enabled: false
-        },
+        xAxis: {
+            type: 'datetime',
+            labels: {
+              formatter: function () {
+                return Highcharts.dateFormat('%d %b %y', this.value * 1000);
+              }
+            }
+          },
         yAxis: {
             // min: 0,
             title: {
@@ -639,10 +588,7 @@ function RelationshipSpace(props) {
 
     // start link detail
     const [openLinkDetail, setOpenLinkDetail] = useState(false);
-    let linkDetail = default_test["0x1291be54e72f7e001f6bbc331777710b4f2999e2_0x1591be54e72f7e001f6bbc331777710b4f2999ef"]
-
-    const handleClickOpenLinkDetail = (source, target) => {
-        props.getLinkDetail('0x89_0x8505b9d2254a7ae468c0e9dd10ccea3a837aef5c', source, target)
+    const handleClickOpenLinkDetail = () => {
         setOpenLinkDetail(true);
     };
 
@@ -650,26 +596,11 @@ function RelationshipSpace(props) {
         setOpenLinkDetail(false);
     };
 
-    if (RelationshipSpace?.linkDetail) {
-        linkDetail = RelationshipSpace.linkDetail
-    }
-
-
-    // const descriptionLinkDetailRef = useRef(null);
-    // useEffect(() => {
-    //     if (openLinkDetail) {
-    //         const { current: descriptionLinkDetail } = descriptionLinkDetailRef;
-    //         if (descriptionLinkDetail !== null) {
-    //             descriptionLinkDetail.focus();
-    //         }
-    //     }
-    // }, [openLinkDetail]);
-
     const [alignmentLinkDetail, setAlignmentLinkDetail] = useState("wallet");
     const handleChangeToggleLinkDetail = (event, newAlignment) => {
         setAlignmentLinkDetail(newAlignment);
     };
-    // start link detail
+    // end link detail
 
     return (
         <Fragment>
@@ -873,7 +804,7 @@ function RelationshipSpace(props) {
                                                             : clusterRows
                                                         ).map((row) => (
                                                             <TableRow className={classes.tableRow} key={row.id} onClick={() => {
-                                                                handleClickOpenLinkDetail(row.rank);
+                                                                handleClickOpenNodeDetail(row.rank);
                                                             }}>
                                                                 <TableCell style={{ width: 20, overflow: "hidden" }} align="left">{row.clusterRank}</TableCell>
                                                                 <TableCell style={{ width: 100, overflow: "hidden" }} align="center">{addr(row.clusterInfo)}</TableCell>
@@ -963,10 +894,10 @@ function RelationshipSpace(props) {
                     >
                         <DialogTitle id="node-detail-title">Selected link</DialogTitle>
                         <DialogContent dividers={scroll === 'paper'}>
-                            <h5>#{linkDetail["sourceRank"]}: {linkDetail["source"]}</h5>
-                            <h5>#{linkDetail["targetRank"]}: {linkDetail["target"]}</h5>
-                            <h5>Average #{linkDetail["sourceRank"]} to #{linkDetail["targetRank"]}: {abbrNum(linkDetail["sourceToTarget"], 2)} (USD)</h5>
-                            <h5>Average #{linkDetail["targetRank"]} to #{linkDetail["sourceRank"]}: {abbrNum(linkDetail["targetToSource"], 2)} (USD)</h5>
+                            <h5>#{linkDetail?.["sourceRank"]}: {linkDetail?.["source"]}</h5>
+                            <h5>#{linkDetail?.["targetRank"]}: {linkDetail?.["target"]}</h5>
+                            <h5>Average #{linkDetail?.["sourceRank"]} to #{linkDetail?.["targetRank"]}: {abbrNum(linkDetail?.["sourceToTarget"], 2)} (USD)</h5>
+                            <h5>Average #{linkDetail?.["targetRank"]} to #{linkDetail?.["sourceRank"]}: {abbrNum(linkDetail?.["targetToSource"], 2)} (USD)</h5>
                             <h5>Transfer Change Logs: </h5>
                             <Paper sx={{ width: '100%', overflow: 'hidden' }}>
                                 <TableContainer sx={{ maxHeight: 500 }}>
@@ -982,18 +913,18 @@ function RelationshipSpace(props) {
                                                 </TableRow>
                                             </TableHead>
                                             <TableBody>
-                                                {/* {(rowsPerPage > 0
-                                                    ? linkDetail['transferChangeLogs'].slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                                    : linkDetail['transferChangeLogs']
+                                                {(rowsPerPage > 0
+                                                    ? linkDetail?.['transferChangeLogs'].reverse().slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                                    : linkDetail?.['transferChangeLogs'].reverse()
                                                 ).map((row) => (
                                                     <TableRow className={classes.tableRow} key={row.time}>
                                                         <TableCell style={{ width: 70, overflow: "hidden" }} align="left">{timeConverter(row.time)}</TableCell>
-                                                        <TableCell style={{ width: 70, overflow: "hidden" }} align="left">{row.valueInUSD}</TableCell>
+                                                        <TableCell style={{ width: 70, overflow: "hidden" }} align="left">{abbrNum(row.valueInUSD)}</TableCell>
                                                         <TableCell style={{ width: 40, overflow: "hidden" }} align="left">{row.tokens}</TableCell>
                                                         <TableCell style={{ width: 40, overflow: "hidden" }} align="left">{row.from}</TableCell>
                                                         <TableCell style={{ width: 40, overflow: "hidden" }} align="left">{row.to}</TableCell>
                                                     </TableRow>
-                                                ))} */}
+                                                ))}
                                             </TableBody>
                                         </Table>
                                     </div>
@@ -1001,7 +932,7 @@ function RelationshipSpace(props) {
                                 <TablePagination
                                     rowsPerPageOptions={[10]}
                                     component="div"
-                                    count={clusterRows.length}
+                                    count={linkDetail?.transferChangeLogs.length}
                                     rowsPerPage={rowsPerPage}
                                     page={page}
                                     onPageChange={handleChangePage}
