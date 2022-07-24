@@ -8,6 +8,7 @@ export const RelationshipSpaceActions = {
   getClusterNodeRelationship,
   getClusterLinkRelationship,
   getClusterTokenChangeLogs,
+  getTokenChangeLogs,
   getListCluster,
   getLinkDetail,
   getTokenInfomation
@@ -134,6 +135,27 @@ function getClusterTokenChangeLogs(token_key, rank) {
       .catch(error => {
         dispatch({
           type: RelationshipSpaceConstants.GET_CLUSTER_TOKEN_CHANGE_LOGS_FAILURE,
+          error: error
+        });
+      });
+  };
+}
+
+function getTokenChangeLogs(token_key, address) {
+  return dispatch => {
+    dispatch({
+      type: RelationshipSpaceConstants.GET_TOKEN_CHANGE_LOGS_REQUEST
+    });
+    RelationshipSpaceService.getTokenChangeLogs(token_key, address)
+      .then(res => {
+        dispatch({
+          type: RelationshipSpaceConstants.GET_TOKEN_CHANGE_LOGS_SUCCESS,
+          payload: res.data
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: RelationshipSpaceConstants.GET_TOKEN_CHANGE_LOGS_FAILURE,
           error: error
         });
       });

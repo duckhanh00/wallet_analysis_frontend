@@ -547,7 +547,6 @@ function TopWhaleInfo(props) {
           open={openNodeDetail}
           onClose={handleCloseNodeDetail}
           disableScrollLock
-          // fullWidth={true}
           fullScreen={true}
           // scroll="paper"
           sx={{ marginTop: '10%', margin: 'auto', width: 810, height: 642 }}

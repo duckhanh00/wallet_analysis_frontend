@@ -42,6 +42,22 @@ import DialogTitle from '@mui/material/DialogTitle';
 import TablePagination from '@mui/material/TablePagination';
 
 import './style.scss'
+
+export function clusterDetail(nodeDetail) {
+    if (nodeDetail.clusterRank) {
+        return (
+        <div>
+        <h4>Cluster</h4>
+        <h5>rank: #{nodeDetail["clusterRank"]}</h5>
+        <h5>Token amount in cluster: {abbrNum(nodeDetail["clusterTokenAmount"], 2)}</h5>
+        <h5>Token amount total supply : {abbrNum(nodeDetail["clusterTokenTotalSupplyPercentage"])}%</h5>
+        <h5>Token amount in USD: {abbrNum(nodeDetail["clusterTokenBalance"], 2)} USD</h5>
+        <h5>Total balance in cluster: {abbrNum(nodeDetail["clusterTotalBalance"], 2)} USD</h5>
+        <h5>Token amount per total balance : {abbrNum(nodeDetail["clusterTokenTotalBalancePercentage"])}%</h5>
+        <h5>Token change in month: {abbrNum(nodeDetail["clusterTokenChange"], 2)}</h5>
+        </div>)
+    }
+}
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
 
@@ -124,7 +140,7 @@ const useStyles = makeStyles({
         color: "white",
         borderRadius: "4px",
         "&:hover": {
-            backgroundColor:  "250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            backgroundColor: "250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
         },
         "&.dropdown-menu>li>a:focus": {
             backgroundColor: "#2E8BC0"
@@ -241,8 +257,9 @@ function RelationshipSpace(props) {
 
     const [walletType, setWalletType] = useState('rank')
     const [clusterType, setClusterType] = useState('')
+    const [typeTokenChangeLogs, setTypeTokenChangeLogs] = useState('walletTokenChangeLogs')
     const [addressWallet, setAddressWallet] = useState()
-    
+
     useEffect(() => {
         props.getWalletNodeRelationship(tokenAddress)
         props.getWalletLinkRelationship(tokenAddress)
@@ -271,31 +288,42 @@ function RelationshipSpace(props) {
     let listClusterIn = []
     let listClusterOut = []
 
-
     let tokenInfomation = []
+
+    let clusterTokenChangeLogs = []
+    let walletTokenChangeLogs = []
+
     if (RelationshipSpace?.walletNodeRelationship && RelationshipSpace?.walletLinkRelationship) {
         nodeGraphWalletRank = RelationshipSpace.walletNodeRelationship["rank"]
         nodeGraphWalletIn = RelationshipSpace.walletNodeRelationship["in"]
-        nodeGraphWalletOut = RelationshipSpace.walletNodeRelationship["out"] 
+        nodeGraphWalletOut = RelationshipSpace.walletNodeRelationship["out"]
         linkGraphWalletRank = RelationshipSpace.walletLinkRelationship["rank"]
         linkGraphWalletIn = RelationshipSpace.walletLinkRelationship["in"]
-        linkGraphWalletOut = RelationshipSpace.walletLinkRelationship["out"]    
+        linkGraphWalletOut = RelationshipSpace.walletLinkRelationship["out"]
     }
 
     if (RelationshipSpace?.clusterNodeRelationship && RelationshipSpace?.clusterLinkRelationship && RelationshipSpace?.listCluster) {
         nodeGraphClusterRank = RelationshipSpace.clusterNodeRelationship["rank"]
         nodeGraphClusterIn = RelationshipSpace.clusterNodeRelationship["in"]
-        nodeGraphClusterOut = RelationshipSpace.clusterNodeRelationship["out"] 
+        nodeGraphClusterOut = RelationshipSpace.clusterNodeRelationship["out"]
         linkGraphClusterRank = RelationshipSpace.clusterLinkRelationship["rank"]
         linkGraphClusterIn = RelationshipSpace.clusterLinkRelationship["in"]
-        linkGraphClusterOut = RelationshipSpace.clusterLinkRelationship["out"]    
+        linkGraphClusterOut = RelationshipSpace.clusterLinkRelationship["out"]
         listClusterRank = RelationshipSpace.listCluster["rank"]
         listClusterIn = RelationshipSpace.listCluster["in"]
-        listClusterOut = RelationshipSpace.listCluster["out"] 
+        listClusterOut = RelationshipSpace.listCluster["out"]
     }
 
     if (RelationshipSpace?.tokenInfomation) {
         tokenInfomation = RelationshipSpace.tokenInfomation
+    }
+
+    if (RelationshipSpace?.clusterTokenChangeLogs) {
+        clusterTokenChangeLogs = RelationshipSpace.clusterTokenChangeLogs
+    }
+
+    if (RelationshipSpace?.walletTokenChangeLogs) {
+        walletTokenChangeLogs = RelationshipSpace.walletTokenChangeLogs
     }
 
     let nodeGraph = []
@@ -330,11 +358,23 @@ function RelationshipSpace(props) {
         listCluster = listClusterOut
     }
 
-    console.log('wallet type', walletType)
-    console.log('cluster type', clusterType)
-    
+    let tokenChangeLogs = []
+    if (typeTokenChangeLogs === 'walletTokenChangeLogs') {
+        let objs = walletTokenChangeLogs
+        tokenChangeLogs = Object.keys(objs).map(function (key) {
+        return [parseInt(key), objs[key]];
+      });
+    }
 
-    let walletChangeLogs = []
+    if (typeTokenChangeLogs === 'clusterTokenChangeLogs') {
+        let objs = clusterTokenChangeLogs
+        tokenChangeLogs = Object.keys(objs).map(function (key) {
+        return [parseInt(key), objs[key]];
+      });
+    }
+
+    console.log('tokenChnageLogs', tokenChangeLogs)
+    console.log('typeTokenChangeLogs', typeTokenChangeLogs)
     // if (RelationshipSpace?.relationshipTokenChangeLogs) {
     //     walletChangeLogs = RelationshipSpace.relationshipTokenChangeLogs
     // }
@@ -349,7 +389,7 @@ function RelationshipSpace(props) {
     // useEffect(() => {
     //     setRowCluster(listCluster)
     // }, [listCluster])
-    
+
     const [tabMenu, setTabMenu] = useState(0);
     const handleChangeTab = (event, newValue) => {
         setTabMenu(newValue);
@@ -373,7 +413,7 @@ function RelationshipSpace(props) {
 
     const [searchWallet, setSearchWallet] = useState("");
     const [searchCluster, setSearchCluster] = useState("");
-    const requestSearchWallet = (searchedVal) => {    
+    const requestSearchWallet = (searchedVal) => {
         const filteredRows = walletRows.filter((row) => {
             return row.address.toLowerCase().includes(searchedVal.toLowerCase());
         });
@@ -448,6 +488,12 @@ function RelationshipSpace(props) {
         );
 
         setAddressWallet(node['id'])
+        props.getTokenChangeLogs(tokenAddress, node?.['id'])
+        if (node.clusterRank){
+            props.getClusterTokenChangeLogs(tokenAddress, node['clusterRank'])
+        }
+        setTypeTokenChangeLogs("walletTokenChangeLogs")
+        setAlignmentNodeDetail('walletTokenChangeLogs')
         handleClickOpenNodeDetail(node)
     }
 
@@ -522,7 +568,7 @@ function RelationshipSpace(props) {
 
     // // start node detail
     const [openNodeDetail, setOpenNodeDetail] = useState(false);
-    const [nodeDetail, setNodeDetail] = useState({ "id": "1", "clusterRank": 1, "walletRank": 1, "clusterPercent": 1, "walletPercent": 1 })
+    const [nodeDetail, setNodeDetail] = useState({ "id": "1" })
     const handleClickOpenNodeDetail = (row) => {
         setNodeDetail(row)
         setOpenNodeDetail(true);
@@ -532,26 +578,16 @@ function RelationshipSpace(props) {
         setOpenNodeDetail(false);
     };
 
-    const [alignmentNodeDetail, setAlignmentNodeDetail] = useState("wallet");
+    const [alignmentNodeDetail, setAlignmentNodeDetail] = useState("walletTokenChangeLogs");
     const handleChangeToggleNodeDetail = (event, newAlignment) => {
         setAlignmentNodeDetail(newAlignment);
     };
-
-    const [dataChart, setDataChart] = useState();
-    const handleTypeNodeDetail = (type) => {
-        if (type === "wallet") {
-            setDataChart(walletChangeLogs)
-        }
-        else if (type === "cluster") {
-            setDataChart(clusterChangeLog)
-        }
-    }
 
     let options = {
         chart: {
             backgroundColor: "#17171a",
             height: 300,
-            width: 600
+            width: 472
         },
         rangeSelector: {
             selected: 1
@@ -593,7 +629,7 @@ function RelationshipSpace(props) {
         },
         series: [{
             name: 'Token amount',
-            data: [],
+            data: tokenChangeLogs,
             tooltip: {
                 valueDecimals: 2
             }
@@ -604,7 +640,7 @@ function RelationshipSpace(props) {
     // start link detail
     const [openLinkDetail, setOpenLinkDetail] = useState(false);
     let linkDetail = default_test["0x1291be54e72f7e001f6bbc331777710b4f2999e2_0x1591be54e72f7e001f6bbc331777710b4f2999ef"]
-    
+
     const handleClickOpenLinkDetail = (source, target) => {
         props.getLinkDetail('0x89_0x8505b9d2254a7ae468c0e9dd10ccea3a837aef5c', source, target)
         setOpenLinkDetail(true);
@@ -662,39 +698,39 @@ function RelationshipSpace(props) {
                         scroll={scroll}
                         aria-labelledby="general-title"
                         aria-describedby="general-description"
-                        sx={{width: "1200px", height: "1000px", margin: "0 auto"}}
+                        sx={{ width: "1200px", height: "1000px", margin: "0 auto" }}
                     >
-                        <DialogTitle id="general-title" sx={{textAlign: "center", backgroundColor: "#1d1d1e", display: "flex", justifyContent: "center", alignItems: "center", paddingRight: "10px", borderBottom: "1px solid grey"}}><img
+                        <DialogTitle id="general-title" sx={{ textAlign: "center", backgroundColor: "#1d1d1e", display: "flex", justifyContent: "center", alignItems: "center", paddingRight: "10px", borderBottom: "1px solid grey" }}><img
                             className='logo'
                             src={tokenInfomation.image}
                             alt="Logo"
-                        /> <Typography sx={{fontSize: "24px", fontWeight: 700, color: "white", marginLeft: "10px"}}>{tokenInfomation?.name} </Typography></DialogTitle>
-                        <DialogContent sx={{backgroundColor: "#1d1d1e", borderBottom: "1px solid grey"}}
+                        /> <Typography sx={{ fontSize: "24px", fontWeight: 700, color: "white", marginLeft: "10px" }}>{tokenInfomation?.name} </Typography></DialogTitle>
+                        <DialogContent sx={{ backgroundColor: "#1d1d1e", borderBottom: "1px solid grey" }}
                             dividers={scroll === 'paper'}>
                             <DialogContentText
                                 id="general-description"
                                 ref={descriptionGeneralRef}
                                 tabIndex={-1}
                             >
-                                <Typography variant="h6" sx={{fontSize: "20px", fontWeight: 500, color: "white", display: "flex", marginTop: "5px"}}><Typography sx={{fontSize: "20px",fontWeight: 700, color: "#2E8BC0", marginRight: "5px"}}>Wallets:  </Typography> {tokenInfomation?.totalWallets}</Typography>
-                                <Typography variant="h6" sx={{fontSize: "20px", fontWeight: 500, color: "white", display: "flex", marginTop: "5px"}}><Typography sx={{fontSize: "20px",fontWeight: 700, color: "#2E8BC0", marginRight: "5px"}}>Clusters:  </Typography>  {tokenInfomation?.totalClusters}</Typography>
-                                <Typography variant="h6" sx={{fontSize: "20px", fontWeight: 500, color: "white", display: "flex", marginTop: "5px"}}><Typography sx={{fontSize: "20px",fontWeight: 700, color: "#2E8BC0", marginRight: "5px"}}>Active wallets in month:  </Typography>  {tokenInfomation?.totalActiveWalletsInMonth}</Typography>
-                                <Typography variant="h6" sx={{fontSize: "20px", fontWeight: 500, color: "white", display: "flex", marginTop: "5px"}}><Typography sx={{fontSize: "20px",fontWeight: 700, color: "#2E8BC0", marginRight: "5px"}}>Total balance of new wallets in month:  </Typography>  {abbrNum(tokenInfomation?.newWalletsInMonth?.totalBalance, 2)} USD</Typography>
-                                <Typography variant="h6" sx={{fontSize: "20px", fontWeight: 500, color: "white", display: "flex", marginTop: "5px"}}><Typography sx={{fontSize: "20px",fontWeight: 700, color: "#2E8BC0", marginRight: "5px"}}>Token amount of new wallets in month:  </Typography>  {abbrNum(tokenInfomation?.newWalletsInMonth?.tokenBalance, 2)} {tokenInfomation.symbol ? tokenInfomation.symbol.toUpperCase() : "" }</Typography>
-                                <Typography variant="h6" sx={{fontSize: "20px", fontWeight: 500, color: "white", display: "flex", marginTop: "5px"}}><Typography sx={{fontSize: "20px",fontWeight: 700, color: "#2E8BC0", marginRight: "5px"}}>New wallets in month:  </Typography>  {tokenInfomation?.newWalletsInMonth?.number} wallets</Typography>
-                                <Typography variant="h6" sx={{fontSize: "20px", fontWeight: 500, color: "white", display: "flex", marginTop: "5px"}}><Typography sx={{fontSize: "20px",fontWeight: 700, color: "#2E8BC0", marginRight: "5px"}}>Total balance of new wallets:  </Typography>  {tokenInfomation?.newWalletsInMonth?.number} USD</Typography>
-                                <Typography variant="h6" sx={{fontSize: "20px", fontWeight: 500, color: "white", display: "flex", marginTop: "5px"}}><Typography sx={{fontSize: "20px",fontWeight: 700, color: "#2E8BC0", marginRight: "5px"}}>Token amount of new wallets:  </Typography>  {abbrNum(tokenInfomation?.newWalletsInMonth?.tokenAmount,2)} {tokenInfomation.symbol ? tokenInfomation.symbol.toUpperCase() : "" }</Typography>
-                                <Typography variant="h6" sx={{fontSize: "20px", fontWeight: 500, color: "white", display: "flex", marginTop: "5px"}}><Typography sx={{fontSize: "20px",fontWeight: 700, color: "#2E8BC0", marginRight: "5px"}}>Token amount of new wallets in USD:  </Typography>  {abbrNum(tokenInfomation?.newWalletsInMonth?.tokenBalance,2)} USD</Typography>
-                                <Typography variant="h6" sx={{fontSize: "20px", fontWeight: 500, color: "white", display: "flex", marginTop: "5px"}}><Typography sx={{fontSize: "20px",fontWeight: 700, color: "#2E8BC0", marginRight: "5px"}}>% Total balance:  </Typography>  {abbrNum(tokenInfomation?.newWalletsInMonth?.tokenTotalBalancePercentage,2)} %</Typography>
-                                <Typography variant="h6" sx={{fontSize: "20px", fontWeight: 500, color: "white", display: "flex", marginTop: "5px"}}><Typography sx={{fontSize: "20px",fontWeight: 700, color: "#2E8BC0", marginRight: "5px"}}>% Total supply:  </Typography>  {abbrNum(tokenInfomation?.newWalletsInMonth?.tokenTotalSupplyPercentage,2)} %</Typography>
+                                <Typography variant="h6" sx={{ fontSize: "20px", fontWeight: 500, color: "white", display: "flex", marginTop: "5px" }}><Typography sx={{ fontSize: "20px", fontWeight: 700, color: "#2E8BC0", marginRight: "5px" }}>Wallets:  </Typography> {tokenInfomation?.totalWallets}</Typography>
+                                <Typography variant="h6" sx={{ fontSize: "20px", fontWeight: 500, color: "white", display: "flex", marginTop: "5px" }}><Typography sx={{ fontSize: "20px", fontWeight: 700, color: "#2E8BC0", marginRight: "5px" }}>Clusters:  </Typography>  {tokenInfomation?.totalClusters}</Typography>
+                                <Typography variant="h6" sx={{ fontSize: "20px", fontWeight: 500, color: "white", display: "flex", marginTop: "5px" }}><Typography sx={{ fontSize: "20px", fontWeight: 700, color: "#2E8BC0", marginRight: "5px" }}>Active wallets in month:  </Typography>  {tokenInfomation?.totalActiveWalletsInMonth}</Typography>
+                                <Typography variant="h6" sx={{ fontSize: "20px", fontWeight: 500, color: "white", display: "flex", marginTop: "5px" }}><Typography sx={{ fontSize: "20px", fontWeight: 700, color: "#2E8BC0", marginRight: "5px" }}>Total balance of new wallets in month:  </Typography>  {abbrNum(tokenInfomation?.newWalletsInMonth?.totalBalance, 2)} USD</Typography>
+                                <Typography variant="h6" sx={{ fontSize: "20px", fontWeight: 500, color: "white", display: "flex", marginTop: "5px" }}><Typography sx={{ fontSize: "20px", fontWeight: 700, color: "#2E8BC0", marginRight: "5px" }}>Token amount of new wallets in month:  </Typography>  {abbrNum(tokenInfomation?.newWalletsInMonth?.tokenBalance, 2)} {tokenInfomation.symbol ? tokenInfomation.symbol.toUpperCase() : ""}</Typography>
+                                <Typography variant="h6" sx={{ fontSize: "20px", fontWeight: 500, color: "white", display: "flex", marginTop: "5px" }}><Typography sx={{ fontSize: "20px", fontWeight: 700, color: "#2E8BC0", marginRight: "5px" }}>New wallets in month:  </Typography>  {tokenInfomation?.newWalletsInMonth?.number} wallets</Typography>
+                                <Typography variant="h6" sx={{ fontSize: "20px", fontWeight: 500, color: "white", display: "flex", marginTop: "5px" }}><Typography sx={{ fontSize: "20px", fontWeight: 700, color: "#2E8BC0", marginRight: "5px" }}>Total balance of new wallets:  </Typography>  {tokenInfomation?.newWalletsInMonth?.number} USD</Typography>
+                                <Typography variant="h6" sx={{ fontSize: "20px", fontWeight: 500, color: "white", display: "flex", marginTop: "5px" }}><Typography sx={{ fontSize: "20px", fontWeight: 700, color: "#2E8BC0", marginRight: "5px" }}>Token amount of new wallets:  </Typography>  {abbrNum(tokenInfomation?.newWalletsInMonth?.tokenAmount, 2)} {tokenInfomation.symbol ? tokenInfomation.symbol.toUpperCase() : ""}</Typography>
+                                <Typography variant="h6" sx={{ fontSize: "20px", fontWeight: 500, color: "white", display: "flex", marginTop: "5px" }}><Typography sx={{ fontSize: "20px", fontWeight: 700, color: "#2E8BC0", marginRight: "5px" }}>Token amount of new wallets in USD:  </Typography>  {abbrNum(tokenInfomation?.newWalletsInMonth?.tokenBalance, 2)} USD</Typography>
+                                <Typography variant="h6" sx={{ fontSize: "20px", fontWeight: 500, color: "white", display: "flex", marginTop: "5px" }}><Typography sx={{ fontSize: "20px", fontWeight: 700, color: "#2E8BC0", marginRight: "5px" }}>% Total balance:  </Typography>  {abbrNum(tokenInfomation?.newWalletsInMonth?.tokenTotalBalancePercentage, 2)} %</Typography>
+                                <Typography variant="h6" sx={{ fontSize: "20px", fontWeight: 500, color: "white", display: "flex", marginTop: "5px" }}><Typography sx={{ fontSize: "20px", fontWeight: 700, color: "#2E8BC0", marginRight: "5px" }}>% Total supply:  </Typography>  {abbrNum(tokenInfomation?.newWalletsInMonth?.tokenTotalSupplyPercentage, 2)} %</Typography>
                             </DialogContentText>
                         </DialogContent>
-                        <DialogActions sx={{backgroundColor: "#1d1d1e"}}>
-                            <Button onClick={handleCloseGeneral}><Typography sx={{fontSize: "16px", fontWeight: 700, color: "white", marginLeft: "10px"}}>Cancel </Typography></Button>
+                        <DialogActions sx={{ backgroundColor: "#1d1d1e" }}>
+                            <Button onClick={handleCloseGeneral}><Typography sx={{ fontSize: "16px", fontWeight: 700, color: "white", marginLeft: "10px" }}>Cancel </Typography></Button>
                         </DialogActions>
                     </Dialog>
 
-                    <Dropdown className={classes.dropdown} sx={{maxHeight: 100}}>
+                    <Dropdown className={classes.dropdown} sx={{ maxHeight: 100 }}>
                         <Dropdown.Toggle className={classes.dropdownToggle}>
                             Menu
                         </Dropdown.Toggle>
@@ -710,7 +746,7 @@ function RelationshipSpace(props) {
                                 <AppBar position="static" color="default">
                                     <Tabs
                                         value={tabMenu}
-                                        onChange={console.log('tabssss'), handleChangeTab}
+                                        onChange={handleChangeTab}
                                         indicatorColor="standard"
                                         textColor="secondary"
                                         variant="fullWidth"
@@ -728,9 +764,9 @@ function RelationshipSpace(props) {
                                         exclusive
                                         onChange={handleChangeToggle}
                                     >
-                                        <ToggleButton className={classes.togger} value="rank" onClick={(e) => {console.log('on change'); setWalletType('rank'); setRowWallet(nodeGraphWalletRank)}}>Rank</ToggleButton>
-                                        <ToggleButton className={classes.togger} value="in" onClick={(e) => {console.log('on change');setWalletType('in'); setRowWallet(nodeGraphWalletIn) }}>In</ToggleButton>
-                                        <ToggleButton className={classes.togger} value="out" onClick={(e) => {console.log('on change');setWalletType('out'); setRowWallet(nodeGraphWalletOut) }}>Out</ToggleButton>
+                                        <ToggleButton className={classes.togger} value="rank" onClick={(e) => { console.log('on change'); setWalletType('rank'); setRowWallet(nodeGraphWalletRank) }}>Rank</ToggleButton>
+                                        <ToggleButton className={classes.togger} value="in" onClick={(e) => { console.log('on change'); setWalletType('in'); setRowWallet(nodeGraphWalletIn) }}>In</ToggleButton>
+                                        <ToggleButton className={classes.togger} value="out" onClick={(e) => { console.log('on change'); setWalletType('out'); setRowWallet(nodeGraphWalletOut) }}>Out</ToggleButton>
                                     </ToggleButtonGroup>
                                     <SearchBar
                                         value={searchWallet}
@@ -782,9 +818,9 @@ function RelationshipSpace(props) {
                                         exclusive
                                         onChange={handleChangeToggle}
                                     >
-                                        <ToggleButton className={classes.togger} value="rank" onClick={(e) => { setClusterType('rank'); setRowCluster(listClusterRank)}}>Rank</ToggleButton>
-                                        <ToggleButton className={classes.togger} value="in" onClick={(e) => {setClusterType('in'); setRowCluster(listClusterIn)}}>In</ToggleButton>
-                                        <ToggleButton className={classes.togger} value="out" onClick={(e) => {setClusterType('out'); setRowCluster(listClusterOut)}}>Out</ToggleButton>
+                                        <ToggleButton className={classes.togger} value="rank" onClick={(e) => { setClusterType('rank'); setRowCluster(listClusterRank) }}>Rank</ToggleButton>
+                                        <ToggleButton className={classes.togger} value="in" onClick={(e) => { setClusterType('in'); setRowCluster(listClusterIn) }}>In</ToggleButton>
+                                        <ToggleButton className={classes.togger} value="out" onClick={(e) => { setClusterType('out'); setRowCluster(listClusterOut) }}>Out</ToggleButton>
                                     </ToggleButtonGroup>
 
                                     <SearchBar
@@ -805,7 +841,7 @@ function RelationshipSpace(props) {
                                                                 handleClickOpenLinkDetail(row.rank);
                                                             }}>
                                                                 <TableCell style={{ width: 70, overflow: "hidden" }} align="left">{row.clusterRank}</TableCell>
-                                                                <TableCell style={{ width: 70, overflow: "hidden" }} align="left">{row.id}</TableCell>
+                                                                <TableCell style={{ width: 70, overflow: "hidden" }} align="left">{row.clusterInfo}</TableCell>
                                                                 <TableCell style={{ width: 40, overflow: "hidden" }} align="left">{row.clusterValue}</TableCell>
                                                             </TableRow>
                                                         ))}
@@ -834,6 +870,8 @@ function RelationshipSpace(props) {
                         onClose={handleCloseNodeDetail}
                         disableScrollLock
                         scroll="paper"
+                        fullScreen={true}
+                        sx={{ marginTop: '11%', marginLeft: '1%', marginRight: '70%', marginBottom: '1%' }}
                         // classes={{
                         //     scrollPaper: classes.topScrollPaper,
                         //     paperScrollBody: classes.topPaperScrollBody,
@@ -847,22 +885,16 @@ function RelationshipSpace(props) {
                             dividers={scroll === 'paper'}>
 
                             <h4>Wallet</h4>
-                            <h5>Address: {addr(nodeDetail["id"])}</h5>
-                            <h5>Wallet rank: #{nodeDetail["walletRank"]}</h5>
-                            <h5>Token amount in wallet: {abbrNum(nodeDetail["walletTokenAmount"], 2)}</h5>
-                            <h5>Token amount per total supply : {nodeDetail["walletTokenTotalSupplyPercentage"]}%</h5>
-                            <h5>Token amount in USD: {abbrNum(nodeDetail["walletTokenBalance"], 2)} USD</h5>
-                            <h5>Total balance in wallet: {abbrNum(nodeDetail["walletTotalBalance"], 2)} USD</h5>
-                            <h5>Token amount per total balance : {nodeDetail["walletTokenTotalBalancePercentage"]}%</h5>
-                            <h5>Token change in month: {abbrNum(nodeDetail["walletTokenChange"], 2)}</h5>
-                            <h4>Cluster</h4>
-                            <h5>rank: #{nodeDetail["clusterRank"]}</h5>
-                            <h5>Token amount in cluster: {abbrNum(nodeDetail["clusterTokenAmount"], 2)}</h5>
-                            <h5>Token amount total supply : {nodeDetail["clusterTokenTotalSupplyPercentage"]}%</h5>
-                            <h5>Token amount in USD: {abbrNum(nodeDetail["clusterTokenBalance"], 2)} USD</h5>
-                            <h5>Total balance in cluster: {abbrNum(nodeDetail["clusterTotalBalance"], 2)} USD</h5>
-                            <h5>Token amount per total balance : {nodeDetail["clusterTokenTotalBalancePercentage"]}%</h5>
-                            <h5>Token change in month: {abbrNum(nodeDetail["clusterTokenChange"], 2)}</h5>
+                            <h5>Address: {addr(nodeDetail?.["id"])}</h5>
+                            <h5>Wallet rank: #{nodeDetail?.["walletRank"]}</h5>
+                            <h5>Token amount in wallet: {abbrNum(nodeDetail?.["walletTokenAmount"], 2)}</h5>
+                            <h5>Token amount per total supply : {abbrNum(nodeDetail?.["walletTokenTotalSupplyPercentage"])}%</h5>
+                            <h5>Token amount in USD: {abbrNum(nodeDetail?.["walletTokenBalance"], 2)} USD</h5>
+                            <h5>Total balance in wallet: {abbrNum(nodeDetail?.["walletTotalBalance"], 2)} USD</h5>
+                            <h5>Token amount per total balance : {abbrNum(nodeDetail?.["walletTokenTotalBalancePercentage"])}%</h5>
+                            <h5>Token change in month: {abbrNum(nodeDetail?.["walletTokenChange"], 2)}</h5>
+                            {clusterDetail(nodeDetail)}
+
 
                             <ToggleButtonGroup
                                 className={classes.toggerGroup}
@@ -871,8 +903,8 @@ function RelationshipSpace(props) {
                                 exclusive={true}
                                 onChange={handleChangeToggleNodeDetail}
                             >
-                                <ToggleButton className={classes.toggerNodeDetail} value="wallet" onClick={(e) => { handleTypeNodeDetail(e.target.value) }}>Wallet</ToggleButton>
-                                <ToggleButton className={classes.toggerNodeDetail} value="cluster" onClick={(e) => { handleTypeNodeDetail(e.target.value) }}>Cluster</ToggleButton>
+                                <ToggleButton className={classes.toggerNodeDetail} value="walletTokenChangeLogs" onClick={(e) => { setTypeTokenChangeLogs(e.target.value) }}>Wallet</ToggleButton>
+                                <ToggleButton className={classes.toggerNodeDetail} value="clusterTokenChangeLogs" disabled={nodeDetail.clusterRank ? false : true} onClick={(e) => { setTypeTokenChangeLogs(e.target.value) }}>Cluster</ToggleButton>
                             </ToggleButtonGroup>
                             <HighchartsReact highcharts={Highcharts} options={options} />
                         </DialogContent>
@@ -979,7 +1011,7 @@ function RelationshipSpace(props) {
                 <Fab className='button-change-size-add' color="primary" aria-label="add">
                     <AddIcon onClick={handleIncreaseSize} />
                 </Fab>
-                <Fab className='button-change-size-remove' color="primary" aria-label="remove" sx={{marginLeft: "20px"}}>
+                <Fab className='button-change-size-remove' color="primary" aria-label="remove" sx={{ marginLeft: "20px" }}>
                     <RemoveIcon onClick={handleDecreaseSize} />
                 </Fab>
             </div>
@@ -998,6 +1030,7 @@ const actions = {
     getClusterLinkRelationship: RelationshipSpaceActions.getClusterLinkRelationship,
     getListCluster: RelationshipSpaceActions.getListCluster,
     getClusterTokenChangeLogs: RelationshipSpaceActions.getClusterTokenChangeLogs,
+    getTokenChangeLogs: RelationshipSpaceActions.getTokenChangeLogs,
     getLinkDetail: RelationshipSpaceActions.getLinkDetail,
     getTokenInfomation: RelationshipSpaceActions.getTokenInfomation
 };

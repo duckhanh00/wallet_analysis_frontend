@@ -48,10 +48,10 @@ function getListCluster(token_key) {
     })
 }
 
-function getClusterTokenChangeLogs(token_key, rank) {
+function getClusterTokenChangeLogs(token_key, cluster_rank) {
     return sendRequestToServer({
         method: 'GET',
-        url: `${process.env.REACT_APP_SERVER}/cluster_token_change_logs?token_key=${token_key}&rank=${rank}`
+        url: `${process.env.REACT_APP_SERVER}/cluster_token_change_logs?token_key=${token_key}&cluster_rank=${cluster_rank}`
     })
 }
 
