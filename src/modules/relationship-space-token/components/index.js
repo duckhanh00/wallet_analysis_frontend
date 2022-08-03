@@ -358,14 +358,14 @@ function RelationshipSpace(props) {
     const [searchCluster, setSearchCluster] = useState("");
     const requestSearchWallet = (searchedVal) => {
         const filteredRows = walletRows.filter((row) => {
-            return row.address.toLowerCase().includes(searchedVal.toLowerCase());
+            return row.id.toLowerCase().includes(searchedVal.toLowerCase());
         });
         setRowWallet(filteredRows);
     };
-
+    console.log(walletRows)
     const requestSearchCluster = (searchedVal) => {
         const filteredRows = clusterRows.filter((row) => {
-            return row.address.toLowerCase().includes(searchedVal.toLowerCase());
+            return row.id.toLowerCase().includes(searchedVal.toLowerCase());
         });
         setRowCluster(filteredRows);
     };
@@ -396,12 +396,12 @@ function RelationshipSpace(props) {
 
     const [lenLink, setLenLink] = useState(50)
     const fgRef = useRef();
-    useEffect(() => {
-        // forceRef.current.d3Force("collide", d3.forceCollide(13));
-        fgRef.current.d3Force("charge").strength(-10);
-        fgRef.current.d3Force("link").distance(lenLink);
-        fgRef.current.d3Force("charge").distanceMax(200);
-    }, [lenLink]);
+    // useEffect(() => {
+    //     // forceRef.current.d3Force("collide", d3.forceCollide(13));
+    //     fgRef.current.d3Force("charge").strength(-10);
+    //     fgRef.current.d3Force("link").distance(lenLink);
+    //     fgRef.current.d3Force("charge").distanceMax(200);
+    // }, [lenLink]);
 
     // useEffect(() => {
     //     const bloomPass = new UnrealBloomPass();
@@ -649,7 +649,7 @@ function RelationshipSpace(props) {
                                 <Typography variant="h6" sx={{ fontSize: "20px", fontWeight: 500, color: "white", display: "flex", marginTop: "5px" }}><Typography sx={{ fontSize: "20px", fontWeight: 700, color: "#2E8BC0", marginRight: "5px" }}>Total balance of new wallets in month:  </Typography>  {abbrNum(tokenInfomation?.newWalletsInMonth?.totalBalance, 2)} USD</Typography>
                                 <Typography variant="h6" sx={{ fontSize: "20px", fontWeight: 500, color: "white", display: "flex", marginTop: "5px" }}><Typography sx={{ fontSize: "20px", fontWeight: 700, color: "#2E8BC0", marginRight: "5px" }}>Token amount of new wallets in month:  </Typography>  {abbrNum(tokenInfomation?.newWalletsInMonth?.tokenBalance, 2)} {tokenInfomation.symbol ? tokenInfomation.symbol.toUpperCase() : ""}</Typography>
                                 <Typography variant="h6" sx={{ fontSize: "20px", fontWeight: 500, color: "white", display: "flex", marginTop: "5px" }}><Typography sx={{ fontSize: "20px", fontWeight: 700, color: "#2E8BC0", marginRight: "5px" }}>New wallets in month:  </Typography>  {tokenInfomation?.newWalletsInMonth?.number} wallets</Typography>
-                                <Typography variant="h6" sx={{ fontSize: "20px", fontWeight: 500, color: "white", display: "flex", marginTop: "5px" }}><Typography sx={{ fontSize: "20px", fontWeight: 700, color: "#2E8BC0", marginRight: "5px" }}>Total balance of new wallets:  </Typography>  {tokenInfomation?.newWalletsInMonth?.totalBalance} USD</Typography>
+                                <Typography variant="h6" sx={{ fontSize: "20px", fontWeight: 500, color: "white", display: "flex", marginTop: "5px" }}><Typography sx={{ fontSize: "20px", fontWeight: 700, color: "#2E8BC0", marginRight: "5px" }}>Total balance of new wallets:  </Typography>  {abbrNum(tokenInfomation?.newWalletsInMonth?.totalBalance, 2)} USD</Typography>
                                 <Typography variant="h6" sx={{ fontSize: "20px", fontWeight: 500, color: "white", display: "flex", marginTop: "5px" }}><Typography sx={{ fontSize: "20px", fontWeight: 700, color: "#2E8BC0", marginRight: "5px" }}>Token amount of new wallets:  </Typography>  {abbrNum(tokenInfomation?.newWalletsInMonth?.tokenAmount, 2)} {tokenInfomation.symbol ? tokenInfomation.symbol.toUpperCase() : ""}</Typography>
                                 <Typography variant="h6" sx={{ fontSize: "20px", fontWeight: 500, color: "white", display: "flex", marginTop: "5px" }}><Typography sx={{ fontSize: "20px", fontWeight: 700, color: "#2E8BC0", marginRight: "5px" }}>Token amount of new wallets in USD:  </Typography>  {abbrNum(tokenInfomation?.newWalletsInMonth?.tokenBalance, 2)} USD</Typography>
                                 <Typography variant="h6" sx={{ fontSize: "20px", fontWeight: 500, color: "white", display: "flex", marginTop: "5px" }}><Typography sx={{ fontSize: "20px", fontWeight: 700, color: "#2E8BC0", marginRight: "5px" }}>% Total balance:  </Typography>  {abbrNum(tokenInfomation?.newWalletsInMonth?.tokenTotalBalancePercentage, 2)} %</Typography>
@@ -721,7 +721,7 @@ function RelationshipSpace(props) {
                                                             if (walletType === 'rank') {
                                                                 return (
                                                                     <TableRow className={classes.tableRow} key={row.id} onClick={() => {
-                                                                        handleClickOpenNodeDetail(row)
+                                                                        handleClickNode(row)
                                                                     }}>
                                                                         <TableCell style={{ width: 20, overflow: "hidden" }} align="left">{row["walletRank"]}</TableCell>
                                                                         <TableCell style={{ width: 100, overflow: "hidden" }} align="center">{addr(row["id"])}</TableCell>
@@ -733,7 +733,7 @@ function RelationshipSpace(props) {
                                                             if (walletType === 'in') {
                                                                 return (
                                                                     <TableRow className={classes.tableRow} key={row.id} onClick={() => {
-                                                                        handleClickOpenNodeDetail(row)
+                                                                        handleClickNode(row)
                                                                     }}>
                                                                         <TableCell style={{ width: 20, overflow: "hidden" }} align="left">{row["walletRank"]}</TableCell>
                                                                         <TableCell style={{ width: 100, overflow: "hidden" }} align="center">{addr(row["id"])}</TableCell>
@@ -745,7 +745,7 @@ function RelationshipSpace(props) {
                                                             if (walletType === 'out') {
                                                                 return (
                                                                     <TableRow className={classes.tableRow} key={row.id} onClick={() => {
-                                                                        handleClickOpenNodeDetail(row)
+                                                                        handleClickNode(row)
                                                                     }}>
                                                                         <TableCell style={{ width: 20, overflow: "hidden" }} align="left">{row["walletRank"]}</TableCell>
                                                                         <TableCell style={{ width: 100, overflow: "hidden" }} align="center">{addr(row["id"])}</TableCell>
@@ -804,7 +804,7 @@ function RelationshipSpace(props) {
                                                             : clusterRows
                                                         ).map((row) => (
                                                             <TableRow className={classes.tableRow} key={row.id} onClick={() => {
-                                                                handleClickOpenNodeDetail(row.rank);
+                                                                handleSearchNode(row.clusterInfo);
                                                             }}>
                                                                 <TableCell style={{ width: 20, overflow: "hidden" }} align="left">{row.clusterRank}</TableCell>
                                                                 <TableCell style={{ width: 100, overflow: "hidden" }} align="center">{addr(row.clusterInfo)}</TableCell>
@@ -884,6 +884,7 @@ function RelationshipSpace(props) {
                         onClose={handleCloseLinkDetail}
                         disableScrollLock
                         scroll="paper"
+                        sx={{ marginTop: '5%'}}
                         // classes={{
                         //     scrollPaper: classes.topScrollPaper,
                         //     paperScrollBody: classes.topPaperScrollBody,
@@ -953,7 +954,7 @@ function RelationshipSpace(props) {
                         nodeLabel={node => `${node.id}: #${node.walletRank}`}
                         nodeAutoColorBy="clusterRank"
                         linkWidth={0.3}
-                        linkAutoColorBy="clusterRank"
+                        linkColor="#FFFFFF"
                         // linkDirectionalParticles={1}
                         // nodeThreeObjectExtend={true}
                         nodeVisibility={true}
