@@ -314,6 +314,16 @@ function RelationshipSpace(props) {
         listCluster = listClusterOut
     }
 
+    const [nodeGraphState, setNodeGraphState] = useState([])
+    const [linkGraphState, setLinkGraphState] = useState([])
+    useEffect(() => {
+       setNodeGraphState(nodeGraph)
+    }, [nodeGraph])
+
+    useEffect(() => {
+        setLinkGraphState(linkGraph)
+     }, [linkGraph])
+
     let tokenChangeLogs = []
     if (typeTokenChangeLogs === 'walletTokenChangeLogs') {
         let objs = walletTokenChangeLogs
@@ -394,14 +404,25 @@ function RelationshipSpace(props) {
 
     // start react force graph
 
-    const [lenLink, setLenLink] = useState(50)
+    const [lenLink, setLenLink] = useState(100)
     const fgRef = useRef();
-    // useEffect(() => {
-    //     // forceRef.current.d3Force("collide", d3.forceCollide(13));
-    //     fgRef.current.d3Force("charge").strength(-10);
-    //     fgRef.current.d3Force("link").distance(lenLink);
-    //     fgRef.current.d3Force("charge").distanceMax(200);
-    // }, [lenLink]);
+    useEffect(() => {
+        // forceRef.current.d3Force("collide", d3.forceCollide(13));
+        // fgRef.current.d3Force("charge").strength(-10);
+        fgRef.current.d3Force("link").distance(lenLink);
+        // fgRef.current.d3Force("link");
+        // fgRef.current.d3Force("charge").distanceMax(200);
+    }, [lenLink]);  
+
+    const handleIncreaseLink = () => {
+        const updateLenLink = lenLink*2
+        setLenLink(updateLenLink)
+    }
+
+    const handleDecreaseLink = () => {
+        const updateLenLink = lenLink*0.5
+        setLenLink(updateLenLink)
+    }
 
     // useEffect(() => {
     //     const bloomPass = new UnrealBloomPass();
@@ -410,14 +431,6 @@ function RelationshipSpace(props) {
     //     bloomPass.threshold = 0.1;
     //     fgRef.current.postProcessingComposer().addPass(bloomPass);
     // }, []);
-
-
-    const [nodes, setNodes] = useState([])
-
-    const [node_id, setSearchTerm] = useState("");
-    // const handleChange = e => {
-    //     setSearchTerm(e.target.value);
-    // };
 
     const handleClickNode = (node) => {
         d3.selectAll("#node-info-container").remove();
@@ -469,22 +482,23 @@ function RelationshipSpace(props) {
     }
 
     const handleIncreaseSize = () => {
-        const updated_node = nodes
+        const updated_node = nodeGraphState
         updated_node.map((item) => {
             item["val"] = item["val"] * 2
         })
 
-        setNodes([...updated_node])
+        setNodeGraphState([...updated_node])
     }
 
     const handleDecreaseSize = () => {
-        const updated_node = nodes
+        const updated_node = nodeGraphState
         updated_node.map((item) => {
             item["val"] = item["val"] * 0.5
         })
 
-        setNodes([...updated_node])
+        setNodeGraphState([...updated_node])
     }
+
 
     // // start token general infomation 
     const [openGeneral, setOpenGeneral] = useState(false);
@@ -950,10 +964,10 @@ function RelationshipSpace(props) {
                     <ForceGraph3D
                         height="100vh"
                         ref={fgRef}
-                        graphData={{ "nodes": nodeGraph, "links": linkGraph }}
+                        graphData={{ "nodes": nodeGraphState, "links": linkGraphState }}
                         nodeLabel={node => `${node.id}: #${node.walletRank}`}
                         nodeAutoColorBy="clusterRank"
-                        linkWidth={0.3}
+                        linkWidth={2}
                         linkColor="#FFFFFF"
                         // linkDirectionalParticles={1}
                         // nodeThreeObjectExtend={true}
@@ -980,6 +994,15 @@ function RelationshipSpace(props) {
                 </Fab>
                 <Fab className='button-change-size-remove' color="primary" aria-label="remove" sx={{ marginLeft: "20px" }}>
                     <RemoveIcon onClick={handleDecreaseSize} />
+                </Fab>
+            </div>
+
+            <div className='button-change-length'>
+                <Fab className='button-change-size-add' color="default" aria-label="add">
+                    <AddIcon onClick={handleIncreaseLink} />
+                </Fab>
+                <Fab className='button-change-size-remove' color="default" aria-label="remove" sx={{ marginLeft: "20px" }}>
+                    <RemoveIcon onClick={handleDecreaseLink} />
                 </Fab>
             </div>
         </Fragment>
