@@ -79,7 +79,7 @@ function GeneralTokenInfo(props) {
             </div>
             <div className="market__item">
               <div className="coin-desc">Total wallets</div> 
-              <div className="market__price">{tokenInfomation['totalWallets']} wallets</div>
+              <div className="market__price">{numberWithCommas(BigNumber(tokenInfomation['totalWallets']).toFixed(0))} wallets</div>
             </div>
           </div>
         </div>

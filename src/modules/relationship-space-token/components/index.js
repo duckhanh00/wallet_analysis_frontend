@@ -865,7 +865,7 @@ function RelationshipSpace(props) {
                             dividers={scroll === 'paper'}>
 
                             <h4>Wallet</h4>
-                            <h5>Address: {addr(nodeDetail?.["id"])}</h5>
+                            <h5>Address: {nodeDetail?.["id"]}</h5>
                             <h5>Wallet rank: #{nodeDetail?.["walletRank"]}</h5>
                             <h5>Token amount in wallet: {abbrNum(nodeDetail?.["walletTokenAmount"], 2)}</h5>
                             <h5>Token amount per total supply : {abbrNum(nodeDetail?.["walletTokenTotalSupplyPercentage"])}%</h5>

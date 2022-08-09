@@ -8,7 +8,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { Box } from "@mui/material";
 import { useLocation } from "react-router-dom";
-import { addr, abbrNum, timeConverter} from "../../../../../helpers";
+import { addr, abbrNum, timeConverter } from "../../../../../helpers";
 import { WhaleSpaceActions } from "../../../redux/actions";
 import "./style.scss";
 
@@ -38,7 +38,7 @@ function TokenDistribution(props) {
       yAxisBalance = tokenDistribution.map((item) => {
         return parseInt(item[0])
       })
-      xAxisBalance = tokenDistribution.map( (item) => {
+      xAxisBalance = tokenDistribution.map((item) => {
         return `${abbrNum(item[2], 0)} - ${abbrNum(item[3], 0)}`
       })
     }
@@ -48,7 +48,7 @@ function TokenDistribution(props) {
       yAxisAmount = tokenDistribution.map((item) => {
         return parseInt(item[0])
       })
-      xAxisAmount = tokenDistribution.map( (item) => {
+      xAxisAmount = tokenDistribution.map((item) => {
         return `${abbrNum(item[2], 0)} - ${abbrNum(item[3], 0)}`
       })
     }
@@ -60,7 +60,7 @@ function TokenDistribution(props) {
       yAxisBalance = tokenDistribution.map((item) => {
         return item[0]
       })
-      xAxisBalance = tokenDistribution.map( (item) => {
+      xAxisBalance = tokenDistribution.map((item) => {
         return `${abbrNum(item[2], 0)} - ${abbrNum(item[3], 0)}`
       })
     }
@@ -70,10 +70,15 @@ function TokenDistribution(props) {
       yAxisAmount = tokenDistribution.map((item) => {
         return item[0]
       })
-      xAxisAmount = tokenDistribution.map( (item) => {
+      xAxisAmount = tokenDistribution.map((item) => {
         return `${abbrNum(item[2], 0)} - ${abbrNum(item[3], 0)}`
       })
     }
+  }
+
+  const [typeYAxis, setTypeYAxis] = useState("logarithmic")
+  const handleTypeYAxis = (value) => {
+    setTypeYAxis(value)
   }
 
   let amountOptions = {
@@ -104,7 +109,7 @@ function TokenDistribution(props) {
       crosshair: true
     },
     yAxis: {
-      type: 'logarithmic',
+      type: typeYAxis,
       tickAmount: 7,
       gridLineColor: "#323546",
       style: {
@@ -125,7 +130,7 @@ function TokenDistribution(props) {
     tooltip: {
       headerFormat: '<span style="font-size:15px"><b>Min - Max:<b/> <b>{point.key}<b/></span><table>',
       pointFormat: '<tr><td style="font-size:15px"><b>{series.name}: </b> </td>' +
-                  '<td style="font-size:15px"><b>&nbsp;{point.y:.0f} wallets</b></td></tr>',
+        '<td style="font-size:15px"><b>&nbsp;{point.y:.0f} wallets</b></td></tr>',
       footerFormat: '</table>',
       shared: true,
       useHTML: true
@@ -182,7 +187,7 @@ function TokenDistribution(props) {
     yAxis: {
       tickAmount: 7,
       gridLineColor: "#323546",
-      type: 'logarithmic',
+      type: typeYAxis,
       style: {
         color: "#a1a7bb",
       },
@@ -219,8 +224,8 @@ function TokenDistribution(props) {
   return (
     <Fragment>
       <div className="block-in-page">
-        <div className="row">
-          <Box className="action__chart" sx={{ padding: "10px 0" }}>
+       
+          <Box className="action__chart" sx={{ display: "flex", justifyContent: "space-between" }}>
             <FormControl sx={{ m: 1, minWidth: 140 }} size="small">
               <InputLabel id="demo-select-small"></InputLabel>
               <Select
@@ -243,9 +248,19 @@ function TokenDistribution(props) {
                 <MenuItem value={"notContract"}>Not Contract</MenuItem>
               </Select>
             </FormControl>
-            <Box className="action__chart" sx={{ display: "flex", justifyContent: "space-between" }}></Box>
+            <Box className="action__1">
+              <div className="action">
+                <div className={
+                  "action__btn " + (typeYAxis === "logarithmic" ? "active" : "")
+                }
+                  onClick={() => handleTypeYAxis("logarithmic")}>Logarithmic</div>
+                <div className={
+                  "action__btn " + (typeYAxis === "linear" ? "active" : "")
+                }
+                  onClick={() => handleTypeYAxis("linear")}>Linear</div>
+              </div>
+            </Box>
           </Box>
-        </div>
         <Box className="action__chart" sx={{ display: "flex", justifyContent: "space-between" }}>
           <HighchartsReact highcharts={Highcharts} options={amountOptions} />
           <HighchartsReact highcharts={Highcharts} options={balanceOptions} />
