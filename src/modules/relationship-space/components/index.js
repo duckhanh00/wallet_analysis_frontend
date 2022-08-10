@@ -11,7 +11,7 @@ import { Dropdown } from "react-bootstrap";
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass';
 import { RelationshipSpaceActions } from '../redux/actions'
 import { makeStyles } from "@material-ui/core/styles";
-import { useTheme } from '@mui/material/styles';
+import { useTheme, styled } from '@mui/material/styles';
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -39,6 +39,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import TablePagination from '@mui/material/TablePagination';
+import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
+
 
 import './style.scss'
 
@@ -86,6 +88,19 @@ function a11yProps(index) {
         'aria-controls': `action-tabpanel-${index}`,
     };
 }
+
+const HtmlTooltip = styled(({ className, ...props }) => (
+    <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+    [`& .${tooltipClasses.tooltip}`]: {
+        backgroundColor: '#f5f5f9',
+        color: 'rgba(0, 0, 0, 0.87)',
+        maxWidth: 220,
+        fontSize: theme.typography.pxToRem(12),
+        border: '1px solid #dadde9',
+        zIndex: 2000 + '!important'
+    },
+}));
 
 
 const useStyles = makeStyles({
@@ -179,20 +194,20 @@ const useStyles = makeStyles({
 });
 
 const default_test = {
-        "source": "0x8735fe4006d4f969737b948b268923b9018ecc52",
-        "target": "0xdf97761eb48058d8c9800f97f9ff45e3a76983fe",
-        "sourceRank": 1,
-        "targetRank": 1,
-        "sourceToTarget": 1,
-        "targetToSource": 1,
-        "transferChangeLogs": [{
-            "time": 1,
-            "valueInUSD": 1,
-            "tokens": "1 ETH; ",
-            "from": 1,
-            "to": 1
-        }]
-    }
+    "source": "0x8735fe4006d4f969737b948b268923b9018ecc52",
+    "target": "0xdf97761eb48058d8c9800f97f9ff45e3a76983fe",
+    "sourceRank": 1,
+    "targetRank": 1,
+    "sourceToTarget": 1,
+    "targetToSource": 1,
+    "transferChangeLogs": [{
+        "time": 1,
+        "valueInUSD": 1,
+        "tokens": "1 ETH; ",
+        "from": 1,
+        "to": 1
+    }]
+}
 
 
 
@@ -316,12 +331,12 @@ function RelationshipSpace(props) {
     const [nodeGraphState, setNodeGraphState] = useState([])
     const [linkGraphState, setLinkGraphState] = useState([])
     useEffect(() => {
-       setNodeGraphState(nodeGraph)
+        setNodeGraphState(nodeGraph)
     }, [nodeGraph])
 
     useEffect(() => {
         setLinkGraphState(linkGraph)
-     }, [linkGraph])
+    }, [linkGraph])
 
     let tokenChangeLogs = []
     if (typeTokenChangeLogs === 'walletTokenChangeLogs') {
@@ -411,15 +426,15 @@ function RelationshipSpace(props) {
         fgRef.current.d3Force("link").distance(lenLink);
         // fgRef.current.d3Force("link");
         // fgRef.current.d3Force("charge").distanceMax(200);
-    }, [lenLink]);  
+    }, [lenLink]);
 
     const handleIncreaseLink = () => {
-        const updateLenLink = lenLink*2
+        const updateLenLink = lenLink * 2
         setLenLink(updateLenLink)
     }
 
     const handleDecreaseLink = () => {
-        const updateLenLink = lenLink*0.5
+        const updateLenLink = lenLink * 0.5
         setLenLink(updateLenLink)
     }
 
@@ -557,11 +572,11 @@ function RelationshipSpace(props) {
         xAxis: {
             type: 'datetime',
             labels: {
-              formatter: function () {
-                return Highcharts.dateFormat('%d %b %y', this.value * 1000);
-              }
+                formatter: function () {
+                    return Highcharts.dateFormat('%d %b %y', this.value * 1000);
+                }
             }
-          },
+        },
         yAxis: {
             // min: 0,
             title: {
@@ -807,7 +822,7 @@ function RelationshipSpace(props) {
                                             <div style={{ overflow: 'auto', height: '520px' }}>
                                                 <Table style={{ tableLayout: 'fixed' }}>
                                                     <TableBody>
-                                                    <TableRow className={classes.tableRow} sx={{}}>
+                                                        <TableRow className={classes.tableRow} sx={{}}>
                                                             <TableCell style={{ width: 20, overflow: "hidden" }} align="left">Rank</TableCell>
                                                             <TableCell style={{ width: 100, overflow: "hidden" }} align="center">Large Wallet</TableCell>
                                                             <TableCell style={{ width: 80, overflow: "hidden" }} align="center">Token Amount</TableCell>
@@ -897,7 +912,7 @@ function RelationshipSpace(props) {
                         onClose={handleCloseLinkDetail}
                         disableScrollLock
                         scroll="paper"
-                        sx={{ marginTop: '5%'}}
+                        sx={{ marginTop: '5%' }}
                         // classes={{
                         //     scrollPaper: classes.topScrollPaper,
                         //     paperScrollBody: classes.topPaperScrollBody,
@@ -988,23 +1003,63 @@ function RelationshipSpace(props) {
                 </div>
             </Box>
             <div className='button-change-size'>
-                <Fab className='button-change-size-add' color="primary" aria-label="add">
-                    <AddIcon onClick={handleIncreaseSize} />
-                </Fab>
-                <Fab className='button-change-size-remove' color="primary" aria-label="remove" sx={{ marginLeft: "20px" }}>
-                    <RemoveIcon onClick={handleDecreaseSize} />
-                </Fab>
+
+                <HtmlTooltip
+                    title={
+                        <React.Fragment>
+                            <Typography color="inherit">increase node size</Typography>
+                        </React.Fragment>
+                    }
+                >
+                    <Fab className='button-change-size-add' color="primary" aria-label="add">
+                        <AddIcon onClick={handleIncreaseSize} />
+                    </Fab>
+                </HtmlTooltip>
+
+
+                <HtmlTooltip
+                    title={
+                        <React.Fragment>
+                            <Typography color="inherit">reduce node size</Typography>
+                        </React.Fragment>
+                    }
+                >
+                    <Fab className='button-change-size-remove' color="primary" aria-label="remove" sx={{ marginLeft: "20px" }}>
+                        <RemoveIcon onClick={handleDecreaseSize} />
+                    </Fab>
+                </HtmlTooltip>
+
             </div>
 
             <div className='button-change-length'>
-                <Fab className='button-change-size-add' color="default" aria-label="add">
-                    <AddIcon onClick={handleIncreaseLink} />
-                </Fab>
-                <Fab className='button-change-size-remove' color="default" aria-label="remove" sx={{ marginLeft: "20px" }}>
+
+                <HtmlTooltip
+                    title={
+                        <React.Fragment>
+                            <Typography color="inherit">increase link length</Typography>
+                        </React.Fragment>
+                    }
+                >
+                    <Fab className='button-change-size-add' color="default" aria-label="add">
+                        <AddIcon onClick={handleIncreaseLink} />
+                    </Fab>
+                </HtmlTooltip>
+
+
+                <HtmlTooltip
+                    title={
+                        <React.Fragment>
+                            <Typography color="inherit">reduce link length</Typography>
+                        </React.Fragment>
+                    }
+                >
+                    <Fab className='button-change-size-remove' color="default" aria-label="remove" sx={{ marginLeft: "20px" }}>
                     <RemoveIcon onClick={handleDecreaseLink} />
                 </Fab>
-            </div>
-        </Fragment>
+            </HtmlTooltip>
+
+        </div>
+        </Fragment >
     );
 }
 

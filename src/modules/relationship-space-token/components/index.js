@@ -11,7 +11,7 @@ import { Dropdown } from "react-bootstrap";
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass';
 import { RelationshipSpaceActions } from '../redux/actions'
 import { makeStyles } from "@material-ui/core/styles";
-import { useTheme } from '@mui/material/styles';
+import { useTheme, styled } from '@mui/material/styles';
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -39,6 +39,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import TablePagination from '@mui/material/TablePagination';
+import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 
 import './style.scss'
 
@@ -87,6 +88,18 @@ function a11yProps(index) {
     };
 }
 
+const HtmlTooltip = styled(({ className, ...props }) => (
+    <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+    [`& .${tooltipClasses.tooltip}`]: {
+        backgroundColor: '#f5f5f9',
+        color: 'rgba(0, 0, 0, 0.87)',
+        maxWidth: 220,
+        fontSize: theme.typography.pxToRem(12),
+        border: '1px solid #dadde9',
+        zIndex: 2000 + '!important'
+    },
+}));
 
 const useStyles = makeStyles({
     button: {
@@ -988,21 +1001,60 @@ function RelationshipSpace(props) {
                 </div>
             </Box>
             <div className='button-change-size'>
-                <Fab className='button-change-size-add' color="primary" aria-label="add">
-                    <AddIcon onClick={handleIncreaseSize} />
-                </Fab>
-                <Fab className='button-change-size-remove' color="primary" aria-label="remove" sx={{ marginLeft: "20px" }}>
-                    <RemoveIcon onClick={handleDecreaseSize} />
-                </Fab>
+
+                <HtmlTooltip
+                    title={
+                        <React.Fragment>
+                            <Typography color="inherit">increase node size</Typography>
+                        </React.Fragment>
+                    }
+                >
+                    <Fab className='button-change-size-add' color="primary" aria-label="add">
+                        <AddIcon onClick={handleIncreaseSize} />
+                    </Fab>
+                </HtmlTooltip>
+
+
+                <HtmlTooltip
+                    title={
+                        <React.Fragment>
+                            <Typography color="inherit">reduce node size</Typography>
+                        </React.Fragment>
+                    }
+                >
+                    <Fab className='button-change-size-remove' color="primary" aria-label="remove" sx={{ marginLeft: "20px" }}>
+                        <RemoveIcon onClick={handleDecreaseSize} />
+                    </Fab>
+                </HtmlTooltip>
+
             </div>
 
             <div className='button-change-length'>
-                <Fab className='button-change-size-add' color="default" aria-label="add">
-                    <AddIcon onClick={handleIncreaseLink} />
-                </Fab>
-                <Fab className='button-change-size-remove' color="default" aria-label="remove" sx={{ marginLeft: "20px" }}>
+
+                <HtmlTooltip
+                    title={
+                        <React.Fragment>
+                            <Typography color="inherit">increase link length</Typography>
+                        </React.Fragment>
+                    }
+                >
+                    <Fab className='button-change-size-add' color="default" aria-label="add">
+                        <AddIcon onClick={handleIncreaseLink} />
+                    </Fab>
+                </HtmlTooltip>
+
+
+                <HtmlTooltip
+                    title={
+                        <React.Fragment>
+                            <Typography color="inherit">reduce link length</Typography>
+                        </React.Fragment>
+                    }
+                >
+                    <Fab className='button-change-size-remove' color="default" aria-label="remove" sx={{ marginLeft: "20px" }}>
                     <RemoveIcon onClick={handleDecreaseLink} />
                 </Fab>
+            </HtmlTooltip>
             </div>
         </Fragment>
     );

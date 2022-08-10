@@ -41,7 +41,7 @@ function GeneralTokenInfo(props) {
               alt="Logo"
             />
             <span>{tokenInfomation['name']}</span>
-            <div className="coin-logo">{tokenInfomation['symbol']}</div>
+            <div className="coin-logo">{tokenInfomation['symbol'] ? tokenInfomation['symbol'].toUpperCase() : "" }</div>
           </h1>
           <ul className="list-desc">
             <li className="desc-item">Chain name: {tokenInfomation['chainName'] ? tokenInfomation['chainName'].toUpperCase() : "" }</li>
