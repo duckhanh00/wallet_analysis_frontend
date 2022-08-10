@@ -1,4 +1,3 @@
-
 import React, { Fragment, useEffect, useState, useRef, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import { addr, abbrNum, timeConverter } from '../../../helpers';
@@ -372,7 +371,7 @@ function RelationshipSpace(props) {
         });
         setRowWallet(filteredRows);
     };
-    console.log(walletRows)
+
     const requestSearchCluster = (searchedVal) => {
         const filteredRows = clusterRows.filter((row) => {
             return row.id.toLowerCase().includes(searchedVal.toLowerCase());
@@ -545,7 +544,7 @@ function RelationshipSpace(props) {
         chart: {
             backgroundColor: "#17171a",
             height: 300,
-            width: 472
+            width: 490
         },
         rangeSelector: {
             selected: 1
@@ -851,7 +850,7 @@ function RelationshipSpace(props) {
                         disableScrollLock
                         scroll="paper"
                         fullScreen={true}
-                        sx={{ marginTop: '11%', marginLeft: '1%', marginRight: '70%', marginBottom: '1%' }}
+                        sx={{ marginTop: '11%', marginLeft: '1%', marginRight: '69%', marginBottom: '1%' }}
                         // classes={{
                         //     scrollPaper: classes.topScrollPaper,
                         //     paperScrollBody: classes.topPaperScrollBody,

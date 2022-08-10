@@ -27,14 +27,25 @@
 }
 
 .button-change-size {
-  margin-top: 750px;
+  margin-top: 46%;
   bottom: auto;
   transform: none !important;
   z-index: 10000;
   position: absolute;
-  top: 2%;
+  // top: 2%;
   right: 1%;
 }
+
+.button-change-length {
+  margin-top: 42%;
+  bottom: auto;
+  transform: none !important;
+  z-index: 10000;
+  position: absolute;
+  // top: 2%;
+  right: 1%;
+}
+
 
 .relationship-space-container {
   position: relative;

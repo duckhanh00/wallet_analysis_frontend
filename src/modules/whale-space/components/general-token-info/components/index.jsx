@@ -1,15 +1,19 @@
 import React, { Fragment, useEffect, useState, useRef, useCallback } from 'react';
+import { useLocation } from 'react-router-dom';
 import { connect } from "react-redux";
+import { numberWithCommas, upperText } from '../../../../../helpers';
+import BigNumber from 'bignumber.js';
 
 
 import "./style.scss";
 import { WhaleSpaceActions } from "../../../redux/actions";
 
 function GeneralTokenInfo(props) {
-  
+  const location = useLocation();
+  const tokenAddress = "0x38_0x0391be54e72f7e001f6bbc331777710b4f2999ef";
   const { WhaleSpace } = props
   useEffect(() => {
-    props.getTokenInfomation('0x38_0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c')
+    props.getTokenInfomation(tokenAddress)
   }, [])
 
   let tokenInfomation = {
@@ -17,7 +21,15 @@ function GeneralTokenInfo(props) {
   if (WhaleSpace?.tokenInfomation) {   
     tokenInfomation = WhaleSpace.tokenInfomation
   }
-  console.log("tokenInfomation", tokenInfomation)
+  const handlePrice = (price) => {
+    if (price < 1) {
+      const i = Math.floor(Math.log(price) / Math.log(10));
+      return BigNumber(price).toFixed(-i+2)
+    }
+    if (price > 1) {
+      return BigNumber(price).toFixed(2)
+    }
+  }
   return (
     <Fragment>
       <div className="coin-container">
@@ -32,28 +44,28 @@ function GeneralTokenInfo(props) {
             <div className="coin-logo">{tokenInfomation['symbol']}</div>
           </h1>
           <ul className="list-desc">
-            <li className="desc-item">Chain name: {tokenInfomation['chainName']}</li>
+            <li className="desc-item">Chain name: {tokenInfomation['chainName'] ? tokenInfomation['chainName'].toUpperCase() : "" }</li>
           </ul>
         </div>
 
         <div className="coin-right">
           <span className="coin-desc">Price {tokenInfomation['name']} ({tokenInfomation['symbol']})</span>
           <div className="coin-price">
-            <h1> {tokenInfomation['price']} USD</h1>
+            <h1> {handlePrice(tokenInfomation['price'])} USD</h1>
             {/* <div className="coin-up">&#x25B2; 0.81%</div> */}
           </div>
 
           <div className="market">
             <div className="market__item">
               <div className="coin-desc">Market cap</div>
-              <div className="market__price">{tokenInfomation['marketCap']} USD</div>
+              <div className="market__price">{numberWithCommas(BigNumber(tokenInfomation['marketCap']).toFixed(2))} USD</div>
               {/* <span>1.38%</span> */}
             </div>
             <div className="market__item">
               <div className="coin-desc">
                 Fully Diluted Market Cap
               </div>
-              <div className="market__price">{tokenInfomation['totalSupply']*tokenInfomation['price']} USD</div>
+              <div className="market__price">{numberWithCommas(BigNumber(tokenInfomation['totalSupply']*tokenInfomation['price']).toFixed(2))} USD</div>
               {/* <span>1.38%</span> */}
             </div>
             <div className="market__item">
@@ -61,13 +73,13 @@ function GeneralTokenInfo(props) {
                 {/* Khối lượng <span className="desc-item">24 giờ</span> */}
                 Circulating Supply
               </div>
-              <div className="market__price">{tokenInfomation['circulatingSupply']}</div>
+              <div className="market__price">{numberWithCommas(BigNumber(tokenInfomation['circulatingSupply']).toFixed(2))}</div>
               <div className="coin-desc">Total supply</div>
-              <div className="market__price">{tokenInfomation['totalSupply']}</div>
+              <div className="market__price">{numberWithCommas(BigNumber(tokenInfomation['totalSupply']).toFixed(2))}</div>
             </div>
             <div className="market__item">
               <div className="coin-desc">Total wallets</div> 
-              <div className="market__price">{tokenInfomation['totalWallets']} wallets</div>
+              <div className="market__price">{numberWithCommas(BigNumber(tokenInfomation['totalWallets']).toFixed(0))} wallets</div>
             </div>
           </div>
         </div>
