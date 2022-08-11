@@ -42,7 +42,7 @@ function HomeSpace(props) {
   let listAllTokens = []
 
   if (HomeSpace?.listAllTokens) {
-    listAllTokens = HomeSpace.listAllTokens;
+    listAllTokens = HomeSpace.listAllTokens.slice(1, HomeSpace.listAllTokens.length);;
   }
 
   console.log(listAllTokens)
