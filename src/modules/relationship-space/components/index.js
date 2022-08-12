@@ -214,7 +214,7 @@ const default_test = {
 function RelationshipSpace(props) {
     const clusterChangeLog = [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]]
     const location = useLocation();
-    const tokenAddress = "0x38_0x0391be54e72f7e001f6bbc331777710b4f2999ef";
+    const tokenAddress = "0x38_0x3ee2200efb3400fabb9aacf31297cbdd1d435d47";
     const classes = useStyles();
     const theme = useTheme();
     const { RelationshipSpace } = props

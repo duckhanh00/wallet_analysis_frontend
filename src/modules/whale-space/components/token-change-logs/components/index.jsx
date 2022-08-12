@@ -113,7 +113,7 @@ function TopWhaleInfo(props) {
   const [type, setType] = useState("tokenAmount");
   const [isContract, setIsContract] = useState("contract");
   const location = useLocation();
-  const tokenAddress = "0x38_0x0391be54e72f7e001f6bbc331777710b4f2999ef";
+  const tokenAddress = "0x38_0x3ee2200efb3400fabb9aacf31297cbdd1d435d47";
   const [addressWallet, setAddressWallet] = useState("")
 
   useEffect(() => {
