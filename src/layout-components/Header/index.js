@@ -34,9 +34,6 @@ export class Header extends Component {
   }
 
   render() {
-    // const [location, setLocation] = useState("/home");
-    // const locations = {"Home": "/home", "Relationship Space": "/relationship-space", "Whale Space": "/whale-space"};
-
     return (
       <Box>
         <Box
@@ -81,18 +78,18 @@ export class Header extends Component {
                   </Box>
                 </Box>
               ))}
-               <Box
-                  sx={{ padding: "10px 0", margin: "0 15px", height: "100%", display: "flex", alignItems: "center" }}
-                >
-                  <Box className="nav-item">
-                    <a target="_blank" href="https://t.me/+p0WwKjDZ29hlNzQ1/" className="nav-link">
-                      <TelegramIcon />
-                      <Typography variant="body1" sx={{ fontWeight: 600 }} ml={0.5}>
-                        Join us
-                      </Typography>
-                    </a>
-                  </Box>
+              <Box
+                sx={{ padding: "10px 0", margin: "0 15px", height: "100%", display: "flex", alignItems: "center" }}
+              >
+                <Box className="nav-item">
+                  <a target="_blank" href="https://t.me/+p0WwKjDZ29hlNzQ1/" className="nav-link">
+                    <TelegramIcon />
+                    <Typography variant="body1" sx={{ fontWeight: 600 }} ml={0.5}>
+                      Join us
+                    </Typography>
+                  </a>
                 </Box>
+              </Box>
             </ul>
           </Box>
         </Box>
