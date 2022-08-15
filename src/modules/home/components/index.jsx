@@ -17,7 +17,6 @@ const chains = {
 function HomeSpace(props) {
   const [curChain, setCurChain] = useState("bsc");
   const [displayToggle, setDisplayToggle] = useState(false);
-  const [loading, setLoading] = useState(true);
   const {HomeSpace} = props;
 
   const handleChangeDisplayToggle = () => {
@@ -30,9 +29,7 @@ function HomeSpace(props) {
   }
 
   const fetchData = async () => {
-      setLoading(true);
       await props.getListAllTokens();
-      setLoading(false);
   }
 
   useEffect(() => {
@@ -63,7 +60,7 @@ function HomeSpace(props) {
               <ArrowRightIcon sx={{color: "white"}}/>
             </Box>
             {Object.keys(chains).map((chain) => (
-              chain == curChain ? " " :
+              chain === curChain ? " " :
               (<Box className={displayToggle ? "unhide-box" : "hide-box"} sx={{alignItems: "center", padding: "0 10px", marginLeft: "10px", backgroundColor: "rgba(35,31,39,.5)", justifyContent: "center", height: "35px", borderRadius: "15px"}} onClick={() => handleChangeChain(chain)}>
                 <img
                   className="unselected-logo-img"
@@ -78,7 +75,7 @@ function HomeSpace(props) {
           <Typography variant="h4" sx={{textAlign: "center", color: "white", fontWeight: 700 }}> Token List </Typography>
           {listAllTokens ? <Box>
             {listAllTokens.map((token) => (
-              token.chainName == curChain ? <TokenListItem tokenId={token.id} name={token.name} imgSrc={token.image} /> : " "
+              token.chainName === curChain ? <TokenListItem tokenId={token.id} name={token.name} imgSrc={token.image} /> : " "
             ))}
           </Box> : ""
            }

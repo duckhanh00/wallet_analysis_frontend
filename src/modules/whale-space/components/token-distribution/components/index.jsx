@@ -7,14 +7,12 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { Box } from "@mui/material";
-import { useLocation } from "react-router-dom";
-import { addr, abbrNum, timeConverter } from "../../../../../helpers";
+import { abbrNum } from "../../../../../helpers";
 import { WhaleSpaceActions } from "../../../redux/actions";
 import "./style.scss";
 
 function TokenDistribution(props) {
   const { WhaleSpace } = props
-  const location = useLocation();
   const tokenAddress = "0x38_0x3ee2200efb3400fabb9aacf31297cbdd1d435d47";
   const [isContract, setIsContract] = useState("contract");
 

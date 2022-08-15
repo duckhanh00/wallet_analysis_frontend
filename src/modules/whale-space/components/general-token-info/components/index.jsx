@@ -1,7 +1,6 @@
-import React, { Fragment, useEffect, useState, useRef, useCallback } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { Fragment, useEffect } from 'react';
 import { connect } from "react-redux";
-import { numberWithCommas, upperText } from '../../../../../helpers';
+import { numberWithCommas } from '../../../../../helpers';
 import BigNumber from 'bignumber.js';
 
 
@@ -9,7 +8,6 @@ import "./style.scss";
 import { WhaleSpaceActions } from "../../../redux/actions";
 
 function GeneralTokenInfo(props) {
-  const location = useLocation();
   const tokenAddress = "0x38_0x3ee2200efb3400fabb9aacf31297cbdd1d435d47";
   const { WhaleSpace } = props
   useEffect(() => {

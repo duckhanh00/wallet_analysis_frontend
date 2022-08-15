@@ -8,7 +8,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { Box } from "@mui/material";
 import { useLocation } from "react-router-dom";
-import { addr, abbrNum, timeConverter } from "../../../../../helpers";
+import { abbrNum } from "../../../../../helpers";
 import { WhaleSpaceActions } from "../../../redux/actions";
 import "./style.scss";
 
@@ -20,13 +20,7 @@ function TokenDistribution(props) {
 
   useEffect(() => {
     props.getTokenDistribution(tokenAddress)
-  }, [])
-
-  let tokenDistribution = {}
-
-  if (WhaleSpace?.tokenDistribution) {
-    tokenDistribution = WhaleSpace.tokenDistribution
-  }
+  }, [tokenAddress])
 
   let xAxisBalance = []
   let yAxisBalance = []

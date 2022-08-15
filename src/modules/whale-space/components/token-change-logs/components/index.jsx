@@ -1,14 +1,13 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { addr, abbrNum, timeConverter } from "../../../../../helpers";
+import { addr, abbrNum } from "../../../../../helpers";
 import { connect } from "react-redux";
 import Highcharts from "highcharts";
-import { useLocation } from "react-router-dom";
 import HighchartsReact from "highcharts-react-official";
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -19,7 +18,6 @@ import BigNumber from "bignumber.js";
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Typography from '@mui/material/Typography';
 import Button from '@material-ui/core/Button';
@@ -112,18 +110,12 @@ function TopWhaleInfo(props) {
   const { WhaleSpace } = props
   const [type, setType] = useState("tokenAmount");
   const [isContract, setIsContract] = useState("contract");
-  const location = useLocation();
   const tokenAddress = "0x38_0x3ee2200efb3400fabb9aacf31297cbdd1d435d47";
   const [addressWallet, setAddressWallet] = useState("")
 
   useEffect(() => {
     props.getTopWhaleWallets(tokenAddress)
   }, [])
-
-  let topWhaleWallets = {}
-  if (WhaleSpace?.topWhaleWallets) {
-    topWhaleWallets = WhaleSpace.topWhaleWallets
-  }
 
   let listTopWallet = []
   if (type === "totalBalance" && isContract === "contract") {
@@ -214,25 +206,14 @@ function TopWhaleInfo(props) {
   };
 
   const [subTitle, setSubTitle] = useState("Top 100 wallets");
-  const handleSubTitle = (title) => {
-    setSubTitle(title)
-  }
-
 
   // pop up token change logs
   const [openNodeDetail, setOpenNodeDetail] = useState(false);
-  const handleClickOpenNodeDetail = (row) => {
-    setOpenNodeDetail(true);
-  };
 
   const handleCloseNodeDetail = () => {
     setOpenNodeDetail(false);
   };
 
-  const [alignmentNodeDetail, setAlignmentNodeDetail] = useState("wallet");
-  const handleChangeToggleNodeDetail = (event, newAlignment) => {
-    setAlignmentNodeDetail(newAlignment);
-  };
   // pop up token change logs
 
   const handleClickRow = (address) => {

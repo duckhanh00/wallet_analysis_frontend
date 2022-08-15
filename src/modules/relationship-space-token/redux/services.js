@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import { sendRequestToServer, filterObject } from '../../../helpers/';
+import { sendRequestToServer } from '../../../helpers/';
 
 export const RelationshipSpaceService = {
     getWalletNodeRelationship,

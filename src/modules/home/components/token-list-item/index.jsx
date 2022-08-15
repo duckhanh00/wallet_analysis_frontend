@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography, Button } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import BubbleChartIcon from '@mui/icons-material/BubbleChart';
 import InfoIcon from '@mui/icons-material/Info';
 

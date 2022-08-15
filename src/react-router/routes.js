@@ -2,10 +2,10 @@ import React, { lazy, Suspense } from 'react';
 import { connect } from 'react-redux';
 
 import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
-import { AnimatePresence, motion } from 'framer-motion/dist/framer-motion'
+import { AnimatePresence } from 'framer-motion/dist/framer-motion'
 
-import { PrivateRoute } from './privateRoute';
-import { AuthRoute } from './authRoute';
+// import { PrivateRoute } from './privateRoute';
+// import { AuthRoute } from './authRoute';
 import { PublicRoute } from './publicRoute';
 
 import { PermissionRoute, AllRoute } from './permission';
@@ -18,28 +18,7 @@ const WhaleSpaceToken = lazy(() => import('../modules/whale-space copy/component
 
 const Routes = props => {
   const location = useLocation();
-
-  const pageVariants = {
-    initial: {
-      opacity: 0,
-      scale: 0.99
-    },
-    in: {
-      opacity: 1,
-      scale: 1
-    },
-    out: {
-      opacity: 0,
-      scale: 1.01
-    }
-  };
-
-  const pageTransition = {
-    type: 'tween',
-    ease: 'anticipate',
-    duration: 0.4
-  };
-
+  
   return (
     <AnimatePresence>
       <Suspense 

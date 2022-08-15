@@ -1,7 +1,7 @@
-import React, { Fragment, useEffect, useState, useRef, useCallback } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { connect } from "react-redux";
-import { numberWithCommas, upperText } from '../../../../../helpers';
+import { numberWithCommas } from '../../../../../helpers';
 import BigNumber from 'bignumber.js';
 
 

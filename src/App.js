@@ -7,7 +7,7 @@ import './App.scss'
 
 // Component
 import Header from './layout-components/Header';
-import Footer from './layout-components/Footer';
+// import Footer from './layout-components/Footer';
 import ScrollToTop from './utils/ScrollToTop';
 
 import { Routes } from './react-router/routes';
@@ -22,7 +22,7 @@ class App extends Component {
   }
   render() {
     let headerComponent = !this.state.isFullPageLayout ? <Header /> : '';
-    let footerComponent = !this.state.isFullPageLayout ? <Footer /> : '';
+    // let footerComponent = !this.state.isFullPageLayout ? <Footer /> : '';
     return (
 
       <Provider store={store}>

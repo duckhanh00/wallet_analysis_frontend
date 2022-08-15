@@ -1,14 +1,12 @@
-import React, { Fragment, useEffect, useState, useRef, useCallback } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { Fragment, useEffect, useState, useRef } from 'react';
 import { addr, abbrNum, timeConverter } from '../../../helpers';
-import ReactDOM from "react-dom";
 import { connect } from 'react-redux';
 import { ForceGraph3D } from "react-force-graph";
 import * as d3 from "d3";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { Dropdown } from "react-bootstrap";
-import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass';
+// import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass';
 import { RelationshipSpaceActions } from '../redux/actions'
 import { makeStyles } from "@material-ui/core/styles";
 import { useTheme, styled } from '@mui/material/styles';
@@ -212,8 +210,6 @@ const default_test = {
 
 
 function RelationshipSpace(props) {
-    const clusterChangeLog = [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]]
-    const location = useLocation();
     const tokenAddress = "0x38_0x3ee2200efb3400fabb9aacf31297cbdd1d435d47";
     const classes = useStyles();
     const theme = useTheme();
@@ -222,7 +218,6 @@ function RelationshipSpace(props) {
     const [walletType, setWalletType] = useState('rank')
     const [clusterType, setClusterType] = useState('')
     const [typeTokenChangeLogs, setTypeTokenChangeLogs] = useState('walletTokenChangeLogs')
-    const [addressWallet, setAddressWallet] = useState()
 
     useEffect(() => {
         props.getWalletNodeRelationship(tokenAddress)
@@ -231,9 +226,7 @@ function RelationshipSpace(props) {
         props.getClusterLinkRelationship(tokenAddress)
         props.getListCluster(tokenAddress)
         props.getTokenInfomation(tokenAddress)
-    }, [])
-
-    console.log(RelationshipSpace)
+    }, [tokenAddress])
 
     let nodeGraphWalletRank = []
     let nodeGraphWalletIn = []
@@ -360,13 +353,13 @@ function RelationshipSpace(props) {
     const [tabMenu, setTabMenu] = useState(0);
     const handleChangeTab = (event, newValue) => {
         setTabMenu(newValue);
-        if (newValue == 1) {
+        if (newValue === 1) {
             setWalletType("");
             setClusterType("rank");
             setAlignment("rank")
             // setRowCluster(listClusterRank)
         }
-        if (newValue == 0) {
+        if (newValue === 0) {
             setClusterType("");
             setWalletType("rank");
             setAlignment("rank")
@@ -457,7 +450,6 @@ function RelationshipSpace(props) {
             3000 // ms transition duration
         );
 
-        setAddressWallet(node['id'])
         props.getTokenChangeLogs(tokenAddress, node?.['id'])
         if (node.clusterRank) {
             props.getClusterTokenChangeLogs(tokenAddress, node['clusterRank'])
@@ -487,12 +479,6 @@ function RelationshipSpace(props) {
 
         props.getLinkDetail(tokenAddress, link.source.id, link.target.id)
         handleClickOpenLinkDetail()
-    }
-
-
-    const [node_info, setNodeInfo] = useState("");
-    const handleNodeInfo = (e) => {
-        setNodeInfo(e.target.value)
     }
 
     const handleIncreaseSize = () => {
@@ -622,11 +608,6 @@ function RelationshipSpace(props) {
 
     const handleCloseLinkDetail = () => {
         setOpenLinkDetail(false);
-    };
-
-    const [alignmentLinkDetail, setAlignmentLinkDetail] = useState("wallet");
-    const handleChangeToggleLinkDetail = (event, newAlignment) => {
-        setAlignmentLinkDetail(newAlignment);
     };
     // end link detail
 
